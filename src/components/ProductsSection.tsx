@@ -594,7 +594,7 @@ export const ProductsSection: React.FC<{ onContactClick: () => void }> = ({ onCo
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center mb-16">
           
           {/* LEFT CONTENT */}
-          <div className="lg:col-span-6 flex flex-col justify-center">
+          <div className="lg:col-span-6 flex flex-col justify-center pl-4 sm:pl-6 lg:pl-8">
             <div className="flex items-center gap-3 mb-6">
               <span className="text-[#14B8B0] font-black text-xs sm:text-sm uppercase tracking-[0.2em]">
                 OUR PRODUCTS

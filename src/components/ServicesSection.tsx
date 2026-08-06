@@ -614,7 +614,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
         
         {/* SECTION HEADER LEFT ALIGNED (Matching Hero Section Alignment) */}
         <motion.div
-          className="flex flex-col items-start text-left max-w-3xl mb-16 sm:mb-20"
+          className="flex flex-col items-start text-left max-w-3xl mb-16 sm:mb-20 pl-4 sm:pl-6 lg:pl-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}

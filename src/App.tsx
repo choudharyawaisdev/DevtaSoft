@@ -84,14 +84,14 @@ function HomePage({
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-[48px] w-full">
           {/* Left Column: Text & CTAs with Staggered Entrance */}
           <motion.div
-            className="lg:w-[48%] w-full max-w-[650px] flex flex-col"
+            className="lg:w-[48%] w-full max-w-[650px] flex flex-col pl-4 sm:pl-6 lg:pl-8"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
           >
             {/* Main Hero Headline */}
             <motion.h1
-              className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[66px] leading-[1.08] tracking-tight text-[#0D152A] select-none lg:pl-6 pl-0"
+              className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[66px] leading-[1.08] tracking-tight text-[#0D152A] select-none"
               variants={itemVariants}
             >
               Best developers <br />

@@ -161,7 +161,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onReadMoreClick }) =
           
           {/* LEFT COLUMN: Main Headline, Description & CTA */}
           <motion.div 
-            className="lg:col-span-5 flex flex-col justify-between"
+            className="lg:col-span-5 flex flex-col justify-between pl-4 sm:pl-6 lg:pl-8"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}

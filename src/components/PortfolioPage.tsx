@@ -1070,7 +1070,7 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
         
         {/* ─── SECTION HEADER LEFT ALIGNED (Matching Hero Section Alignment) ────────────────── */}
-        <div className="relative pt-8 pb-14 flex flex-col items-start text-left max-w-4xl">
+        <div className="relative pt-8 pb-14 flex flex-col items-start text-left max-w-4xl pl-4 sm:pl-6 lg:pl-8">
           
           {/* Top Label */}
           <motion.div
