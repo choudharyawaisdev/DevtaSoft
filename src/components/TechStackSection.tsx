@@ -137,11 +137,7 @@ const mobileStack: TechItem[] = [
   {
     name: 'iOS',
     category: 'mobile',
-    icon: (
-      <div className="w-12 h-10 flex flex-col items-center justify-center font-display font-black text-slate-800 text-lg leading-none tracking-tight">
-        <span>iOS</span>
-      </div>
-    ),
+    icon: <img src="/ios.png" alt="iOS" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
 ];
 
