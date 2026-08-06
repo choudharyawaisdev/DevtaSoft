@@ -109,67 +109,60 @@ const Vector404Illustration: React.FC = () => (
       <circle cx="95" cy="335" r="7" fill="#E2E8F0" filter="url(#softShadow)" />
       <circle cx="140" cy="345" r="4.5" fill="#CBD5E1" />
       <circle cx="440" cy="338" r="8" fill="#E2E8F0" filter="url(#softShadow)" />
-      <circle cx="510" cy="348" r="5" fill="#CBD5E1" />
       <circle cx="215" cy="350" r="3.5" fill="#CBD5E1" />
 
       {/* ─── 1. LEFT "4" (3D Navy Solid Numeral) ────────────────────── */}
       <g id="left-four" filter="url(#softShadow)">
-        {/* Side/Depth extruded 3D facets */}
-        <path d="M 60 280 L 140 100 L 175 100 L 175 235 L 210 235 L 210 280 L 175 280 L 175 305 L 130 305 L 130 280 Z" fill="url(#numeralDarkSide)" opacity="0.3" />
-        
         {/* Main 3D Shape Facets */}
         {/* Vertical Right Pillar */}
-        <rect x="135" y="90" width="45" height="215" rx="6" fill="url(#numeralDarkFront)" />
-        <rect x="135" y="90" width="45" height="12" rx="4" fill="url(#numeralDarkTop)" />
+        <rect x="125" y="90" width="45" height="215" rx="6" fill="url(#numeralDarkFront)" />
+        <rect x="125" y="90" width="45" height="12" rx="4" fill="url(#numeralDarkTop)" />
 
         {/* Diagonal Stem */}
-        <path d="M 60 255 L 145 90 L 175 90 L 90 255 Z" fill="url(#numeralDarkFront)" />
+        <path d="M 50 255 L 135 90 L 165 90 L 80 255 Z" fill="url(#numeralDarkFront)" />
 
         {/* Horizontal Bar */}
-        <rect x="50" y="215" width="145" height="42" rx="6" fill="url(#numeralDarkFront)" />
-        <path d="M 50 215 L 195 215 L 195 222 L 50 222 Z" fill="url(#numeralDarkTop)" />
+        <rect x="40" y="215" width="145" height="42" rx="6" fill="url(#numeralDarkFront)" />
+        <path d="M 40 215 L 185 215 L 185 222 L 40 222 Z" fill="url(#numeralDarkTop)" />
       </g>
 
 
       {/* ─── 2. CENTER "0" ARCHWAY PORTAL (Orange 3D Structure) ──────── */}
       <g id="center-zero-portal" filter="url(#doorShadow)">
-        {/* Outer 3D Extrusion Shadow / Base */}
-        <rect x="250" y="80" width="130" height="230" rx="65" fill="#B34B00" />
-        <rect x="258" y="80" width="122" height="225" rx="61" fill="url(#archSide)" />
+        {/* 3D Extrusion Side/Shadow */}
+        <rect x="242" y="75" width="124" height="230" rx="62" fill="#B34B00" />
+        <rect x="238" y="72" width="126" height="232" rx="63" fill="url(#archSide)" />
 
         {/* Main Front Orange Arch */}
-        <rect x="250" y="70" width="125" height="235" rx="62.5" fill="url(#archFront)" />
+        <rect x="235" y="70" width="130" height="235" rx="65" fill="url(#archFront)" />
 
-        {/* Inner Arch Cutout / Door Frame Inner Depth */}
-        <rect x="278" y="112" width="69" height="193" rx="34.5" fill="url(#archInner)" />
+        {/* Clean Inner Arch Opening */}
+        <rect x="265" y="112" width="70" height="193" rx="35" fill="url(#portalSky)" />
 
-        {/* Sky Portal Background inside Open Door */}
-        <rect x="282" y="115" width="61" height="190" rx="30.5" fill="url(#portalSky)" />
-
-        {/* Open Door Panel (Swung open to the right with 3D perspective) */}
-        <g id="open-door-panel" transform="translate(343, 115)">
-          {/* Door panel extruded side */}
-          <path d="M 0 0 L 22 -15 L 22 175 L 0 190 Z" fill="#D65F00" />
-          {/* Door panel front face */}
-          <path d="M 0 0 L 18 -12 L 18 178 L 0 190 Z" fill="#FF8706" stroke="#FFA947" strokeWidth="1.5" />
+        {/* Open Door Panel (Swung open to the right) */}
+        <g id="open-door-panel" transform="translate(330, 112)">
+          {/* Door panel side */}
+          <path d="M 0 0 L 20 -14 L 20 178 L 0 193 Z" fill="#D65F00" />
+          {/* Door panel front */}
+          <path d="M 0 0 L 16 -10 L 16 182 L 0 193 Z" fill="#FF8706" />
           {/* Door Handle */}
-          <circle cx="5" cy="95" r="3.5" fill="#FFE5C4" />
-          <rect x="2" y="94" width="8" height="2" rx="1" fill="#FFFFFF" />
+          <circle cx="5" cy="96" r="3.5" fill="#FFE5C4" />
         </g>
       </g>
+
 
       {/* ─── 3. RIGHT "4" (3D Navy Solid Numeral) ───────────────────── */}
       <g id="right-four" filter="url(#softShadow)">
         {/* Vertical Right Pillar */}
-        <rect x="440" y="90" width="45" height="215" rx="6" fill="url(#numeralDarkFront)" />
-        <rect x="440" y="90" width="45" height="12" rx="4" fill="url(#numeralDarkTop)" />
+        <rect x="500" y="90" width="45" height="215" rx="6" fill="url(#numeralDarkFront)" />
+        <rect x="500" y="90" width="45" height="12" rx="4" fill="url(#numeralDarkTop)" />
 
         {/* Diagonal Stem */}
-        <path d="M 365 255 L 450 90 L 480 90 L 395 255 Z" fill="url(#numeralDarkFront)" />
+        <path d="M 425 255 L 510 90 L 540 90 L 455 255 Z" fill="url(#numeralDarkFront)" />
 
         {/* Horizontal Bar */}
-        <rect x="355" y="215" width="145" height="42" rx="6" fill="url(#numeralDarkFront)" />
-        <path d="M 355 215 L 500 215 L 500 222 L 355 222 Z" fill="url(#numeralDarkTop)" />
+        <rect x="415" y="215" width="145" height="42" rx="6" fill="url(#numeralDarkFront)" />
+        <path d="M 415 215 L 560 215 L 560 222 L 415 222 Z" fill="url(#numeralDarkTop)" />
       </g>
     </svg>
   </div>
