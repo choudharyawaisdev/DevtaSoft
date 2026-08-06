@@ -737,10 +737,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
       </div>
 
-      {/* BOTTOM VALUE STRIP (4 Columns with Darker & Taller Vertical Divider Lines) */}
+      {/* BOTTOM VALUE STRIP (Vertical Divider Lines Touching Top & Bottom Div Borders) */}
       <div className="max-w-[1560px] mx-auto px-3 sm:px-6 lg:px-10">
         <motion.div
-          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-slate-300/80 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 p-4 sm:p-6 lg:py-7 lg:px-10"
+          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-slate-300 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
@@ -752,7 +752,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
               return (
                 <div
                   key={item.title}
-                  className="flex flex-col items-start py-6 sm:py-6 lg:py-6 px-3 sm:px-6 lg:px-8 xl:px-10 first:pt-0 last:pb-0 lg:first:pl-0 lg:last:pr-0"
+                  className="flex flex-col items-start p-6 sm:p-8 lg:p-10"
                 >
                   <div className="flex items-center gap-3 sm:gap-3.5 mb-3.5 sm:mb-4">
                     <div
