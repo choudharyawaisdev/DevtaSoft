@@ -657,11 +657,6 @@ export const ProductsSection: React.FC<{ onContactClick: () => void }> = ({ onCo
                       <p className="text-[11px] font-semibold text-slate-400">Live Product Ecosystem</p>
                     </div>
                   </div>
-
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#14B8B0]/10 text-[#14B8B0] font-bold text-xs">
-                    <span className="w-2 h-2 rounded-full bg-[#14B8B0] animate-pulse" />
-                    Active Suite
-                  </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-5">
