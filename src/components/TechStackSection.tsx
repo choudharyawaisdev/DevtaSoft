@@ -111,13 +111,7 @@ const mobileStack: TechItem[] = [
   {
     name: 'Flutter',
     category: 'mobile',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path d="M55 10L15 50L28 63L80 10H55Z" fill="#47C5FB" />
-        <path d="M42 63L28 77L55 104H80L55 79L42 63Z" fill="#02569B" />
-        <path d="M55 79L42 63L55 50L68 63L55 79Z" fill="#0175C2" />
-      </svg>
-    ),
+    icon: <img src="/Flutter.png" alt="Flutter" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'React Native',
@@ -134,41 +128,17 @@ const mobileStack: TechItem[] = [
   {
     name: 'Kotlin',
     category: 'mobile',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path d="M10 10H90L50 50L90 90H10V10Z" fill="url(#ktG)" />
-        <defs>
-          <linearGradient id="ktG" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#7F52FF" />
-            <stop offset="50%" stopColor="#C811E7" />
-            <stop offset="100%" stopColor="#E54857" />
-          </linearGradient>
-        </defs>
-      </svg>
-    ),
+    icon: <img src="/Kotlin.png" alt="Kotlin" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Swift',
     category: 'mobile',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path d="M85 75C60 90 25 75 15 50C30 55 45 45 45 45C30 40 20 25 20 25C35 40 55 35 55 35C45 25 45 10 45 10C65 30 75 55 85 75Z" fill="#F05138" />
-      </svg>
-    ),
+    icon: <img src="/Swift.png" alt="Swift" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Android',
     category: 'mobile',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path d="M25 40V70C25 75 29 79 34 79H66C71 79 75 75 75 40H25Z" fill="#3DDC84" />
-        <path d="M30 35C30 25 39 17 50 17C61 17 70 25 70 35H30Z" fill="#3DDC84" />
-        <circle cx="40" cy="26" r="3" fill="white" />
-        <circle cx="60" cy="26" r="3" fill="white" />
-        <line x1="33" y1="18" x2="26" y2="9" stroke="#3DDC84" strokeWidth="3" strokeLinecap="round" />
-        <line x1="67" y1="18" x2="74" y2="9" stroke="#3DDC84" strokeWidth="3" strokeLinecap="round" />
-      </svg>
-    ),
+    icon: <img src="/Android.png" alt="Android" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'iOS',
@@ -185,59 +155,22 @@ const aiStack: TechItem[] = [
   {
     name: 'OpenAI',
     category: 'ai',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <circle cx="50" cy="50" r="28" stroke="#10A37F" strokeWidth="6" fill="none" />
-        <path d="M48 15 C52 13, 58 15, 61 19 L72 38 C75 43, 73 50, 68 53 L58 59 V46 L65 42 L58 30 L45 38 V26 L48 15 Z" fill="#10A37F" />
-        <path d="M35 25 C37 20, 43 18, 48 20 L68 31 C73 34, 75 41, 72 46 L62 52 L56 41 L61 32 L49 25 L43 35 L35 25 Z" fill="#10A37F" />
-      </svg>
-    ),
+    icon: <img src="/openai.png" alt="OpenAI" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'LangChain',
     category: 'ai',
-    icon: (
-      <div className="w-9 h-9 flex items-center justify-center text-lg gap-0.5 select-none">
-        🦜🔗
-      </div>
-    ),
+    icon: <img src="/langchain.png" alt="LangChain" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'LangGraph',
     category: 'ai',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <circle cx="30" cy="30" r="9" fill="#1D4ED8" />
-        <circle cx="70" cy="30" r="9" fill="#0D9488" />
-        <circle cx="30" cy="70" r="9" fill="#0D9488" />
-        <circle cx="70" cy="70" r="9" fill="#1D4ED8" />
-        <line x1="30" y1="30" x2="70" y2="30" stroke="#0D152A" strokeWidth="4" />
-        <line x1="30" y1="30" x2="30" y2="70" stroke="#0D152A" strokeWidth="4" />
-        <line x1="70" y1="30" x2="70" y2="70" stroke="#0D152A" strokeWidth="4" />
-        <line x1="30" y1="70" x2="70" y2="70" stroke="#0D152A" strokeWidth="4" />
-        <line x1="30" y1="30" x2="70" y2="70" stroke="#0D152A" strokeWidth="3" />
-      </svg>
-    ),
+    icon: <img src="/langgraph.png" alt="LangGraph" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Python',
     category: 'ai',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path
-          d="M49 10C27 10 28 20 28 20V29H49V32H18C18 32 8 31 8 53C8 75 16 74 16 74H25V64C25 52 35 52 35 52H56C56 56 56 65 56 65H35C35 65 24 64 24 76C24 88 35 88 35 88H49C49 88 60 88 60 76V67H39V64H70C70 64 80 65 80 43C80 21 72 22 72 22H63V32C63 44 53 44 53 44H32V34C32 34 32 25 32 25H49Z"
-          fill="url(#pyG3)"
-        />
-        <defs>
-          <linearGradient id="pyG3" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3776AB" />
-            <stop offset="100%" stopColor="#FFD43B" />
-          </linearGradient>
-        </defs>
-        <circle cx="37" cy="19" r="3" fill="white" />
-        <circle cx="51" cy="79" r="3" fill="white" />
-      </svg>
-    ),
+    icon: <img src="/Python.png" alt="Python" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'RAG',
@@ -254,18 +187,7 @@ const aiStack: TechItem[] = [
   {
     name: 'n8n',
     category: 'ai',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <circle cx="25" cy="50" r="9" fill="#EA4B71" />
-        <circle cx="50" cy="30" r="9" fill="#EA4B71" />
-        <circle cx="50" cy="70" r="9" fill="#EA4B71" />
-        <circle cx="75" cy="50" r="9" fill="#EA4B71" />
-        <line x1="25" y1="50" x2="50" y2="30" stroke="#EA4B71" strokeWidth="4" />
-        <line x1="25" y1="50" x2="50" y2="70" stroke="#EA4B71" strokeWidth="4" />
-        <line x1="50" y1="30" x2="75" y2="50" stroke="#EA4B71" strokeWidth="4" />
-        <line x1="50" y1="70" x2="75" y2="50" stroke="#EA4B71" strokeWidth="4" />
-      </svg>
-    ),
+    icon: <img src="/n8n.png" alt="n8n" className="h-10 w-auto object-contain" />,
   },
 ];
 
