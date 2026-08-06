@@ -24,34 +24,17 @@ const frontendStack: TechItem[] = [
   {
     name: 'Next.js',
     category: 'frontend',
-    icon: (
-      <svg className="w-12 h-9" viewBox="0 0 120 40" fill="none">
-        <text x="0" y="28" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="26" fill="#000000" letterSpacing="-1">
-          N<tspan fill="#000000">EXT</tspan><tspan fontSize="16" dy="-2">.js</tspan>
-        </text>
-      </svg>
-    ),
+    icon: <img src="/Next.js.png" alt="Next.js" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'TypeScript',
     category: 'frontend',
-    icon: (
-      <div className="w-9 h-9 rounded-md bg-[#3178C6] flex items-center justify-center text-white font-extrabold text-xs tracking-tighter shadow-xs">
-        <span className="translate-y-[1px]">TS</span>
-      </div>
-    ),
+    icon: <img src="/TypeScript.png" alt="TypeScript" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Tailwind CSS',
     category: 'frontend',
-    icon: (
-      <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none">
-        <path
-          d="M26 40C29.5 33 34.5 29.5 41 29.5C49 29.5 52.5 37 57.5 37C61 37 63.5 34.5 65.5 30C62 37 57 40.5 50.5 40.5C42.5 40.5 39 33 34 33C30.5 33 28 35.5 26 40ZM26 60C29.5 53 34.5 49.5 41 49.5C49 49.5 52.5 57 57.5 57C61 57 63.5 54.5 65.5 50C62 57 57 60.5 50.5 60.5C42.5 60.5 39 53 34 53C30.5 53 28 55.5 26 60Z"
-          fill="#38BDF8"
-        />
-      </svg>
-    ),
+    icon: <img src="/Tailwind CSS.png" alt="Tailwind CSS" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Framer Motion',
@@ -67,11 +50,7 @@ const frontendStack: TechItem[] = [
   {
     name: 'JavaScript',
     category: 'frontend',
-    icon: (
-      <div className="w-9 h-9 rounded-md bg-[#F7DF1E] flex items-end justify-end p-1 text-black font-extrabold text-xs shadow-xs">
-        <span className="leading-none tracking-tighter">JS</span>
-      </div>
-    ),
+    icon: <img src="/JavaScript.png" alt="JavaScript" className="h-10 w-auto object-contain" />,
   },
 ];
 
@@ -79,115 +58,52 @@ const backendStack: TechItem[] = [
   {
     name: 'Node.js',
     category: 'backend',
-    icon: (
-      <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none">
-        <path d="M50 15L85 35V75L50 95L15 75V35L50 15Z" fill="#5FA04E" />
-        <path d="M50 35L70 46.5V69.5L50 81L30 69.5V46.5L50 35Z" fill="white" opacity="0.3" />
-      </svg>
-    ),
+    icon: <img src="/Node.js.png" alt="Node.js" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Laravel',
     category: 'backend',
-    icon: (
-      <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none">
-        <path d="M82 25L50 43V83L82 65V25Z" fill="#FF2D20" />
-        <path d="M18 25L50 43V83L18 65V25Z" fill="#FF2D20" opacity="0.75" />
-        <path d="M50 17L82 35L50 53L18 35L50 17Z" fill="#FF2D20" />
-      </svg>
-    ),
+    icon: <img src="/Laravel.png" alt="Laravel" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'PHP',
     category: 'backend',
-    icon: (
-      <div className="w-11 h-7 rounded-full bg-[#777BB4] flex items-center justify-center text-white font-extrabold text-[11px] tracking-tight shadow-xs">
-        PHP
-      </div>
-    ),
+    icon: <img src="/PHP.png" alt="PHP" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Python',
     category: 'backend',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path
-          d="M49 10C27 10 28 20 28 20V29H49V32H18C18 32 8 31 8 53C8 75 16 74 16 74H25V64C25 52 35 52 35 52H56C56 56 56 65 56 65H35C35 65 24 64 24 76C24 88 35 88 35 88H49C49 88 60 88 60 76V67H39V64H70C70 64 80 65 80 43C80 21 72 22 72 22H63V32C63 44 53 44 53 44H32V34C32 34 32 25 32 25H49Z"
-          fill="url(#pyG)"
-        />
-        <defs>
-          <linearGradient id="pyG" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3776AB" />
-            <stop offset="100%" stopColor="#FFD43B" />
-          </linearGradient>
-        </defs>
-        <circle cx="37" cy="19" r="3" fill="white" />
-        <circle cx="51" cy="79" r="3" fill="white" />
-      </svg>
-    ),
+    icon: <img src="/Python.png" alt="Python" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'FastAPI',
     category: 'backend',
-    icon: (
-      <div className="w-9 h-9 rounded-full bg-[#059669] flex items-center justify-center shadow-xs">
-        <Zap className="w-5 h-5 text-white fill-white" />
-      </div>
-    ),
+    icon: <img src="/FastAPI.png" alt="FastAPI" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'MySQL',
     category: 'backend',
-    icon: (
-      <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none">
-        <path d="M45 22C30 22 20 35 20 50C20 65 30 78 45 78C60 78 70 68 73 58L63 55C61 61 54 68 45 68C32 68 28 58 28 50C28 42 32 32 45 32C53 32 60 38 63 44L73 40C69 30 59 22 45 22Z" fill="#00618A" />
-        <path d="M58 42L73 62L88 42H78L73 50L68 42H58Z" fill="#E48E00" />
-      </svg>
-    ),
+    icon: <img src="/MySQL.png" alt="MySQL" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'MongoDB',
     category: 'backend',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <path d="M50 10C50 10 25 35 25 60C25 75 36 88 50 90C64 88 75 75 75 60C75 35 50 10 50 10Z" fill="#47A248" />
-        <path d="M50 10V90C50 90 49 89 48 85V15C49 12 50 10 50 10Z" fill="#3F8B40" />
-      </svg>
-    ),
+    icon: <img src="/MongoDB.png" alt="MongoDB" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Docker',
     category: 'backend',
-    icon: (
-      <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none">
-        <path d="M18 55H28V65H18V55ZM30 55H40V65H30V55ZM42 55H52V65H42V55ZM54 55H64V65H54V55ZM30 43H40V53H30V43ZM42 43H52V53H42V43ZM54 43H64V53H54V43ZM42 31H52V41H42V31Z" fill="#2496ED" />
-        <path d="M10 65C10 65 15 85 50 85C85 85 90 65 90 65H10Z" fill="#2496ED" />
-      </svg>
-    ),
+    icon: <img src="/Docker.png" alt="Docker" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'Git',
     category: 'backend',
-    icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
-        <rect x="15" y="15" width="70" height="70" rx="14" transform="rotate(45 50 50)" fill="#F05032" />
-        <circle cx="35" cy="50" r="6" fill="white" />
-        <circle cx="65" cy="35" r="6" fill="white" />
-        <circle cx="65" cy="65" r="6" fill="white" />
-        <path d="M35 50H65M65 35V65" stroke="white" strokeWidth="5" />
-      </svg>
-    ),
+    icon: <img src="/Git.png" alt="Git" className="h-10 w-auto object-contain" />,
   },
   {
     name: 'AWS',
     category: 'backend',
-    icon: (
-      <svg className="w-11 h-7" viewBox="0 0 100 60" fill="none">
-        <text x="2" y="32" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="26" fill="#232F3E">aws</text>
-        <path d="M10 42 Q 45 58 85 40" stroke="#FF9900" strokeWidth="4" fill="none" strokeLinecap="round" />
-        <path d="M80 37 L87 40 L82 46" fill="#FF9900" />
-      </svg>
-    ),
+    icon: <img src="/AWS.png" alt="AWS" className="h-10 w-auto object-contain" />,
   },
 ];
 
