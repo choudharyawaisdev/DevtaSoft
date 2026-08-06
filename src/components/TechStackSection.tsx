@@ -13,7 +13,7 @@ const frontendStack: TechItem[] = [
     name: 'React',
     category: 'frontend',
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 100 100" fill="none">
+      <svg className="w-13 h-13 sm:w-15 sm:h-15" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="8" fill="#00D8FF" />
         <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(0 50 50)" />
         <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(60 50 50)" />
@@ -24,23 +24,23 @@ const frontendStack: TechItem[] = [
   {
     name: 'Next.js',
     category: 'frontend',
-    icon: <img src="/Next.js.png" alt="Next.js" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Next.js.png" alt="Next.js" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'TypeScript',
     category: 'frontend',
-    icon: <img src="/TypeScript.png" alt="TypeScript" className="h-10 w-auto object-contain" />,
+    icon: <img src="/TypeScript.png" alt="TypeScript" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Tailwind CSS',
     category: 'frontend',
-    icon: <img src="/Tailwind CSS.png" alt="Tailwind CSS" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Tailwind CSS.png" alt="Tailwind CSS" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Framer Motion',
     category: 'frontend',
     icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+      <svg className="w-12 h-12 sm:w-14 sm:h-14" viewBox="0 0 100 100" fill="none">
         <path d="M20 20H80V50H50L20 20Z" fill="#F08" />
         <path d="M20 50H50L80 80H20V50Z" fill="#FF0055" />
         <path d="M50 50L80 80V50H50Z" fill="#00E5FF" />
@@ -50,7 +50,7 @@ const frontendStack: TechItem[] = [
   {
     name: 'JavaScript',
     category: 'frontend',
-    icon: <img src="/JavaScript.png" alt="JavaScript" className="h-10 w-auto object-contain" />,
+    icon: <img src="/JavaScript.png" alt="JavaScript" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
 ];
 
@@ -58,52 +58,52 @@ const backendStack: TechItem[] = [
   {
     name: 'Node.js',
     category: 'backend',
-    icon: <img src="/Node.js.png" alt="Node.js" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Node.js.png" alt="Node.js" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Laravel',
     category: 'backend',
-    icon: <img src="/Laravel.png" alt="Laravel" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Laravel.png" alt="Laravel" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'PHP',
     category: 'backend',
-    icon: <img src="/PHP.png" alt="PHP" className="h-10 w-auto object-contain" />,
+    icon: <img src="/PHP.png" alt="PHP" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Python',
     category: 'backend',
-    icon: <img src="/Python.png" alt="Python" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Python.png" alt="Python" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'FastAPI',
     category: 'backend',
-    icon: <img src="/FastAPI.png" alt="FastAPI" className="h-10 w-auto object-contain" />,
+    icon: <img src="/FastAPI.png" alt="FastAPI" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'MySQL',
     category: 'backend',
-    icon: <img src="/MySQL.png" alt="MySQL" className="h-10 w-auto object-contain" />,
+    icon: <img src="/MySQL.png" alt="MySQL" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'MongoDB',
     category: 'backend',
-    icon: <img src="/MongoDB.png" alt="MongoDB" className="h-10 w-auto object-contain" />,
+    icon: <img src="/MongoDB.png" alt="MongoDB" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Docker',
     category: 'backend',
-    icon: <img src="/Docker.png" alt="Docker" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Docker.png" alt="Docker" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Git',
     category: 'backend',
-    icon: <img src="/Git.png" alt="Git" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Git.png" alt="Git" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'AWS',
     category: 'backend',
-    icon: <img src="/AWS.png" alt="AWS" className="h-10 w-auto object-contain" />,
+    icon: <img src="/AWS.png" alt="AWS" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
 ];
 
@@ -111,13 +111,13 @@ const mobileStack: TechItem[] = [
   {
     name: 'Flutter',
     category: 'mobile',
-    icon: <img src="/Flutter.png" alt="Flutter" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Flutter.png" alt="Flutter" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'React Native',
     category: 'mobile',
     icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+      <svg className="w-13 h-13 sm:w-15 sm:h-15" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="8" fill="#00D8FF" />
         <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(0 50 50)" />
         <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(60 50 50)" />
@@ -128,23 +128,23 @@ const mobileStack: TechItem[] = [
   {
     name: 'Kotlin',
     category: 'mobile',
-    icon: <img src="/Kotlin.png" alt="Kotlin" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Kotlin.png" alt="Kotlin" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Swift',
     category: 'mobile',
-    icon: <img src="/Swift.png" alt="Swift" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Swift.png" alt="Swift" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Android',
     category: 'mobile',
-    icon: <img src="/Android.png" alt="Android" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Android.png" alt="Android" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'iOS',
     category: 'mobile',
     icon: (
-      <div className="w-10 h-8 flex flex-col items-center justify-center font-display font-extrabold text-slate-800 text-base leading-none tracking-tight">
+      <div className="w-12 h-10 flex flex-col items-center justify-center font-display font-black text-slate-800 text-lg leading-none tracking-tight">
         <span>iOS</span>
       </div>
     ),
@@ -155,28 +155,28 @@ const aiStack: TechItem[] = [
   {
     name: 'OpenAI',
     category: 'ai',
-    icon: <img src="/openai.png" alt="OpenAI" className="h-10 w-auto object-contain" />,
+    icon: <img src="/openai.png" alt="OpenAI" className="w-13 h-13 sm:w-15 sm:h-15 object-contain" />,
   },
   {
     name: 'LangChain',
     category: 'ai',
-    icon: <img src="/langchain.png" alt="LangChain" className="h-10 w-auto object-contain" />,
+    icon: <img src="/langchain.png" alt="LangChain" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'LangGraph',
     category: 'ai',
-    icon: <img src="/langgraph.png" alt="LangGraph" className="h-10 w-auto object-contain" />,
+    icon: <img src="/langgraph.png" alt="LangGraph" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Python',
     category: 'ai',
-    icon: <img src="/Python.png" alt="Python" className="h-10 w-auto object-contain" />,
+    icon: <img src="/Python.png" alt="Python" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'RAG',
     category: 'ai',
     icon: (
-      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+      <svg className="w-13 h-13 sm:w-15 sm:h-15" viewBox="0 0 100 100" fill="none">
         <ellipse cx="50" cy="25" rx="28" ry="10" stroke="#00D8FF" strokeWidth="4" fill="none" />
         <ellipse cx="50" cy="50" rx="28" ry="10" stroke="#00D8FF" strokeWidth="4" fill="none" />
         <ellipse cx="50" cy="75" rx="28" ry="10" stroke="#00D8FF" strokeWidth="4" fill="none" />
@@ -187,7 +187,7 @@ const aiStack: TechItem[] = [
   {
     name: 'n8n',
     category: 'ai',
-    icon: <img src="/n8n.png" alt="n8n" className="h-10 w-auto object-contain" />,
+    icon: <img src="/n8n.png" alt="n8n" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
 ];
 
@@ -256,9 +256,9 @@ export const TechStackSection: React.FC = () => {
               <motion.div
                 key={tech.name}
                 whileHover={{ y: -4, scale: 1.03 }}
-                className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-6 sm:px-8 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[160px] flex-1 sm:flex-initial cursor-pointer group"
+                className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-6 sm:px-9 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[150px] sm:min-w-[175px] flex-1 sm:flex-initial cursor-pointer group"
               >
-                <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {tech.icon}
                 </div>
                 <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#FF8706] transition-colors">
@@ -291,9 +291,9 @@ export const TechStackSection: React.FC = () => {
               <motion.div
                 key={tech.name}
                 whileHover={{ y: -4, scale: 1.03 }}
-                className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-7 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[130px] sm:min-w-[150px] flex-1 sm:flex-initial cursor-pointer group"
+                className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-8 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[165px] flex-1 sm:flex-initial cursor-pointer group"
               >
-                <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {tech.icon}
                 </div>
                 <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#14B8B0] transition-colors">
@@ -343,9 +343,9 @@ export const TechStackSection: React.FC = () => {
                 <motion.div
                   key={tech.name}
                   whileHover={{ y: -4, scale: 1.03 }}
-                  className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                  className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-6 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[135px] sm:min-w-[145px] flex-1 sm:flex-initial cursor-pointer group"
                 >
-                  <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {tech.icon}
                   </div>
                   <span className="font-display font-extrabold text-xs sm:text-sm text-[#0D152A] text-center tracking-tight group-hover:text-[#FF8706] transition-colors">
@@ -380,9 +380,9 @@ export const TechStackSection: React.FC = () => {
                 <motion.div
                   key={tech.name}
                   whileHover={{ y: -4, scale: 1.03 }}
-                  className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                  className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-6 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[135px] sm:min-w-[145px] flex-1 sm:flex-initial cursor-pointer group"
                 >
-                  <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {tech.icon}
                   </div>
                   <span className="font-display font-extrabold text-xs sm:text-sm text-[#0D152A] text-center tracking-tight group-hover:text-[#14B8B0] transition-colors">
