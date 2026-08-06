@@ -602,74 +602,74 @@ const Services3DCubeIllustration: React.FC = () => {
       {/* Orbiting Service Satellite Cards (6 Icons Around Cube) */}
       {/* 1. API */}
       <motion.div
-        className="absolute top-6 left-4 sm:left-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        className="absolute top-4 sm:top-6 left-1 sm:left-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
         animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <div className="w-7 h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
-          <Code2 className="w-4 h-4" />
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
+          <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-xs text-[#0D152A]">API</span>
+        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">API</span>
       </motion.div>
 
       {/* 2. Database */}
       <motion.div
-        className="absolute top-12 right-2 sm:right-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        className="absolute top-6 sm:top-12 right-1 sm:right-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
         animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
         transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
       >
-        <div className="w-7 h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
-          <Database className="w-4 h-4" />
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
+          <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-xs text-[#0D152A]">Database</span>
+        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Database</span>
       </motion.div>
 
       {/* 3. Mobile */}
       <motion.div
-        className="absolute bottom-12 right-4 sm:right-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        className="absolute bottom-6 sm:bottom-12 right-1 sm:right-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
         animate={{ y: [0, -7, 0], x: [0, -5, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
       >
-        <div className="w-7 h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
-          <Smartphone className="w-4 h-4" />
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
+          <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-xs text-[#0D152A]">Mobile</span>
+        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Mobile</span>
       </motion.div>
 
       {/* 4. Cloud */}
       <motion.div
-        className="absolute bottom-8 left-2 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        className="absolute bottom-4 sm:bottom-8 left-1 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
         animate={{ y: [0, 7, 0], x: [0, 5, 0] }}
         transition={{ duration: 4.0, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
       >
-        <div className="w-7 h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
-          <Cloud className="w-4 h-4" />
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
+          <Cloud className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-xs text-[#0D152A]">Cloud</span>
+        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Cloud</span>
       </motion.div>
 
       {/* 5. AI */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 -right-4 sm:right-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
       >
-        <div className="w-7 h-7 rounded-xl bg-[#F0ECFF] flex items-center justify-center text-[#7C3AED]">
-          <Bot className="w-4 h-4" />
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#F0ECFF] flex items-center justify-center text-[#7C3AED]">
+          <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-xs text-[#0D152A]">AI</span>
+        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">AI</span>
       </motion.div>
 
       {/* 6. Design */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 -left-4 sm:left-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        className="absolute top-1/2 -translate-y-1/2 left-0 sm:left-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.0 }}
       >
-        <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] flex items-center justify-center text-[#FF0055]">
-          <Palette className="w-4 h-4" />
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#FFF0F5] flex items-center justify-center text-[#FF0055]">
+          <Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-xs text-[#0D152A]">Design</span>
+        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Design</span>
       </motion.div>
 
       {/* Small Glowing Floating Particles */}
