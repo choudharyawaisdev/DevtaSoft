@@ -16,11 +16,11 @@ export const IntersectingStrips: React.FC = () => {
   const marqueeItems = [...brands, ...brands, ...brands, ...brands, ...brands, ...brands];
 
   return (
-    <section className="w-full overflow-hidden py-8 sm:py-14 relative z-20 select-none pointer-events-none">
-      <div className="relative w-full flex items-center justify-center min-h-[96px] sm:min-h-[160px]">
+    <section className="w-full overflow-hidden py-10 sm:py-14 relative z-20 select-none pointer-events-none">
+      <div className="relative w-full flex items-center justify-center min-h-[140px] sm:min-h-[160px]">
         
-        {/* Teal/Cyan Strip (#14B8B0) - Visible & Slanted Downwards on Mobile and Desktop */}
-        <div className="flex absolute w-[130vw] -left-[15vw] bg-[#14B8B0] py-3 sm:py-4 shadow-lg border-y border-white/25 transform -rotate-[3.5deg] sm:-rotate-[2.5deg] z-10 overflow-hidden items-center">
+        {/* Teal/Cyan Strip (#14B8B0) - Slanted Downwards (-9deg on Mobile, -2.5deg on Desktop) forming a clear X */}
+        <div className="flex absolute w-[160vw] -left-[30vw] bg-[#14B8B0] py-3.5 sm:py-4 shadow-lg border-y border-white/25 transform -rotate-[9deg] sm:-rotate-[2.5deg] z-10 overflow-hidden items-center">
           <div className="animate-marquee-left flex items-center gap-6 sm:gap-9 whitespace-nowrap">
             {marqueeItems.map((brand, idx) => (
               <div key={`teal-${idx}`} className="flex items-center gap-6 sm:gap-9">
@@ -35,8 +35,8 @@ export const IntersectingStrips: React.FC = () => {
           </div>
         </div>
 
-        {/* Orange Strip (#FF6B00) - Visible & Slanted Upwards on Mobile and Desktop */}
-        <div className="flex absolute w-[130vw] -left-[15vw] bg-[#FF6B00] py-3 sm:py-4 shadow-xl border-y border-white/25 transform rotate-[3.5deg] sm:rotate-[2.5deg] z-20 overflow-hidden items-center opacity-[0.96]">
+        {/* Orange Strip (#FF6B00) - Slanted Upwards (+9deg on Mobile, +2.5deg on Desktop) forming a clear X */}
+        <div className="flex absolute w-[160vw] -left-[30vw] bg-[#FF6B00] py-3.5 sm:py-4 shadow-xl border-y border-white/25 transform rotate-[9deg] sm:rotate-[2.5deg] z-20 overflow-hidden items-center opacity-[0.96]">
           <div className="animate-marquee-right flex items-center gap-6 sm:gap-9 whitespace-nowrap">
             {marqueeItems.map((brand, idx) => (
               <div key={`orange-${idx}`} className="flex items-center gap-6 sm:gap-9">
