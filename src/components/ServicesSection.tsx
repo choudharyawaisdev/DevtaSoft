@@ -737,24 +737,24 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
       </div>
 
-      {/* BOTTOM VALUE STRIP (4 Columns with Vertical Divider Lines Between Every Item) */}
+      {/* BOTTOM VALUE STRIP (4 Columns with Darker & Taller Vertical Divider Lines) */}
       <div className="max-w-[1560px] mx-auto px-3 sm:px-6 lg:px-10">
         <motion.div
-          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-slate-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 p-6 sm:p-10 lg:p-12"
+          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-slate-300/80 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 p-4 sm:p-6 lg:py-7 lg:px-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-200/90">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-300">
             {valueItems.map((item) => {
               const ValueIcon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="flex flex-col items-start py-6 sm:py-4 lg:py-2 px-2 sm:px-6 lg:px-8 first:pt-0 last:pb-0 lg:first:pl-0 lg:last:pr-0"
+                  className="flex flex-col items-start py-6 sm:py-6 lg:py-6 px-3 sm:px-6 lg:px-8 xl:px-10 first:pt-0 last:pb-0 lg:first:pl-0 lg:last:pr-0"
                 >
-                  <div className="flex items-center gap-3 sm:gap-3.5 mb-3 sm:mb-4">
+                  <div className="flex items-center gap-3 sm:gap-3.5 mb-3.5 sm:mb-4">
                     <div
                       className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xs shrink-0"
                       style={{ backgroundColor: item.bgColor }}
