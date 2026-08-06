@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, ShieldCheck, Code2 } from 'lucide-react';
+import { Zap, ShieldCheck, Code2, Smartphone, Cpu } from 'lucide-react';
 
 interface TechItem {
   name: string;
-  category: 'frontend' | 'backend';
+  category: string;
   icon: React.ReactNode;
 }
 
@@ -191,6 +191,168 @@ const backendStack: TechItem[] = [
   },
 ];
 
+const mobileStack: TechItem[] = [
+  {
+    name: 'Flutter',
+    category: 'mobile',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <path d="M55 10L15 50L28 63L80 10H55Z" fill="#47C5FB" />
+        <path d="M42 63L28 77L55 104H80L55 79L42 63Z" fill="#02569B" />
+        <path d="M55 79L42 63L55 50L68 63L55 79Z" fill="#0175C2" />
+      </svg>
+    ),
+  },
+  {
+    name: 'React Native',
+    category: 'mobile',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="8" fill="#00D8FF" />
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(0 50 50)" />
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(60 50 50)" />
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke="#00D8FF" strokeWidth="3.5" transform="rotate(120 50 50)" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Kotlin',
+    category: 'mobile',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <path d="M10 10H90L50 50L90 90H10V10Z" fill="url(#ktG)" />
+        <defs>
+          <linearGradient id="ktG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#7F52FF" />
+            <stop offset="50%" stopColor="#C811E7" />
+            <stop offset="100%" stopColor="#E54857" />
+          </linearGradient>
+        </defs>
+      </svg>
+    ),
+  },
+  {
+    name: 'Swift',
+    category: 'mobile',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <path d="M85 75C60 90 25 75 15 50C30 55 45 45 45 45C30 40 20 25 20 25C35 40 55 35 55 35C45 25 45 10 45 10C65 30 75 55 85 75Z" fill="#F05138" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Android',
+    category: 'mobile',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <path d="M25 40V70C25 75 29 79 34 79H66C71 79 75 75 75 40H25Z" fill="#3DDC84" />
+        <path d="M30 35C30 25 39 17 50 17C61 17 70 25 70 35H30Z" fill="#3DDC84" />
+        <circle cx="40" cy="26" r="3" fill="white" />
+        <circle cx="60" cy="26" r="3" fill="white" />
+        <line x1="33" y1="18" x2="26" y2="9" stroke="#3DDC84" strokeWidth="3" strokeLinecap="round" />
+        <line x1="67" y1="18" x2="74" y2="9" stroke="#3DDC84" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    name: 'iOS',
+    category: 'mobile',
+    icon: (
+      <div className="w-10 h-8 flex flex-col items-center justify-center font-display font-extrabold text-slate-800 text-base leading-none tracking-tight">
+        <span>iOS</span>
+      </div>
+    ),
+  },
+];
+
+const aiStack: TechItem[] = [
+  {
+    name: 'OpenAI',
+    category: 'ai',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="28" stroke="#10A37F" strokeWidth="6" fill="none" />
+        <path d="M48 15 C52 13, 58 15, 61 19 L72 38 C75 43, 73 50, 68 53 L58 59 V46 L65 42 L58 30 L45 38 V26 L48 15 Z" fill="#10A37F" />
+        <path d="M35 25 C37 20, 43 18, 48 20 L68 31 C73 34, 75 41, 72 46 L62 52 L56 41 L61 32 L49 25 L43 35 L35 25 Z" fill="#10A37F" />
+      </svg>
+    ),
+  },
+  {
+    name: 'LangChain',
+    category: 'ai',
+    icon: (
+      <div className="w-9 h-9 flex items-center justify-center text-lg gap-0.5 select-none">
+        🦜🔗
+      </div>
+    ),
+  },
+  {
+    name: 'LangGraph',
+    category: 'ai',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <circle cx="30" cy="30" r="9" fill="#1D4ED8" />
+        <circle cx="70" cy="30" r="9" fill="#0D9488" />
+        <circle cx="30" cy="70" r="9" fill="#0D9488" />
+        <circle cx="70" cy="70" r="9" fill="#1D4ED8" />
+        <line x1="30" y1="30" x2="70" y2="30" stroke="#0D152A" strokeWidth="4" />
+        <line x1="30" y1="30" x2="30" y2="70" stroke="#0D152A" strokeWidth="4" />
+        <line x1="70" y1="30" x2="70" y2="70" stroke="#0D152A" strokeWidth="4" />
+        <line x1="30" y1="70" x2="70" y2="70" stroke="#0D152A" strokeWidth="4" />
+        <line x1="30" y1="30" x2="70" y2="70" stroke="#0D152A" strokeWidth="3" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Python',
+    category: 'ai',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <path
+          d="M49 10C27 10 28 20 28 20V29H49V32H18C18 32 8 31 8 53C8 75 16 74 16 74H25V64C25 52 35 52 35 52H56C56 56 56 65 56 65H35C35 65 24 64 24 76C24 88 35 88 35 88H49C49 88 60 88 60 76V67H39V64H70C70 64 80 65 80 43C80 21 72 22 72 22H63V32C63 44 53 44 53 44H32V34C32 34 32 25 32 25H49Z"
+          fill="url(#pyG3)"
+        />
+        <defs>
+          <linearGradient id="pyG3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#3776AB" />
+            <stop offset="100%" stopColor="#FFD43B" />
+          </linearGradient>
+        </defs>
+        <circle cx="37" cy="19" r="3" fill="white" />
+        <circle cx="51" cy="79" r="3" fill="white" />
+      </svg>
+    ),
+  },
+  {
+    name: 'RAG',
+    category: 'ai',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <ellipse cx="50" cy="25" rx="28" ry="10" stroke="#00D8FF" strokeWidth="4" fill="none" />
+        <ellipse cx="50" cy="50" rx="28" ry="10" stroke="#00D8FF" strokeWidth="4" fill="none" />
+        <ellipse cx="50" cy="75" rx="28" ry="10" stroke="#00D8FF" strokeWidth="4" fill="none" />
+        <path d="M22 25V75M78 25V75" stroke="#00D8FF" strokeWidth="4" />
+      </svg>
+    ),
+  },
+  {
+    name: 'n8n',
+    category: 'ai',
+    icon: (
+      <svg className="w-9 h-9" viewBox="0 0 100 100" fill="none">
+        <circle cx="25" cy="50" r="9" fill="#EA4B71" />
+        <circle cx="50" cy="30" r="9" fill="#EA4B71" />
+        <circle cx="50" cy="70" r="9" fill="#EA4B71" />
+        <circle cx="75" cy="50" r="9" fill="#EA4B71" />
+        <line x1="25" y1="50" x2="50" y2="30" stroke="#EA4B71" strokeWidth="4" />
+        <line x1="25" y1="50" x2="50" y2="70" stroke="#EA4B71" strokeWidth="4" />
+        <line x1="50" y1="30" x2="75" y2="50" stroke="#EA4B71" strokeWidth="4" />
+        <line x1="50" y1="70" x2="75" y2="50" stroke="#EA4B71" strokeWidth="4" />
+      </svg>
+    ),
+  },
+];
+
 export const TechStackSection: React.FC = () => {
   return (
     <section id="techstack" className="w-full bg-[#FCFDFE] py-24 sm:py-32 px-4 sm:px-6 lg:px-10 font-sans relative overflow-hidden border-t border-slate-100">
@@ -269,21 +431,9 @@ export const TechStackSection: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* ─── DOTTED DIVIDER WITH CENTER CONCENTRIC TARGET PULSE ───────── */}
-        <div className="my-14 sm:my-18 flex items-center justify-center w-full max-w-[1200px] mx-auto px-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#FF8706] shrink-0" />
-          <div className="h-[2px] flex-1 mx-2 bg-[repeating-linear-gradient(90deg,#FF8706_0_4px,transparent_4px_10px)] opacity-60" />
-          <div className="w-8 h-8 rounded-full border-2 border-[#14B8B0] flex items-center justify-center bg-white shadow-xs shrink-0 mx-2 relative">
-            <div className="w-3 h-3 rounded-full bg-[#FF8706]" />
-            <div className="absolute inset-0 rounded-full border border-[#14B8B0]/40 animate-ping opacity-40" />
-          </div>
-          <div className="h-[2px] flex-1 mx-2 bg-[repeating-linear-gradient(90deg,#14B8B0_0_4px,transparent_4px_10px)] opacity-60" />
-          <div className="w-2.5 h-2.5 rounded-full bg-[#14B8B0] shrink-0" />
-        </div>
-
         {/* ─── BACKEND CATEGORY ROW ─────────────────────────────────────── */}
         <motion.div
-          className="mb-20 sm:mb-24 pl-4 sm:pl-6 lg:pl-8"
+          className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8"
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
@@ -315,6 +465,97 @@ export const TechStackSection: React.FC = () => {
             ))}
           </div>
         </motion.div>
+
+        {/* ─── DOTTED DIVIDER WITH CENTER CONCENTRIC TARGET PULSE ───────── */}
+        <div className="my-14 sm:my-18 flex items-center justify-center w-full max-w-[1200px] mx-auto px-4">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FF8706] shrink-0" />
+          <div className="h-[2px] flex-1 mx-2 bg-[repeating-linear-gradient(90deg,#FF8706_0_4px,transparent_4px_10px)] opacity-60" />
+          <div className="w-8 h-8 rounded-full border-2 border-[#14B8B0] flex items-center justify-center bg-white shadow-xs shrink-0 mx-2 relative">
+            <div className="w-3 h-3 rounded-full bg-[#FF8706]" />
+            <div className="absolute inset-0 rounded-full border border-[#14B8B0]/40 animate-ping opacity-40" />
+          </div>
+          <div className="h-[2px] flex-1 mx-2 bg-[repeating-linear-gradient(90deg,#14B8B0_0_4px,transparent_4px_10px)] opacity-60" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#14B8B0] shrink-0" />
+        </div>
+
+        {/* ─── MOBILE DEVELOPMENT & AI & AUTOMATION ROW (SIDE BY SIDE) ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 mb-20 sm:mb-24 pl-4 sm:pl-6 lg:pl-8">
+          
+          {/* MOBILE DEVELOPMENT CATEGORY */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Category Eyebrow Title with Smartphone Icon */}
+            <div className="flex items-center gap-3 mb-8">
+              <span className="w-1.5 h-7 bg-[#FF8706] rounded-full inline-block" />
+              <div className="w-9 h-9 rounded-full bg-[#FFEFE5] flex items-center justify-center shrink-0">
+                <Smartphone className="w-5 h-5 text-[#FF8706] stroke-[2.5]" />
+              </div>
+              <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
+                Mobile Development
+              </h3>
+            </div>
+
+            {/* Mobile Tech Cards Grid */}
+            <div className="flex flex-wrap items-center gap-4">
+              {mobileStack.map((tech) => (
+                <motion.div
+                  key={tech.name}
+                  whileHover={{ y: -6, scale: 1.03 }}
+                  className="bg-white rounded-[22px] border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                >
+                  <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    {tech.icon}
+                  </div>
+                  <span className="font-display font-extrabold text-xs sm:text-sm text-[#0D152A] text-center tracking-tight group-hover:text-[#FF8706] transition-colors">
+                    {tech.name}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* AI & AUTOMATION CATEGORY */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {/* Category Eyebrow Title with Brain Icon */}
+            <div className="flex items-center gap-3 mb-8">
+              <span className="w-1.5 h-7 bg-[#14B8B0] rounded-full inline-block" />
+              <div className="w-9 h-9 rounded-full bg-[#E6F8F9] flex items-center justify-center shrink-0">
+                <Cpu className="w-5 h-5 text-[#14B8B0] stroke-[2.5]" />
+              </div>
+              <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
+                AI & Automation
+              </h3>
+            </div>
+
+            {/* AI Tech Cards Grid */}
+            <div className="flex flex-wrap items-center gap-4">
+              {aiStack.map((tech) => (
+                <motion.div
+                  key={tech.name}
+                  whileHover={{ y: -6, scale: 1.03 }}
+                  className="bg-white rounded-[22px] border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                >
+                  <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    {tech.icon}
+                  </div>
+                  <span className="font-display font-extrabold text-xs sm:text-sm text-[#0D152A] text-center tracking-tight group-hover:text-[#14B8B0] transition-colors">
+                    {tech.name}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+        </div>
 
         {/* ─── BOTTOM VALUE FEATURE STRIP (3 Items) ────────────────────── */}
         <motion.div
