@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './Logo';
 import { 
-  Github, 
-  Twitter, 
   Linkedin, 
   Facebook, 
   Instagram, 
@@ -77,28 +75,6 @@ export const Footer: React.FC<FooterProps> = ({
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5 stroke-[2]" />
-              </a>
-
-              {/* GitHub: #FFFFFF / #24292E */}
-              <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white hover:text-[#0D152A] flex items-center justify-center transition-all duration-300 border border-white/20 shadow-sm hover:scale-110"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5 stroke-[2]" />
-              </a>
-
-              {/* Twitter / X: #1DA1F2 */}
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="w-10 h-10 rounded-full bg-[#1DA1F2]/15 text-[#1DA1F2] hover:bg-[#1DA1F2] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#1DA1F2]/30 shadow-sm hover:scale-110"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5 stroke-[2]" />
               </a>
 
               {/* Facebook: #1877F2 */}
