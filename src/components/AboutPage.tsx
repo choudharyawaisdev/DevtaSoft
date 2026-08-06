@@ -347,16 +347,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onContactClick, onStartPro
               animate="visible"
               variants={heroSlideRight}
             >
-              <div className="relative w-full max-w-[700px] flex items-center justify-center">
+              <div className="relative w-full max-w-[700px] flex items-center justify-center p-2 sm:p-4">
                 
-                {/* Soft Organic Orange Blob Behind Image (No Gradients) */}
+                {/* Soft Organic Orange Blob Behind Image */}
                 <div
-                  className="absolute inset-0 -m-6 sm:-m-10 bg-[#FFEFE5]/80 rounded-[48px] pointer-events-none transform rotate-[-2deg] scale-[0.96]"
+                  className="absolute -inset-4 sm:-inset-8 -bottom-8 sm:-bottom-14 bg-[#FFEFE5]/85 pointer-events-none transition-all duration-700 hover:scale-[1.02]"
                   style={{
-                    borderRadius: '60% 40% 55% 45% / 45% 55% 45% 55%',
+                    borderRadius: '48% 52% 48% 52% / 42% 42% 58% 58%',
                   }}
                 />
-
 
                 {/* Team Illustration Image */}
                 <div className="relative z-10 w-full rounded-[24px] overflow-hidden">
