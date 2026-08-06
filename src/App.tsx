@@ -219,15 +219,14 @@ export default function App() {
   }, []);
 
   const isAdminLoggedIn = localStorage.getItem('devtasoft_admin_logged_in') === 'true';
-  const isLoginOrAdminRoute = location.pathname === '/admin' || location.pathname === '/login';
+  const isAdminRoute = location.pathname === '/admin' || location.pathname === '/login';
 
   // Strict Route Security for /admin and /login URLs: Automatically prompt login modal when accessed via URL.
   useEffect(() => {
-    if (isLoginOrAdminRoute && !isAdminLoggedIn) {
+    if (isAdminRoute && !isAdminLoggedIn) {
       setIsLoginOpen(true);
-      navigate('/', { replace: true });
     }
-  }, [isLoginOrAdminRoute, isAdminLoggedIn, navigate]);
+  }, [isAdminRoute, isAdminLoggedIn]);
 
   const handleContactClick = () => {
     if (visibility.pages.contact) {
@@ -371,7 +370,23 @@ export default function App() {
                 }}
               />
             ) : (
-              <Navigate to="/" replace />
+              <HomePage
+                onContactClick={handleContactClick}
+                onProjectsClick={() => setIsProjectsOpen(true)}
+              />
+            )
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            isAdminLoggedIn ? (
+              <Navigate to="/admin" replace />
+            ) : (
+              <HomePage
+                onContactClick={handleContactClick}
+                onProjectsClick={() => setIsProjectsOpen(true)}
+              />
             )
           }
         />
