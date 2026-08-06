@@ -39,13 +39,7 @@ const frontendStack: TechItem[] = [
   {
     name: 'Framer Motion',
     category: 'frontend',
-    icon: (
-      <svg className="w-12 h-12 sm:w-14 sm:h-14" viewBox="0 0 100 100" fill="none">
-        <path d="M20 20H80V50H50L20 20Z" fill="#F08" />
-        <path d="M20 50H50L80 80H20V50Z" fill="#FF0055" />
-        <path d="M50 50L80 80V50H50Z" fill="#00E5FF" />
-      </svg>
-    ),
+    icon: <img src="/framer.png" alt="Framer Motion" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'JavaScript',
