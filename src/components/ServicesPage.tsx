@@ -505,7 +505,7 @@ export const ServicesPage: React.FC<{ onContactClick: () => void }> = ({ onConta
                   <Users className="w-6 h-6 stroke-[2.2]" />
                 </div>
               </div>
-              <span className="font-display font-black text-3xl text-[#0D152A] mb-1">120+</span>
+              <span className="font-display font-black text-3xl text-[#0D152A] mb-1">250+</span>
               <h4 className="font-display font-extrabold text-base text-[#0D152A] mb-1">Projects Delivered</h4>
               <p className="text-[#6B7280] font-medium text-xs leading-relaxed">
                 Successful digital solutions across industries.
@@ -519,7 +519,7 @@ export const ServicesPage: React.FC<{ onContactClick: () => void }> = ({ onConta
                   <Smile className="w-6 h-6 stroke-[2.2]" />
                 </div>
               </div>
-              <span className="font-display font-black text-3xl text-[#0D152A] mb-1">95%</span>
+              <span className="font-display font-black text-3xl text-[#0D152A] mb-1">98%</span>
               <h4 className="font-display font-extrabold text-base text-[#0D152A] mb-1">Client Satisfaction</h4>
               <p className="text-[#6B7280] font-medium text-xs leading-relaxed">
                 We're proud of the trust and satisfaction of our clients.

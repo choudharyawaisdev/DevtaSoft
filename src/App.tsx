@@ -11,6 +11,7 @@ import { ServicesModal } from './components/ServicesModal';
 import { LoginModal } from './components/LoginModal';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
+import { TechStackSection } from './components/TechStackSection';
 import { AboutPage } from './components/AboutPage';
 import { PortfolioPage } from './components/PortfolioPage';
 import { ProductsPage } from './components/ProductsPage';
@@ -166,6 +167,9 @@ function HomePage({
 
       {/* World-class Services Section */}
       {visibility.sections.servicesSection && <ServicesSection onContactClick={onContactClick} />}
+
+      {/* Modern Technologies We Use - Tech Stack Section */}
+      <TechStackSection />
 
       {/* Beautifully styled filterable Portfolio Section */}
       {visibility.sections.portfolioSection && (
