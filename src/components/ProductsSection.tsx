@@ -382,142 +382,144 @@ const ProductDetailModal: React.FC<{
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white rounded-[28px] w-full max-w-[860px] max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
+              className="relative bg-white rounded-[28px] w-full max-w-[860px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100"
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
               transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
-              <button
-                onClick={onClose}
-                className="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer"
-              >
-                <X className="w-5 h-5 text-slate-500" />
-              </button>
+              <div className="overflow-y-auto w-full h-full custom-scrollbar rounded-[28px]">
+                {/* Close Button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer"
+                >
+                  <X className="w-5 h-5 text-slate-500" />
+                </button>
 
-              {/* Modal Header */}
-              <div className="relative p-8 sm:p-10 pb-4 overflow-hidden">
-                <div
-                  className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-20 pointer-events-none"
-                  style={{ backgroundColor: details.themeColor }}
-                />
+                {/* Modal Header */}
+                <div className="relative p-8 sm:p-10 pb-4 overflow-hidden">
+                  <div
+                    className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-20 pointer-events-none"
+                    style={{ backgroundColor: details.themeColor }}
+                  />
 
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-2xl border bg-white shadow-sm" style={{ borderColor: `${details.themeColor}30` }}>
-                    {product.logo}
-                  </div>
-                  <span
-                    className="inline-flex items-center gap-1.5 text-xs font-black px-3.5 py-1.5 rounded-full border shadow-xs"
-                    style={{ backgroundColor: details.themeBg, color: details.themeColor, borderColor: `${details.themeColor}40` }}
-                  >
-                    <Sparkles className="w-3.5 h-3.5" /> DevtaSoft Product Suite
-                  </span>
-                </div>
-
-                <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#0D152A] leading-tight mb-2">
-                  {details.tagline}
-                </h2>
-
-                <p className="text-[#6B7280] font-medium text-sm sm:text-base leading-relaxed max-w-2xl">
-                  {details.longDesc}
-                </p>
-              </div>
-
-              {/* Key Stats Bar */}
-              <div className="px-8 sm:px-10 py-4">
-                <div className="grid grid-cols-3 gap-4">
-                  {details.stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="rounded-2xl p-4 text-center border border-slate-100 shadow-xs"
-                      style={{ backgroundColor: details.themeBg }}
-                    >
-                      <span className="font-display font-black text-2xl sm:text-3xl block mb-1" style={{ color: details.themeColor }}>
-                        {stat.value}
-                      </span>
-                      <span className="text-[#667085] font-semibold text-xs sm:text-sm">
-                        {stat.label}
-                      </span>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 rounded-2xl border bg-white shadow-sm" style={{ borderColor: `${details.themeColor}30` }}>
+                      {product.logo}
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Features List */}
-              <div className="px-8 sm:px-10 py-6">
-                <h3 className="font-display font-extrabold text-lg text-[#0D152A] mb-4">
-                  Core Capabilities
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {details.features.map((feat, i) => (
-                    <motion.div
-                      key={feat.title}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.12 + i * 0.07 }}
-                      className="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5"
-                    >
-                      <div className="flex items-start gap-3.5">
-                        <div
-                          className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
-                          style={{ backgroundColor: details.themeBg }}
-                        >
-                          <CheckCircle2 className="w-4 h-4" style={{ color: details.themeColor }} />
-                        </div>
-                        <div>
-                          <h4 className="font-display font-extrabold text-sm text-[#0D152A] mb-1">
-                            {feat.title}
-                          </h4>
-                          <p className="text-[#667085] font-medium text-xs leading-relaxed">
-                            {feat.desc}
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Feature Badges */}
-              <div className="px-8 sm:px-10 pb-6">
-                <h3 className="font-display font-extrabold text-sm uppercase tracking-wider text-slate-400 mb-3">
-                  Highlights
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {details.badges.map((badge) => (
                     <span
-                      key={badge}
-                      className="px-3.5 py-1.5 rounded-full font-bold text-xs border"
-                      style={{
-                        backgroundColor: details.themeBg,
-                        color: details.themeColor,
-                        borderColor: `${details.themeColor}30`,
-                      }}
+                      className="inline-flex items-center gap-1.5 text-xs font-black px-3.5 py-1.5 rounded-full border shadow-xs"
+                      style={{ backgroundColor: details.themeBg, color: details.themeColor, borderColor: `${details.themeColor}40` }}
                     >
-                      ✓ {badge}
+                      <Sparkles className="w-3.5 h-3.5" /> DevtaSoft Product Suite
                     </span>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* Footer CTA */}
-              <div className="px-8 sm:px-10 pb-8 sm:pb-10 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-[#667085] font-medium text-sm text-center sm:text-left">
-                  Interested in integrating or deploying {product.name}?
-                </p>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => {
-                      onClose();
-                      onExploreAll?.();
-                    }}
-                    className="inline-flex items-center gap-2 bg-[#FF6B00] hover:bg-[#E05B00] text-white font-bold text-sm px-6 py-3 rounded-2xl shadow-md shadow-[#FF6B00]/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                  >
-                    <span>Try Product</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </button>
+                  <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#0D152A] leading-tight mb-2">
+                    {details.tagline}
+                  </h2>
+
+                  <p className="text-[#6B7280] font-medium text-sm sm:text-base leading-relaxed max-w-2xl">
+                    {details.longDesc}
+                  </p>
+                </div>
+
+                {/* Key Stats Bar */}
+                <div className="px-8 sm:px-10 py-4">
+                  <div className="grid grid-cols-3 gap-4">
+                    {details.stats.map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="rounded-2xl p-4 text-center border border-slate-100 shadow-xs"
+                        style={{ backgroundColor: details.themeBg }}
+                      >
+                        <span className="font-display font-black text-2xl sm:text-3xl block mb-1" style={{ color: details.themeColor }}>
+                          {stat.value}
+                        </span>
+                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">
+                          {stat.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Features List */}
+                <div className="px-8 sm:px-10 py-6">
+                  <h3 className="font-display font-extrabold text-lg text-[#0D152A] mb-4">
+                    Core Capabilities
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {details.features.map((feat, i) => (
+                      <motion.div
+                        key={feat.title}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.12 + i * 0.07 }}
+                        className="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5"
+                      >
+                        <div className="flex items-start gap-3.5">
+                          <div
+                            className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                            style={{ backgroundColor: details.themeBg }}
+                          >
+                            <CheckCircle2 className="w-4 h-4" style={{ color: details.themeColor }} />
+                          </div>
+                          <div>
+                            <h4 className="font-display font-extrabold text-sm text-[#0D152A] mb-1">
+                              {feat.title}
+                            </h4>
+                            <p className="text-[#667085] font-medium text-xs leading-relaxed">
+                              {feat.desc}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Feature Badges */}
+                <div className="px-8 sm:px-10 pb-6">
+                  <h3 className="font-display font-extrabold text-sm uppercase tracking-wider text-slate-400 mb-3">
+                    Highlights
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {details.badges.map((badge) => (
+                      <span
+                        key={badge}
+                        className="px-3.5 py-1.5 rounded-full font-bold text-xs border"
+                        style={{
+                          backgroundColor: details.themeBg,
+                          color: details.themeColor,
+                          borderColor: `${details.themeColor}30`,
+                        }}
+                      >
+                        ✓ {badge}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer CTA */}
+                <div className="px-8 sm:px-10 pb-8 sm:pb-10 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-[#667085] font-medium text-sm text-center sm:text-left">
+                    Interested in integrating or deploying {product.name}?
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onExploreAll?.();
+                      }}
+                      className="inline-flex items-center gap-2 bg-[#FF6B00] hover:bg-[#E05B00] text-white font-bold text-sm px-6 py-3 rounded-2xl shadow-md shadow-[#FF6B00]/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                    >
+                      <span>Try Product</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>

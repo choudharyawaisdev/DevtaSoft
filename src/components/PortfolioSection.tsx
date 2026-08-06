@@ -315,147 +315,149 @@ const CaseStudyModal: React.FC<{
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white rounded-[28px] w-full max-w-[900px] max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
+              className="relative bg-white rounded-[28px] w-full max-w-[900px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100"
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
               transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Hero Image Preview Header */}
-              <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[380px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
-                {/* Ambient Radial Background Glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
+              <div className="overflow-y-auto w-full h-full custom-scrollbar rounded-[28px]">
+                {/* Hero Image Preview Header */}
+                <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[380px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
+                  {/* Ambient Radial Background Glow */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
 
-                {/* Desktop Browser Window Mockup Frame */}
-                <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-[#080D1A] border border-white/15 shadow-2xl overflow-hidden flex flex-col">
-                  {/* Window Title Chrome Bar */}
-                  <div className="bg-[#050811] px-4 py-2.5 border-b border-white/10 flex items-center justify-between shrink-0">
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
-                      <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
-                      <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
-                    </div>
-                    <div className="px-3.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-[340px]">
-                      {project.websiteUrl || 'https://devtasoft.com'}
-                    </div>
-                    <div className="w-12" />
-                  </div>
-
-                  {/* Full Size Crisp Image Preview */}
-                  <div className="relative flex-1 w-full overflow-hidden bg-[#0A0F1D] flex items-start justify-center">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                </div>
-
-                {/* Modal Close Button */}
-                <button
-                  onClick={onClose}
-                  className="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-xl border border-white/20"
-                >
-                  <X className="w-5 h-5 text-white" />
-                </button>
-
-                {/* Floating Category & Timeline Badges */}
-                <div className="absolute bottom-6 left-8 z-20 flex items-center gap-3 flex-wrap pointer-events-none">
-                  <span className={`${project.badgeBg} ${project.badgeTextColor} font-black text-xs px-4 py-1.5 rounded-full shadow-lg border border-white/20 backdrop-blur-md`}>
-                    {project.badgeText}
-                  </span>
-                  <span className="bg-slate-900/85 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/15 backdrop-blur-md">
-                    <Clock className="w-3.5 h-3.5 text-[#FF8706]" />
-                    {details.timeline}
-                  </span>
-                </div>
-              </div>
-
-              {/* Header */}
-              <div className="px-8 sm:px-10 pt-8">
-                <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0D152A] leading-tight mb-1.5">{project.title}</h2>
-                <p className="font-bold text-sm uppercase tracking-wider mb-3" style={{ color: details.color }}>{project.subtitle}</p>
-                <p className="font-display font-extrabold text-lg" style={{ color: details.color }}>{details.tagline}</p>
-              </div>
-
-              {/* Results */}
-              <div className="px-8 sm:px-10 py-6">
-                <div className="grid grid-cols-3 gap-4">
-                  {details.results.map((stat) => (
-                    <div key={stat.label} className="rounded-2xl p-4 text-center border border-slate-100" style={{ backgroundColor: details.bgColor }}>
-                      <span className="font-display font-extrabold text-2xl sm:text-3xl block mb-1" style={{ color: details.color }}>{stat.value}</span>
-                      <span className="text-[#667085] font-semibold text-xs sm:text-sm">{stat.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Challenge & Solution */}
-              <div className="px-8 sm:px-10 pb-6 space-y-5">
-                <div>
-                  <h3 className="font-display font-extrabold text-base text-[#0D152A] mb-2 flex items-center gap-2">
-                    <BarChart3 className="w-4 h-4" style={{ color: details.color }} /> The Challenge
-                  </h3>
-                  <p className="text-[#667085] font-medium text-sm leading-relaxed">{details.challenge}</p>
-                </div>
-                <div>
-                  <h3 className="font-display font-extrabold text-base text-[#0D152A] mb-2 flex items-center gap-2">
-                    <Rocket className="w-4 h-4" style={{ color: details.color }} /> Our Solution
-                  </h3>
-                  <p className="text-[#667085] font-medium text-sm leading-relaxed">{details.solution}</p>
-                </div>
-              </div>
-
-              {/* Key Features */}
-              <div className="px-8 sm:px-10 pb-6">
-                <h3 className="font-display font-extrabold text-lg text-[#0D152A] mb-5">Key Features</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {details.features.map((feat, i) => (
-                    <motion.div key={feat.title} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-                      className="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5">
-                      <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: details.bgColor }}>
-                          <CheckCircle2 className="w-4 h-4" style={{ color: details.color }} />
-                        </div>
-                        <div>
-                          <h4 className="font-display font-extrabold text-sm text-[#0D152A] mb-1">{feat.title}</h4>
-                          <p className="text-[#667085] font-medium text-xs leading-relaxed">{feat.desc}</p>
-                        </div>
+                  {/* Desktop Browser Window Mockup Frame */}
+                  <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-[#080D1A] border border-white/15 shadow-2xl overflow-hidden flex flex-col">
+                    {/* Window Title Chrome Bar */}
+                    <div className="bg-[#050811] px-4 py-2.5 border-b border-white/10 flex items-center justify-between shrink-0">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                        <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                        <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                      <div className="px-3.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-[340px]">
+                        {project.websiteUrl || 'https://devtasoft.com'}
+                      </div>
+                      <div className="w-12" />
+                    </div>
 
-              {/* Tech Stack */}
-              <div className="px-8 sm:px-10 pb-6">
-                <h3 className="font-display font-extrabold text-lg text-[#0D152A] mb-4">Tech Stack</h3>
-                <div className="flex flex-wrap gap-2">
-                  {details.techStack.map((tech) => (
-                    <span key={tech} className="px-3.5 py-1.5 rounded-full font-extrabold text-xs" style={{ backgroundColor: details.bgColor, color: details.color }}>
-                      {tech}
+                    {/* Full Size Crisp Image Preview */}
+                    <div className="relative flex-1 w-full overflow-hidden bg-[#0A0F1D] flex items-start justify-center">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Modal Close Button */}
+                  <button
+                    onClick={onClose}
+                    className="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-xl border border-white/20"
+                  >
+                    <X className="w-5 h-5 text-white" />
+                  </button>
+
+                  {/* Floating Category & Timeline Badges */}
+                  <div className="absolute bottom-6 left-8 z-20 flex items-center gap-3 flex-wrap pointer-events-none">
+                    <span className={`${project.badgeBg} ${project.badgeTextColor} font-black text-xs px-4 py-1.5 rounded-full shadow-lg border border-white/20 backdrop-blur-md`}>
+                      {project.badgeText}
                     </span>
-                  ))}
+                    <span className="bg-slate-900/85 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/15 backdrop-blur-md">
+                      <Clock className="w-3.5 h-3.5 text-[#FF8706]" />
+                      {details.timeline}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Footer */}
-              <div className="px-8 sm:px-10 py-6 bg-slate-50 rounded-b-[28px] border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-                <a href={project.websiteUrl} target="_blank" rel="noreferrer" className="font-bold text-sm text-[#14B8B0] hover:underline flex items-center gap-1.5">
-                  <span>Visit Live Website</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </a>
-                <button
-                  onClick={() => {
-                    onClose();
-                    if (onStartProject) onStartProject();
-                  }}
-                  className="bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-sm px-6 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer"
-                >
-                  Start Your Project
-                </button>
+                {/* Header */}
+                <div className="px-8 sm:px-10 pt-8">
+                  <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0D152A] leading-tight mb-1.5">{project.title}</h2>
+                  <p className="font-bold text-sm uppercase tracking-wider mb-3" style={{ color: details.color }}>{project.subtitle}</p>
+                  <p className="font-display font-extrabold text-lg" style={{ color: details.color }}>{details.tagline}</p>
+                </div>
+
+                {/* Results */}
+                <div className="px-8 sm:px-10 py-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    {details.results.map((stat) => (
+                      <div key={stat.label} className="rounded-2xl p-4 text-center border border-slate-100" style={{ backgroundColor: details.bgColor }}>
+                        <span className="font-display font-extrabold text-2xl sm:text-3xl block mb-1" style={{ color: details.color }}>{stat.value}</span>
+                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Challenge & Solution */}
+                <div className="px-8 sm:px-10 pb-6 space-y-5">
+                  <div>
+                    <h3 className="font-display font-extrabold text-base text-[#0D152A] mb-2 flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4" style={{ color: details.color }} /> The Challenge
+                    </h3>
+                    <p className="text-[#667085] font-medium text-sm leading-relaxed">{details.challenge}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-display font-extrabold text-base text-[#0D152A] mb-2 flex items-center gap-2">
+                      <Rocket className="w-4 h-4" style={{ color: details.color }} /> Our Solution
+                    </h3>
+                    <p className="text-[#667085] font-medium text-sm leading-relaxed">{details.solution}</p>
+                  </div>
+                </div>
+
+                {/* Key Features */}
+                <div className="px-8 sm:px-10 pb-6">
+                  <h3 className="font-display font-extrabold text-lg text-[#0D152A] mb-5">Key Features</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {details.features.map((feat, i) => (
+                      <motion.div key={feat.title} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
+                        className="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: details.bgColor }}>
+                            <CheckCircle2 className="w-4 h-4" style={{ color: details.color }} />
+                          </div>
+                          <div>
+                            <h4 className="font-display font-extrabold text-sm text-[#0D152A] mb-1">{feat.title}</h4>
+                            <p className="text-[#667085] font-medium text-xs leading-relaxed">{feat.desc}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tech Stack */}
+                <div className="px-8 sm:px-10 pb-6">
+                  <h3 className="font-display font-extrabold text-lg text-[#0D152A] mb-4">Tech Stack</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {details.techStack.map((tech) => (
+                      <span key={tech} className="px-3.5 py-1.5 rounded-full font-extrabold text-xs" style={{ backgroundColor: details.bgColor, color: details.color }}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="px-8 sm:px-10 py-6 bg-slate-50 rounded-b-[28px] border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+                  <a href={project.websiteUrl} target="_blank" rel="noreferrer" className="font-bold text-sm text-[#14B8B0] hover:underline flex items-center gap-1.5">
+                    <span>Visit Live Website</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                  <button
+                    onClick={() => {
+                      onClose();
+                      if (onStartProject) onStartProject();
+                    }}
+                    className="bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-sm px-6 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                  >
+                    Start Your Project
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

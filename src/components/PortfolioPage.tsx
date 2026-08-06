@@ -1306,14 +1306,15 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="relative bg-white rounded-[28px] w-full max-w-[880px] max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
+                className="relative bg-white rounded-[28px] w-full max-w-[880px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100"
                 initial={{ opacity: 0, scale: 0.92, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.92, y: 30 }}
                 transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Hero Image Preview Header */}
+                <div className="overflow-y-auto w-full h-full custom-scrollbar rounded-[28px]">
+                  {/* Hero Image Preview Header */}
                 <div className="relative w-full h-[260px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
                   {/* Ambient Radial Background Glow */}
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
@@ -1460,7 +1461,8 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
-              </motion.div>
+              </div>
+            </motion.div>
             </motion.div>
           </>
         )}

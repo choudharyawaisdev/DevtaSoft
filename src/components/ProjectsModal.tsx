@@ -100,7 +100,7 @@ export const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose, o
         </div>
 
         {/* Projects Grid */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1">
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1 custom-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredProjects.map((project) => (
               <div

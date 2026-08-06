@@ -416,175 +416,358 @@ const ServiceDetailModal: React.FC<{
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white rounded-[28px] w-full max-w-[860px] max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
+              className="relative bg-white rounded-[28px] w-full max-w-[860px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100"
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
               transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* ─── Header ─────────────────────────────────────────── */}
-              <div className="relative p-8 sm:p-10 pb-0 overflow-hidden">
-                {/* Ambient Gradient Glow */}
-                <div
-                  className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-20 pointer-events-none"
-                  style={{ backgroundColor: resolvedColor }}
-                />
-
-                {/* Close Button */}
-                <button
-                  onClick={onClose}
-                  className="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200 hover:scale-110 z-10 cursor-pointer"
-                >
-                  <X className="w-5 h-5 text-slate-500" />
-                </button>
-
-                {/* Icon + Badge Row */}
-                <div className="flex items-center gap-4 mb-6">
+              <div className="overflow-y-auto w-full h-full custom-scrollbar rounded-[28px]">
+                {/* ─── Header ─────────────────────────────────────────── */}
+                <div className="relative p-8 sm:p-10 pb-0 overflow-hidden">
+                  {/* Ambient Gradient Glow */}
                   <div
-                    className="w-16 h-16 rounded-[20px] flex items-center justify-center shadow-md"
-                    style={{ backgroundColor: service.bgColor }}
+                    className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-20 pointer-events-none"
+                    style={{ backgroundColor: resolvedColor }}
+                  />
+
+                  {/* Close Button */}
+                  <button
+                    onClick={onClose}
+                    className="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200 hover:scale-110 z-10 cursor-pointer"
                   >
-                    <IconComp className="w-8 h-8 stroke-[2]" style={{ color: resolvedColor }} />
-                  </div>
-                  <div>
-                    <span
-                      className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1 rounded-full border mb-1.5"
-                      style={{
-                        backgroundColor: service.bgColor,
-                        color: resolvedColor,
-                        borderColor: `${resolvedColor}30`,
-                      }}
-                    >
-                      Service {service.badgeText}
-                    </span>
-                    <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#2A285F] leading-tight">
-                      {service.title}
-                    </h2>
-                  </div>
-                </div>
+                    <X className="w-5 h-5 text-slate-500" />
+                  </button>
 
-                {/* Tagline */}
-                <p
-                  className="font-display font-extrabold text-lg sm:text-xl leading-snug mb-3"
-                  style={{ color: resolvedColor }}
-                >
-                  {details.tagline}
-                </p>
-
-                {/* Long Description */}
-                <p className="text-[#667085] font-medium text-sm sm:text-base leading-relaxed max-w-2xl">
-                  {details.longDesc}
-                </p>
-              </div>
-
-              {/* ─── Stats Row ──────────────────────────────────────── */}
-              <div className="px-8 sm:px-10 py-6">
-                <div className="grid grid-cols-3 gap-4">
-                  {details.stats.map((stat) => (
+                  {/* Icon + Badge Row */}
+                  <div className="flex items-center gap-4 mb-6">
                     <div
-                      key={stat.label}
-                      className="bg-slate-50 rounded-2xl p-4 text-center border border-slate-100"
+                      className="w-16 h-16 rounded-[20px] flex items-center justify-center shadow-md"
+                      style={{ backgroundColor: service.bgColor }}
                     >
-                      <span
-                        className="font-display font-extrabold text-2xl sm:text-3xl block mb-1"
-                        style={{ color: resolvedColor }}
-                      >
-                        {stat.value}
-                      </span>
-                      <span className="text-[#667085] font-semibold text-xs sm:text-sm">
-                        {stat.label}
-                      </span>
+                      <IconComp className="w-8 h-8 stroke-[2]" style={{ color: resolvedColor }} />
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* ─── Features Grid ──────────────────────────────────── */}
-              <div className="px-8 sm:px-10 pb-6">
-                <h3 className="font-display font-extrabold text-lg text-[#2A285F] mb-5">
-                  What's Included
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {details.features.map((feat, i) => {
-                    const FeatIcon = feat.icon;
-                    return (
-                      <motion.div
-                        key={feat.title}
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-                        className="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5"
+                    <div>
+                      <span
+                        className="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1 rounded-full border mb-1.5"
+                        style={{
+                          backgroundColor: service.bgColor,
+                          color: resolvedColor,
+                          borderColor: `${resolvedColor}30`,
+                        }}
                       >
-                        <div className="flex items-start gap-3.5">
-                          <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
-                            style={{ backgroundColor: service.bgColor }}
-                          >
-                            <FeatIcon
-                              className="w-5 h-5 stroke-[2.5]"
-                              style={{ color: resolvedColor }}
-                            />
-                          </div>
-                          <div>
-                            <h4 className="font-display font-extrabold text-sm text-[#2A285F] mb-1">
-                              {feat.title}
-                            </h4>
-                            <p className="text-[#667085] font-medium text-xs sm:text-sm leading-relaxed">
-                              {feat.desc}
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
+                        Service {service.badgeText}
+                      </span>
+                      <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#2A285F] leading-tight">
+                        {service.title}
+                      </h2>
+                    </div>
+                  </div>
 
-              {/* ─── Tech Stack ──────────────────────────────────────── */}
-              <div className="px-8 sm:px-10 pb-6">
-                <h3 className="font-display font-extrabold text-lg text-[#2A285F] mb-4">
-                  Tech Stack
-                </h3>
-                <div className="flex flex-wrap gap-2.5">
-                  {details.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs border transition-all duration-200 hover:scale-105 cursor-default"
-                      style={{
-                        backgroundColor: service.bgColor,
-                        color: resolvedColor,
-                        borderColor: `${resolvedColor}30`,
-                      }}
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                  {/* Tagline */}
+                  <p
+                    className="font-display font-extrabold text-lg sm:text-xl leading-snug mb-3"
+                    style={{ color: resolvedColor }}
+                  >
+                    {details.tagline}
+                  </p>
 
-              {/* ─── Footer CTA ─────────────────────────────────────── */}
-              <div className="px-8 sm:px-10 pb-8 sm:pb-10 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-[#667085] font-medium text-sm text-center sm:text-left">
-                  Ready to get started? Let's discuss your project.
-                </p>
-                <button
-                  onClick={() => {
-                    onClose();
-                    onContactClick?.();
-                  }}
-                  className="inline-flex items-center gap-2.5 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-[#FF8706]/25 transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] active:scale-[0.97] cursor-pointer shrink-0"
-                >
-                  <span>Start a Project</span>
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-                </button>
+                  {/* Long Description */}
+                  <p className="text-[#667085] font-medium text-sm sm:text-base leading-relaxed max-w-2xl">
+                    {details.longDesc}
+                  </p>
+                </div>
+
+                {/* ─── Stats Row ──────────────────────────────────────── */}
+                <div className="px-8 sm:px-10 py-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    {details.stats.map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="bg-slate-50 rounded-2xl p-4 text-center border border-slate-100"
+                      >
+                        <span
+                          className="font-display font-extrabold text-2xl sm:text-3xl block mb-1"
+                          style={{ color: resolvedColor }}
+                        >
+                          {stat.value}
+                        </span>
+                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">
+                          {stat.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ─── Features Grid ──────────────────────────────────── */}
+                <div className="px-8 sm:px-10 pb-6">
+                  <h3 className="font-display font-extrabold text-lg text-[#2A285F] mb-5">
+                    What's Included
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {details.features.map((feat, i) => {
+                      const FeatIcon = feat.icon;
+                      return (
+                        <motion.div
+                          key={feat.title}
+                          initial={{ opacity: 0, y: 15 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
+                          className="bg-white rounded-2xl border border-slate-100 p-5 hover:shadow-lg hover:border-slate-200 transition-all duration-300 hover:-translate-y-0.5"
+                        >
+                          <div className="flex items-start gap-3.5">
+                            <div
+                              className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                              style={{ backgroundColor: service.bgColor }}
+                            >
+                              <FeatIcon
+                                className="w-5 h-5 stroke-[2.5]"
+                                style={{ color: resolvedColor }}
+                              />
+                            </div>
+                            <div>
+                              <h4 className="font-display font-extrabold text-sm text-[#2A285F] mb-1">
+                                {feat.title}
+                              </h4>
+                              <p className="text-[#667085] font-medium text-xs sm:text-sm leading-relaxed">
+                                {feat.desc}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* ─── Tech Stack ──────────────────────────────────────── */}
+                <div className="px-8 sm:px-10 pb-6">
+                  <h3 className="font-display font-extrabold text-lg text-[#2A285F] mb-4">
+                    Tech Stack
+                  </h3>
+                  <div className="flex flex-wrap gap-2.5">
+                    {details.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs border transition-all duration-200 hover:scale-105 cursor-default"
+                        style={{
+                          backgroundColor: service.bgColor,
+                          color: resolvedColor,
+                          borderColor: `${resolvedColor}30`,
+                        }}
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ─── Footer CTA ─────────────────────────────────────── */}
+                <div className="px-8 sm:px-10 pb-8 sm:pb-10 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-[#667085] font-medium text-sm text-center sm:text-left">
+                    Ready to get started? Let's discuss your project.
+                  </p>
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onContactClick?.();
+                    }}
+                    className="inline-flex items-center gap-2.5 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-[#FF8706]/25 transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] active:scale-[0.97] cursor-pointer shrink-0"
+                  >
+                    <span>Start a Project</span>
+                    <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
         </>
       )}
     </AnimatePresence>
+  );
+};
+
+// ─── 3D Floating Cube Signature Illustration Component ──────────────────────
+const Services3DCubeIllustration: React.FC = () => {
+  return (
+    <div className="relative w-full max-w-[480px] lg:max-w-none h-[380px] sm:h-[420px] mx-auto flex items-center justify-center select-none">
+      {/* Background Ambient Radial Glow Lights */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(255,135,6,0.18)_0%,rgba(20,184,176,0.12)_50%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-[#14B8B0]/20 rounded-full animate-ping opacity-25 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-[#FF8706]/15 rounded-full pointer-events-none" />
+
+      {/* Orbiting Service Satellite Cards (6 Icons Around Cube) */}
+      {/* 1. API */}
+      <motion.div
+        className="absolute top-6 left-4 sm:left-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <div className="w-7 h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
+          <Code2 className="w-4 h-4" />
+        </div>
+        <span className="font-display font-extrabold text-xs text-[#0D152A]">API</span>
+      </motion.div>
+
+      {/* 2. Database */}
+      <motion.div
+        className="absolute top-12 right-2 sm:right-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
+        transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+      >
+        <div className="w-7 h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
+          <Database className="w-4 h-4" />
+        </div>
+        <span className="font-display font-extrabold text-xs text-[#0D152A]">Database</span>
+      </motion.div>
+
+      {/* 3. Mobile */}
+      <motion.div
+        className="absolute bottom-12 right-4 sm:right-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        animate={{ y: [0, -7, 0], x: [0, -5, 0] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
+      >
+        <div className="w-7 h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
+          <Smartphone className="w-4 h-4" />
+        </div>
+        <span className="font-display font-extrabold text-xs text-[#0D152A]">Mobile</span>
+      </motion.div>
+
+      {/* 4. Cloud */}
+      <motion.div
+        className="absolute bottom-8 left-2 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        animate={{ y: [0, 7, 0], x: [0, 5, 0] }}
+        transition={{ duration: 4.0, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+      >
+        <div className="w-7 h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
+          <Cloud className="w-4 h-4" />
+        </div>
+        <span className="font-display font-extrabold text-xs text-[#0D152A]">Cloud</span>
+      </motion.div>
+
+      {/* 5. AI */}
+      <motion.div
+        className="absolute top-1/2 -translate-y-1/2 -right-4 sm:right-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+      >
+        <div className="w-7 h-7 rounded-xl bg-[#F0ECFF] flex items-center justify-center text-[#7C3AED]">
+          <Bot className="w-4 h-4" />
+        </div>
+        <span className="font-display font-extrabold text-xs text-[#0D152A]">AI</span>
+      </motion.div>
+
+      {/* 6. Design */}
+      <motion.div
+        className="absolute top-1/2 -translate-y-1/2 -left-4 sm:left-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-3.5 py-2 rounded-2xl flex items-center gap-2"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.0 }}
+      >
+        <div className="w-7 h-7 rounded-xl bg-[#FFF0F5] flex items-center justify-center text-[#FF0055]">
+          <Palette className="w-4 h-4" />
+        </div>
+        <span className="font-display font-extrabold text-xs text-[#0D152A]">Design</span>
+      </motion.div>
+
+      {/* Small Glowing Floating Particles */}
+      <span className="absolute top-14 left-1/4 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-75" />
+      <span className="absolute bottom-20 right-1/4 w-2.5 h-2.5 rounded-full bg-[#14B8B0] animate-pulse" />
+      <span className="absolute top-1/3 right-12 w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
+      <span className="absolute bottom-1/3 left-12 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-60" />
+
+      {/* ─── 3D PERSPECTIVE STAGE ───────────────────────────────────── */}
+      <div className="perspective-[1000px] w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+        {/* 3D ROTATING CUBE CONTAINER */}
+        <motion.div
+          className="relative w-40 h-40 sm:w-44 sm:h-44 [transform-style:preserve-3d]"
+          animate={{
+            rotateX: [20, 30, 20],
+            rotateY: [0, 360],
+            y: [-12, 12, -12],
+          }}
+          transition={{
+            rotateY: { duration: 16, repeat: Infinity, ease: 'linear' },
+            rotateX: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
+            y: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+          }}
+        >
+          {/* CUBE FACE 1: FRONT (WEB) */}
+          <div
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#142347] to-[#0A1224] border-2 border-[#14B8B0]/80 shadow-[0_0_30px_rgba(20,184,176,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            style={{ transform: 'translateZ(88px)' }}
+          >
+            <div className="w-11 h-11 rounded-2xl bg-[#14B8B0]/20 border border-[#14B8B0]/50 flex items-center justify-center mb-2 shadow-inner">
+              <Globe className="w-6 h-6 text-[#14B8B0]" />
+            </div>
+            <span className="font-display font-black text-base tracking-wider text-white">WEB</span>
+            <span className="text-[10px] font-bold text-[#14B8B0] uppercase tracking-widest mt-0.5">Development</span>
+          </div>
+
+          {/* CUBE FACE 2: BACK (DESIGN) */}
+          <div
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#241432] to-[#0A1224] border-2 border-[#FF0055]/80 shadow-[0_0_30px_rgba(255,0,85,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            style={{ transform: 'rotateY(180deg) translateZ(88px)' }}
+          >
+            <div className="w-11 h-11 rounded-2xl bg-[#FF0055]/20 border border-[#FF0055]/50 flex items-center justify-center mb-2 shadow-inner">
+              <Palette className="w-6 h-6 text-[#FF0055]" />
+            </div>
+            <span className="font-display font-black text-base tracking-wider text-white">DESIGN</span>
+            <span className="text-[10px] font-bold text-[#FF0055] uppercase tracking-widest mt-0.5">UI/UX</span>
+          </div>
+
+          {/* CUBE FACE 3: RIGHT (MOBILE) */}
+          <div
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#1D1438] to-[#0A1224] border-2 border-[#7C3AED]/80 shadow-[0_0_30px_rgba(124,58,237,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            style={{ transform: 'rotateY(90deg) translateZ(88px)' }}
+          >
+            <div className="w-11 h-11 rounded-2xl bg-[#7C3AED]/20 border border-[#7C3AED]/50 flex items-center justify-center mb-2 shadow-inner">
+              <Smartphone className="w-6 h-6 text-[#7C3AED]" />
+            </div>
+            <span className="font-display font-black text-base tracking-wider text-white">MOBILE</span>
+            <span className="text-[10px] font-bold text-[#7C3AED] uppercase tracking-widest mt-0.5">Apps</span>
+          </div>
+
+          {/* CUBE FACE 4: LEFT (CLOUD) */}
+          <div
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#122A3A] to-[#0A1224] border-2 border-[#00E5FF]/80 shadow-[0_0_30px_rgba(0,229,255,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            style={{ transform: 'rotateY(-90deg) translateZ(88px)' }}
+          >
+            <div className="w-11 h-11 rounded-2xl bg-[#00E5FF]/20 border border-[#00E5FF]/50 flex items-center justify-center mb-2 shadow-inner">
+              <Cloud className="w-6 h-6 text-[#00E5FF]" />
+            </div>
+            <span className="font-display font-black text-base tracking-wider text-white">CLOUD</span>
+            <span className="text-[10px] font-bold text-[#00E5FF] uppercase tracking-widest mt-0.5">DevOps</span>
+          </div>
+
+          {/* CUBE FACE 5: TOP (AI) */}
+          <div
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#331E0F] to-[#0A1224] border-2 border-[#FF8706]/90 shadow-[0_0_35px_rgba(255,135,6,0.4)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            style={{ transform: 'rotateX(90deg) translateZ(88px)' }}
+          >
+            <div className="w-11 h-11 rounded-2xl bg-[#FF8706]/20 border border-[#FF8706]/50 flex items-center justify-center mb-2 shadow-inner">
+              <Cpu className="w-6 h-6 text-[#FF8706]" />
+            </div>
+            <span className="font-display font-black text-base tracking-wider text-white">AI</span>
+            <span className="text-[10px] font-bold text-[#FF8706] uppercase tracking-widest mt-0.5">Automation</span>
+          </div>
+
+          {/* CUBE FACE 6: BOTTOM (CUSTOM) */}
+          <div
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#1B2A4A] to-[#0A1224] border-2 border-[#FFBD2E]/80 shadow-[0_0_30px_rgba(255,189,46,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            style={{ transform: 'rotateX(-90deg) translateZ(88px)' }}
+          >
+            <div className="w-11 h-11 rounded-2xl bg-[#FFBD2E]/20 border border-[#FFBD2E]/50 flex items-center justify-center mb-2 shadow-inner">
+              <Code2 className="w-6 h-6 text-[#FFBD2E]" />
+            </div>
+            <span className="font-display font-black text-base tracking-wider text-white">CUSTOM</span>
+            <span className="text-[10px] font-bold text-[#FFBD2E] uppercase tracking-widest mt-0.5">Software</span>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 };
 
@@ -612,33 +795,59 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
     <section id="services" className="w-full bg-white py-24 sm:py-32 px-4 sm:px-6 lg:px-10 font-sans overflow-hidden border-t border-slate-100">
       <div className="max-w-[1400px] mx-auto">
         
-        {/* SECTION HEADER LEFT ALIGNED (Matching Hero Section Alignment) */}
-        <motion.div
-          className="flex flex-col items-start text-left max-w-3xl mb-16 sm:mb-20 pl-4 sm:pl-6 lg:pl-8"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
-        >
-          {/* Top Label */}
-          <div className="flex flex-col items-start gap-1.5 mb-4">
-            <span className="text-[#14B8B0] font-extrabold text-xs sm:text-sm uppercase tracking-[0.2em]">
-              OUR SERVICES
-            </span>
-            <span className="h-[2.5px] w-10 bg-[#14B8B0] rounded-full inline-block" />
+        {/* SECTION HEADER WITH 3D CUBE SIGNATURE ILLUSTRATION ON RIGHT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center mb-16 sm:mb-24 pl-4 sm:pl-6 lg:pl-8">
+          
+          {/* Left Column: Text & Headings (6 cols) */}
+          <motion.div
+            className="lg:col-span-6 flex flex-col items-start text-left"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
+          >
+            {/* Top Label */}
+            <div className="flex flex-col items-start gap-1.5 mb-4">
+              <span className="text-[#14B8B0] font-extrabold text-xs sm:text-sm uppercase tracking-[0.2em]">
+                OUR SERVICES
+              </span>
+              <span className="h-[2.5px] w-10 bg-[#14B8B0] rounded-full inline-block" />
+            </div>
+
+            {/* Large Bold Headline */}
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[46px] text-[#2A285F] leading-[1.14] tracking-tight mb-6">
+              Solutions we build <br />
+              to move your business <span className="text-[#FF8706]">forward.</span>
+            </h2>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg text-[#475569] max-w-[540px] leading-relaxed font-normal mb-8">
+              We combine technology, creativity, and strategy to build scalable digital solutions that create real business impact.
+            </p>
+
+            {/* Quick Feature Badges */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 bg-[#FFEFE5] text-[#FF8706] font-bold text-xs px-3.5 py-2 rounded-full border border-[#FF8706]/20">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Custom Architecture</span>
+              </div>
+              <div className="inline-flex items-center gap-2 bg-[#E6F8F9] text-[#14B8B0] font-bold text-xs px-3.5 py-2 rounded-full border border-[#14B8B0]/20">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>24/7 Reliability</span>
+              </div>
+              <div className="inline-flex items-center gap-2 bg-[#F0ECFF] text-[#7C3AED] font-bold text-xs px-3.5 py-2 rounded-full border border-[#7C3AED]/20">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>End-to-End Scale</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: 3D Floating Cube Signature Illustration (6 cols) */}
+          <div className="lg:col-span-6 w-full">
+            <Services3DCubeIllustration />
           </div>
 
-          {/* Large Bold Headline */}
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[52px] text-[#2A285F] leading-[1.12] tracking-tight mb-6">
-            Solutions we build <br />
-            to move your business <span className="text-[#FF8706]">forward.</span>
-          </h2>
-
-          {/* Description */}
-          <p className="text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal mb-8">
-            We combine technology, creativity, and strategy to build scalable digital solutions that create real business impact.
-          </p>
-        </motion.div>
+        </div>
 
         {/* SERVICES GRID (3-column × 2-row layout) */}
         <motion.div

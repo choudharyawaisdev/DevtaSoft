@@ -22,6 +22,8 @@ body {
 
 ::-webkit-scrollbar-track {
   background: transparent;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -31,6 +33,12 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
+}
+
+/* Custom Modal Inner Scrollbar Utility */
+.custom-scrollbar::-webkit-scrollbar-track {
+  margin-top: 14px;
+  margin-bottom: 14px;
 }
 
 /* ── Custom Dual-Block Spinner (Uiverse.io by satyamchaudharydev) ── */
