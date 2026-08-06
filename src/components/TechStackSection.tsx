@@ -1,12 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, ShieldCheck, Code2, Smartphone, Cpu } from 'lucide-react';
+import { Zap, ShieldCheck, Code2, Smartphone, Cpu, Palette } from 'lucide-react';
 
 interface TechItem {
   name: string;
   category: string;
   icon: React.ReactNode;
 }
+
+const uiuxStack: TechItem[] = [
+  {
+    name: 'Figma',
+    category: 'uiux',
+    icon: <img src="/Figma.png" alt="Figma" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
+  },
+  {
+    name: 'Framer',
+    category: 'uiux',
+    icon: <img src="/framerr.png" alt="Framer" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
+  },
+  {
+    name: 'Adobe XD',
+    category: 'uiux',
+    icon: <img src="/Adobe XD.png" alt="Adobe XD" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
+  },
+  {
+    name: 'Sketch',
+    category: 'uiux',
+    icon: <img src="/Sketch.png" alt="Sketch" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
+  },
+];
 
 const frontendStack: TechItem[] = [
   {
@@ -252,6 +275,44 @@ export const TechStackSection: React.FC = () => {
                   {tech.icon}
                 </div>
                 <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#FF8706] transition-colors">
+                  {tech.name}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ─── UI/UX DESIGN CATEGORY ROW ─────────────────────────────────── */}
+        <motion.div
+          className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8"
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Category Eyebrow Title */}
+          <div className="flex items-center gap-3 mb-8">
+            <span className="w-1.5 h-7 bg-[#7C3AED] rounded-full inline-block" />
+            <div className="w-9 h-9 rounded-full bg-[#F0ECFF] flex items-center justify-center shrink-0">
+              <Palette className="w-5 h-5 text-[#7C3AED] stroke-[2.5]" />
+            </div>
+            <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
+              UI/UX Design
+            </h3>
+          </div>
+
+          {/* UI/UX Tech Cards Grid */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            {uiuxStack.map((tech) => (
+              <motion.div
+                key={tech.name}
+                whileHover={{ y: -4, scale: 1.03 }}
+                className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-6 sm:px-9 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[150px] sm:min-w-[175px] flex-1 sm:flex-initial cursor-pointer group"
+              >
+                <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  {tech.icon}
+                </div>
+                <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#7C3AED] transition-colors">
                   {tech.name}
                 </span>
               </motion.div>
