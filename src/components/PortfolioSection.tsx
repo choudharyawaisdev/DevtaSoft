@@ -106,61 +106,181 @@ const caseStudyDetails: Record<string, {
   bgColor: string;
 }> = {
   'quikeat-com': {
-    tagline: 'Online Restaurant Ordering & Dining Platform for QuikEat.',
-    challenge: 'QuikEat needed a seamless web app to streamline online food ordering, kitchen ticket management, and table reservations for high-volume restaurants.',
-    solution: 'We engineered a responsive food ordering portal featuring interactive digital menus, real-time kitchen order tracking, and instant online table bookings.',
+    tagline: 'End-to-End Online Restaurant Ordering & Table Booking Platform',
+    challenge: 'High-volume restaurant chains struggled with sluggish legacy PDF menus, lost phone orders during peak dining hours, and uncoordinated kitchen ticket queues.',
+    solution: 'We engineered a high-velocity digital ordering portal featuring interactive visual menus, automated dining table booking, sub-second kitchen ticket WebSockets dispatch, and contactless payments.',
     results: [
-      { value: '3.8x', label: 'Order Volume' },
-      { value: '-45%', label: 'Kitchen Delay' },
-      { value: '< 650ms', label: 'Load Speed' },
+      { value: '3.8x', label: 'Digital Orders' },
+      { value: '-45%', label: 'Kitchen Prep Delay' },
+      { value: '< 450ms', label: 'Page Load Speed' },
     ],
-    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Stripe'],
     timeline: '6 Weeks',
     features: [
-      { title: 'Interactive Menu', desc: 'Dynamic food menu with category filters, ingredient customizer, and special dietary tags.' },
-      { title: 'Kitchen Order Dispatch', desc: 'Instant order transmission to kitchen display systems with live preparation timers.' },
-      { title: 'Table Reservations', desc: 'Real-time dining table booking widget with instant SMS & email confirmations.' },
-      { title: 'Contactless Checkout', desc: 'Integrated Apple Pay, Google Pay, and credit card processing for quick ordering.' },
+      { title: 'Interactive Food Menu', desc: 'High-res dietary filterable food menu with item customizers, allergen tags, and real-time stock levels.' },
+      { title: 'Kitchen Order Dispatch', desc: 'Instant WebSockets order transmission directly to kitchen display screens with active prep timers.' },
+      { title: 'Table Reservation Engine', desc: 'Real-time dining room table booking calendar with instant SMS and email confirmations.' },
+      { title: 'Contactless One-Tap Checkout', desc: 'Frictionless checkout supporting Apple Pay, Google Pay, credit cards, and saved loyalty balances.' },
     ],
-    color: '#14B8B0',
-    bgColor: '#E6F8F9',
+    color: '#FF8706',
+    bgColor: '#FFEFE5',
   },
   'nexcojapan-com': {
-    tagline: 'Global Automobile Export Platform for NexcoJapan.',
-    challenge: 'NexcoJapan needed a unified digital platform to connect global buyers with Japanese auto auctions, requiring real-time vehicle translation, dynamic currency conversion, and freight tracking.',
-    solution: 'We built a high-speed web application with live auction API feeds, automated shipping document generation, and multi-language customer portal.',
+    tagline: 'Real-Time Japanese Automobile Bidding & Global Shipping Export Portal',
+    challenge: 'Overseeing cross-border vehicle exports from Japanese auto auctions was hindered by slow manual currency conversions, translation delays, and unverified shipping schedules.',
+    solution: 'We developed a unified automotive portal featuring live Japanese auction API feeds, multi-currency bidding calculators, automated export documentation, and real-time cargo ship tracking.',
     results: [
-      { value: '50k+', label: 'Monthly Bids' },
-      { value: '+180%', label: 'Global Orders' },
-      { value: '< 1.1s', label: 'Load Speed' },
+      { value: '50K+', label: 'Monthly Bids' },
+      { value: '+185%', label: 'Overseas Buyers' },
+      { value: '< 800ms', label: 'Search Latency' },
     ],
-    techStack: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Tailwind CSS'],
+    techStack: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Tailwind CSS', 'Docker'],
     timeline: '8 Weeks',
     features: [
-      { title: 'Live Auction Bidding', desc: 'Real-time vehicle bidding synchronization with auto-translating spec sheets.' },
-      { title: 'Freight & Port Tracking', desc: 'Interactive shipping vessel tracking from Japan ports to destination ports.' },
-      { title: 'Multi-Currency Checkout', desc: 'Automatic exchange rate updates for USD, JPY, and EUR invoicing.' },
-      { title: 'Customer Portal', desc: 'Personal dashboard for managing purchase bids and export paperwork.' },
+      { title: 'Live Auction Feed Sync', desc: 'Real-time vehicle auction bidding engine with auto-translated inspection sheets and HD galleries.' },
+      { title: 'Port-to-Port Freight Tracker', desc: 'Interactive vessel shipment tracker monitoring cargo ships from Yokohama to destination ports worldwide.' },
+      { title: 'Multi-Currency Exchange Engine', desc: 'Live dynamic currency conversion for USD, JPY, EUR, and AED invoicing.' },
+      { title: 'Buyer Document Vault', desc: 'Automated export certificates, bill of lading generation, and custom duty tracking.' },
     ],
     color: '#14B8B0',
     bgColor: '#E6F8F9',
   },
   'logistics-fleet-management': {
-    tagline: 'Intelligent Supply Chain & Fleet Monitoring System.',
-    challenge: 'Managing over 500 commercial transport vehicles without real-time GPS telemetry led to high fuel overhead and delayed shipments.',
-    solution: 'Engineered an end-to-end custom fleet management dashboard with live vehicle telemetry, automated maintenance alerts, and driver route optimization.',
+    tagline: 'Real-Time GPS Tracking & Automated Supply Chain Dispatch System',
+    challenge: 'Managing a haulage fleet of over 500 commercial transport trucks without live telemetry caused high fuel waste, unexpected engine breakdowns, and delayed deliveries.',
+    solution: 'We architected a central fleet command dashboard integrating IoT vehicle telematics, AI route optimization, automated maintenance forecasting, and driver safety scoring.',
     results: [
-      { value: '500+', label: 'Active Trucks' },
-      { value: '-28%', label: 'Fuel Overhead' },
-      { value: '99.9%', label: 'System Uptime' },
+      { value: '500+', label: 'Monitored Trucks' },
+      { value: '-28%', label: 'Fuel Costs' },
+      { value: '99.99%', label: 'System Uptime' },
     ],
-    techStack: ['TypeScript', 'React', 'Python', 'FastAPI', 'PostgreSQL'],
+    techStack: ['TypeScript', 'React', 'Python', 'FastAPI', 'PostgreSQL', 'Redis'],
     timeline: '10 Weeks',
     features: [
-      { title: 'Real-time Telemetry', desc: 'Live GPS vehicle location tracking with speed and fuel consumption graphs.' },
-      { title: 'Smart Route Dispatch', desc: 'Automated AI routing algorithms to bypass traffic congestion.' },
-      { title: 'Driver Safety Scorecard', desc: 'Monitors harsh braking, acceleration, and idling time.' },
-      { title: 'Maintenance Alerts', desc: 'Automated reminders based on engine hours and mileage.' },
+      { title: 'Live IoT Telemetry', desc: 'Sub-second GPS vehicle location tracking with instant geofence arrival and departure triggers.' },
+      { title: 'AI Route Optimization', desc: 'Dynamic routing algorithm bypassing severe traffic congestion and road hazards automatically.' },
+      { title: 'Driver Safety Scorecards', desc: 'Monitors acceleration spikes, harsh braking incidents, and excessive engine idling times.' },
+      { title: 'Automated Maintenance Alerts', desc: 'Engine diagnostic telemetry triggering predictive oil, brake, and tire service reminders.' },
+    ],
+    color: '#FF8706',
+    bgColor: '#FFEFE5',
+  },
+  'cosme-store': {
+    tagline: 'Luxury Cosmetics, Makeup & Skincare Storefront for Cosme.store',
+    challenge: 'Cosme.store required an ultra-fast, premium e-commerce storefront capable of matching customers with personalized makeup shades while sustaining sub-second mobile page loads.',
+    solution: 'We built a custom Shopify storefront featuring an interactive AI shade finder quiz, dynamic mix-and-match product bundling, multi-currency payments, and fast mobile navigation.',
+    results: [
+      { value: '3.5x', label: 'Conversion Rate' },
+      { value: '< 500ms', label: 'Mobile Page Load' },
+      { value: '99.9%', label: 'Store Uptime' },
+    ],
+    techStack: ['Shopify', 'Liquid', 'Tailwind CSS', 'JavaScript', 'Klaviyo'],
+    timeline: '5 Weeks',
+    features: [
+      { title: 'AI Shade Matcher Quiz', desc: 'Interactive visual quiz recommending exact foundation and concealer shades based on skin undertones.' },
+      { title: 'Mix-and-Match Bundle Builder', desc: 'Dynamic bundle creator allowing customers to build custom skincare routines at discounted rates.' },
+      { title: 'Fragrance Scent Visualizer', desc: 'Interactive scent pyramid detailing top, heart, and base perfume notes.' },
+      { title: 'Frictionless Mobile Checkout', desc: 'Optimized one-page checkout supporting Apple Pay, Shop Pay, and instant order tracking.' },
+    ],
+    color: '#14B8B0',
+    bgColor: '#E6F8F9',
+  },
+  'greendoors-com': {
+    tagline: 'Eco-Friendly Home Marketplace & Energy Efficiency Rating Engine',
+    challenge: 'Homebuyers seeking eco-friendly housing lacked a specialized portal that aggregated verified energy efficiency certificates, solar specs, and green building scores.',
+    solution: 'We designed a modern property listing platform incorporating interactive energy rating filters, 360-degree virtual home tours, and automated mortgage calculator tools.',
+    results: [
+      { value: '4.1x', label: 'Property Inquiries' },
+      { value: '< 600ms', label: 'Map Search Speed' },
+      { value: '12K+', label: 'Listed Green Homes' },
+    ],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+    timeline: '7 Weeks',
+    features: [
+      { title: 'Energy Efficiency Index', desc: 'Verified property ratings detailing solar capacity, insulation quality, and estimated utility savings.' },
+      { title: 'Interactive Map Search', desc: 'High-performance spatial property search with neighborhood walkability and transit filters.' },
+      { title: '360° Virtual Home Tours', desc: 'Seamless immersive 3D walkthroughs embedded directly inside property listing pages.' },
+      { title: 'Instant Tour Scheduling', desc: 'One-tap agent tour booking calendar with automated SMS appointment reminders.' },
+    ],
+    color: '#14B8B0',
+    bgColor: '#E6F8F9',
+  },
+  'lms-software': {
+    tagline: 'Enterprise Online Learning, Virtual Classrooms & Assessment Suite',
+    challenge: 'Corporate training teams and universities struggled with fragmented tools for video lectures, assignment grading, and student certification tracking.',
+    solution: 'We engineered a unified Learning Management System featuring HD WebRTC live classrooms, automated quiz grading, progress analytics, and instant certificate issuance.',
+    results: [
+      { value: '50K+', label: 'Active Students' },
+      { value: '< 400ms', label: 'API Latency' },
+      { value: '99.99%', label: 'System Uptime' },
+    ],
+    techStack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'WebRTC', 'Tailwind CSS'],
+    timeline: '9 Weeks',
+    features: [
+      { title: 'Modular Course Creator', desc: 'Drag-and-drop course builder supporting HD video streams, interactive slides, and downloadable resources.' },
+      { title: 'Live WebRTC Classrooms', desc: 'Integrated HD video broadcasting with live student Q&A, chat, and virtual whiteboards.' },
+      { title: 'Automated Assessment Engine', desc: 'Instant grading for multiple-choice and code submission tests with immediate feedback.' },
+      { title: 'Verifiable Digital Certificates', desc: 'Automated cryptographic certificate generation issued instantly upon course completion.' },
+    ],
+    color: '#FF8706',
+    bgColor: '#FFEFE5',
+  },
+  'plservices-co': {
+    tagline: 'On-Demand Handyman, Repair & Home Maintenance Booking Platform',
+    challenge: 'PL Services needed a unified web portal to streamline home repair inquiries, offer instant pricing estimates, and dispatch certified handymen online.',
+    solution: 'We built a high-converting web application featuring a multi-service job calculator, online scheduling calendar, technician dispatch management, and automated SMS updates.',
+    results: [
+      { value: '3.9x', label: 'Quote Requests' },
+      { value: '< 550ms', label: 'Page Load Speed' },
+      { value: '99.9%', label: 'Service Uptime' },
+    ],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+    timeline: '6 Weeks',
+    features: [
+      { title: 'Multi-Service Job Calculator', desc: 'Instant cost estimator for electrical, carpentry, plumbing, and home repairs.' },
+      { title: 'Online Scheduling Engine', desc: 'Seamless appointment booking calendar with automated time-slot reservations.' },
+      { title: 'Technician Dispatch Manager', desc: 'Real-time assignment and status tracking for dispatching local repair experts.' },
+      { title: 'Transparent Customer Vault', desc: 'Digital invoices, service history, and online payment processing.' },
+    ],
+    color: '#14B8B0',
+    bgColor: '#E6F8F9',
+  },
+  'nexflow-com': {
+    tagline: '24/7 Commercial Plumbing & Emergency Dispatch Platform for NexFlow',
+    challenge: 'NexFlow needed a responsive digital platform to handle emergency plumbing dispatches, online service booking, transparent pricing estimates, and customer reviews.',
+    solution: 'We engineered an intuitive web platform featuring an automated service booking engine, real-time technician dispatch tracker, plumbing cost calculator, and emergency hotline.',
+    results: [
+      { value: '4.2x', label: 'Online Bookings' },
+      { value: '< 500ms', label: 'Search Latency' },
+      { value: '99.9%', label: 'Platform Uptime' },
+    ],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+    timeline: '6 Weeks',
+    features: [
+      { title: 'Online Service Booking', desc: 'Instant appointment scheduling for residential and commercial plumbing services.' },
+      { title: 'Emergency Dispatch Tracker', desc: 'Real-time GPS tracking and SMS notification system for 24/7 emergency dispatches.' },
+      { title: 'Plumbing Cost Estimator', desc: 'Transparent upfront cost calculation tool for common piping and repair jobs.' },
+      { title: 'Verified Customer Reviews', desc: 'Integrated client rating, testimonial showcase, and warranty tracking.' },
+    ],
+    color: '#14B8B0',
+    bgColor: '#E6F8F9',
+  },
+  'ironclad-co': {
+    tagline: 'Residential & Commercial Roofing Inspection & Lead Generation Platform',
+    challenge: 'Ironclad Roofing needed a high-performance web platform to generate residential and commercial leads, offer instant cost estimations, and streamline inspection requests.',
+    solution: 'We engineered a modern, responsive website featuring an automated roofing calculator, online inspection scheduling, interactive project showcase, and emergency service dispatch.',
+    results: [
+      { value: '4.5x', label: 'Inbound Leads' },
+      { value: '< 500ms', label: 'Page Load Speed' },
+      { value: '99.9%', label: 'Platform Uptime' },
+    ],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+    timeline: '5 Weeks',
+    features: [
+      { title: 'Instant Roof Cost Estimator', desc: 'Interactive roof replacement and repair cost estimation tool for homeowners.' },
+      { title: 'Inspection Scheduling', desc: 'Direct online booking calendar for complimentary on-site roofing inspections.' },
+      { title: 'Storm Damage Hotline', desc: 'Priority emergency dispatch interface for urgent storm and leak repairs.' },
+      { title: 'Project Portfolio Gallery', desc: 'High-res gallery showcasing completed residential and commercial roofing projects.' },
     ],
     color: '#FF8706',
     bgColor: '#FFEFE5',
@@ -202,17 +322,53 @@ const CaseStudyModal: React.FC<{
               transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Hero Image */}
-              <div className="relative h-48 sm:h-56 w-full overflow-hidden rounded-t-[28px] bg-[#0D152A]">
-                <img src={project.image} alt={project.title} className="w-full h-full object-contain object-top p-4" referrerPolicy="no-referrer" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
-                <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 z-10 cursor-pointer shadow-lg">
-                  <X className="w-5 h-5 text-slate-600" />
+              {/* Hero Image Preview Header */}
+              <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[380px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
+                {/* Ambient Radial Background Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
+
+                {/* Desktop Browser Window Mockup Frame */}
+                <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-[#080D1A] border border-white/15 shadow-2xl overflow-hidden flex flex-col">
+                  {/* Window Title Chrome Bar */}
+                  <div className="bg-[#050811] px-4 py-2.5 border-b border-white/10 flex items-center justify-between shrink-0">
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                      <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                      <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
+                    </div>
+                    <div className="px-3.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-[340px]">
+                      {project.websiteUrl || 'https://devtasoft.com'}
+                    </div>
+                    <div className="w-12" />
+                  </div>
+
+                  {/* Full Size Crisp Image Preview */}
+                  <div className="relative flex-1 w-full overflow-hidden bg-[#0A0F1D] flex items-start justify-center">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                </div>
+
+                {/* Modal Close Button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-xl border border-white/20"
+                >
+                  <X className="w-5 h-5 text-white" />
                 </button>
-                <div className="absolute bottom-5 left-6 z-10 flex items-center gap-3 flex-wrap">
-                  <span className={`${project.badgeBg} ${project.badgeTextColor} font-black text-xs px-4 py-1.5 rounded-full shadow-sm`}>{project.badgeText}</span>
-                  <span className="bg-white/90 text-slate-600 font-bold text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
-                    <Clock className="w-3.5 h-3.5" />{details.timeline}
+
+                {/* Floating Category & Timeline Badges */}
+                <div className="absolute bottom-6 left-8 z-20 flex items-center gap-3 flex-wrap pointer-events-none">
+                  <span className={`${project.badgeBg} ${project.badgeTextColor} font-black text-xs px-4 py-1.5 rounded-full shadow-lg border border-white/20 backdrop-blur-md`}>
+                    {project.badgeText}
+                  </span>
+                  <span className="bg-slate-900/85 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/15 backdrop-blur-md">
+                    <Clock className="w-3.5 h-3.5 text-[#FF8706]" />
+                    {details.timeline}
                   </span>
                 </div>
               </div>

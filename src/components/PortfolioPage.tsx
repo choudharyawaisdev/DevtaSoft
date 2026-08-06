@@ -352,81 +352,98 @@ const caseStudyModalData: Record<string, {
   features: { title: string; desc: string }[];
 }> = {
   'cosme-store': {
-    tagline: 'Luxury Cosmetics, Makeup & Fragrance Shopify Storefront',
-    challenge: 'Cosme.store needed a high-end, responsive Shopify e-commerce platform to showcase luxury makeup, skincare face washes, and artisanal perfumes with fast mobile navigation and high conversion rates.',
-    solution: 'We built a custom Shopify store featuring an interactive shade finder quiz, bundle-and-save product builder, multi-currency checkout, and sub-second page loading speed.',
+    tagline: 'Luxury Cosmetics, Makeup & Skincare Storefront for Cosme.store',
+    challenge: 'Cosme.store required an ultra-fast, premium e-commerce storefront capable of matching customers with personalized makeup shades while sustaining sub-second mobile page loads.',
+    solution: 'We built a custom Shopify storefront featuring an interactive AI shade finder quiz, dynamic mix-and-match product bundling, multi-currency checkout, and fast mobile navigation.',
     results: [
       { value: '3.5x', label: 'Conversion Rate' },
-      { value: '< 550ms', label: 'Page Load Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '< 500ms', label: 'Mobile Page Load' },
+      { value: '99.9%', label: 'Store Uptime' },
     ],
     techStack: ['Shopify', 'Liquid', 'Tailwind CSS', 'JavaScript', 'Klaviyo'],
     features: [
-      { title: 'Interactive Makeup Shade Finder', desc: 'Personalized AI shade matcher and skin tone product recommendation quiz.' },
-      { title: 'Custom Bundle & Save Builder', desc: 'Dynamic mix-and-match bundle creator for cosmetics and skincare routines.' },
-      { title: 'Sub-Second Mobile Checkout', desc: 'Optimized Shopify One-Page Checkout with Apple Pay and Shop Pay support.' },
-      { title: 'Fragrance Notes Visualizer', desc: 'Interactive scent pyramid detailing top, heart, and base perfume notes.' },
+      { title: 'AI Shade Matcher Quiz', desc: 'Interactive visual quiz recommending exact foundation and concealer shades based on skin undertones.' },
+      { title: 'Mix-and-Match Bundle Builder', desc: 'Dynamic bundle creator allowing customers to build custom skincare routines at discounted rates.' },
+      { title: 'Fragrance Scent Visualizer', desc: 'Interactive scent pyramid detailing top, heart, and base perfume notes.' },
+      { title: 'Frictionless Mobile Checkout', desc: 'Optimized one-page checkout supporting Apple Pay, Shop Pay, and instant order tracking.' },
     ],
   },
   'quikeat-com': {
-    tagline: 'Modern Restaurant Ordering & Dining Reservation Platform for QuikEat',
-    challenge: 'QuikEat needed a fast, mobile-optimized digital storefront to handle food ordering, table reservations, contactless digital menus, and live kitchen order management.',
-    solution: 'We engineered an intuitive restaurant web application featuring an interactive visual food menu, table reservation engine, instant online payment checkout, and live order tracking.',
+    tagline: 'End-to-End Online Restaurant Ordering & Table Booking Platform',
+    challenge: 'High-volume restaurant chains struggled with sluggish legacy PDF menus, lost phone orders during peak dining hours, and uncoordinated kitchen ticket queues.',
+    solution: 'We engineered a high-velocity digital ordering portal featuring interactive visual menus, automated dining table booking, sub-second kitchen ticket WebSockets dispatch, and contactless payments.',
     results: [
-      { value: '4.6x', label: 'Digital Orders' },
+      { value: '3.8x', label: 'Digital Orders' },
+      { value: '-45%', label: 'Kitchen Prep Delay' },
       { value: '< 450ms', label: 'Page Load Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
     ],
-    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'Stripe'],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Stripe'],
     features: [
-      { title: 'Interactive Food Menu', desc: 'High-res food photography menu with dietary filters, customization add-ons, and instant cart.' },
-      { title: 'Table Reservation Engine', desc: 'Real-time table availability calendar with SMS booking confirmation.' },
-      { title: 'Live Order Tracking', desc: 'Real-time kitchen status, preparation timer, and delivery dispatch tracker.' },
-      { title: 'POS & Kitchen Integration', desc: 'Seamless sync with restaurant Point of Sale and kitchen display screens.' },
+      { title: 'Interactive Food Menu', desc: 'High-res dietary filterable food menu with item customizers, allergen tags, and real-time stock levels.' },
+      { title: 'Kitchen Order Dispatch', desc: 'Instant WebSockets order transmission directly to kitchen display screens with active prep timers.' },
+      { title: 'Table Reservation Engine', desc: 'Real-time dining room table booking calendar with instant SMS and email confirmations.' },
+      { title: 'Contactless One-Tap Checkout', desc: 'Frictionless checkout supporting Apple Pay, Google Pay, credit cards, and saved loyalty balances.' },
+    ],
+  },
+  'nexcojapan-com': {
+    tagline: 'Real-Time Japanese Automobile Bidding & Global Shipping Export Portal',
+    challenge: 'Overseeing cross-border vehicle exports from Japanese auto auctions was hindered by slow manual currency conversions, translation delays, and unverified shipping schedules.',
+    solution: 'We developed a unified automotive portal featuring live Japanese auction API feeds, multi-currency bidding calculators, automated export documentation, and real-time cargo ship tracking.',
+    results: [
+      { value: '50K+', label: 'Monthly Bids' },
+      { value: '+185%', label: 'Overseas Buyers' },
+      { value: '< 800ms', label: 'Search Latency' },
+    ],
+    techStack: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Tailwind CSS', 'Docker'],
+    features: [
+      { title: 'Live Auction Feed Sync', desc: 'Real-time vehicle auction bidding engine with auto-translated inspection sheets and HD galleries.' },
+      { title: 'Port-to-Port Freight Tracker', desc: 'Interactive vessel shipment tracker monitoring cargo ships from Yokohama to destination ports worldwide.' },
+      { title: 'Multi-Currency Exchange Engine', desc: 'Live dynamic currency conversion for USD, JPY, EUR, and AED invoicing.' },
+      { title: 'Buyer Document Vault', desc: 'Automated export certificates, bill of lading generation, and custom duty tracking.' },
     ],
   },
   'lms-software': {
-    tagline: 'Enterprise Online Learning & Course Management Suite',
-    challenge: 'Educational institutions and corporate trainers needed a unified software platform to manage course curricula, conduct interactive live webinars, track student progress, and grade assessments automatically.',
-    solution: 'We engineered a robust Learning Management System (LMS) featuring interactive video streaming, automated quizzing engine, student performance analytics, and certificate generation.',
+    tagline: 'Enterprise Online Learning, Virtual Classrooms & Assessment Suite',
+    challenge: 'Corporate training teams and universities struggled with fragmented tools for video lectures, assignment grading, and student certification tracking.',
+    solution: 'We engineered a unified Learning Management System featuring HD WebRTC live classrooms, automated quiz grading, progress analytics, and instant certificate issuance.',
     results: [
       { value: '50K+', label: 'Active Students' },
-      { value: '< 500ms', label: 'API Latency' },
-      { value: '99.99%', label: 'Uptime SLA' },
+      { value: '< 400ms', label: 'API Latency' },
+      { value: '99.99%', label: 'System Uptime' },
     ],
     techStack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'WebRTC', 'Tailwind CSS'],
     features: [
-      { title: 'Automated Course Builder', desc: 'Drag-and-drop module creator with video hosting, PDF downloads, and interactive assignments.' },
-      { title: 'Live Interactive Classes', desc: 'Integrated high-definition WebRTC video conferencing with chat and virtual whiteboards.' },
-      { title: 'Student Analytics Dashboard', desc: 'Real-time progress tracking, completion rates, and grade performance analytics.' },
-      { title: 'Instant Certificate Generator', desc: 'Automated verifiable completion certificates issued upon course mastery.' },
+      { title: 'Modular Course Creator', desc: 'Drag-and-drop course builder supporting HD video streams, interactive slides, and downloadable resources.' },
+      { title: 'Live WebRTC Classrooms', desc: 'Integrated HD video broadcasting with live student Q&A, chat, and virtual whiteboards.' },
+      { title: 'Automated Assessment Engine', desc: 'Instant grading for multiple-choice and code submission tests with immediate feedback.' },
+      { title: 'Verifiable Digital Certificates', desc: 'Automated cryptographic certificate generation issued instantly upon course completion.' },
     ],
   },
   'plservices-co': {
-    tagline: 'On-Demand Handyman & Home Maintenance Platform for PL Services',
-    challenge: 'PL Services needed a unified web portal to streamline home repair inquiries, offer instant pricing estimates, and allow clients to schedule certified handymen online.',
+    tagline: 'On-Demand Handyman, Repair & Home Maintenance Booking Platform',
+    challenge: 'PL Services needed a unified web portal to streamline home repair inquiries, offer instant pricing estimates, and dispatch certified handymen online.',
     solution: 'We built a high-converting web application featuring a multi-service job calculator, online scheduling calendar, technician dispatch management, and automated SMS updates.',
     results: [
       { value: '3.9x', label: 'Quote Requests' },
-      { value: '< 650ms', label: 'Page Load Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '< 550ms', label: 'Page Load Speed' },
+      { value: '99.9%', label: 'Service Uptime' },
     ],
     techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
     features: [
       { title: 'Multi-Service Job Calculator', desc: 'Instant cost estimator for electrical, carpentry, plumbing, and home repairs.' },
       { title: 'Online Scheduling Engine', desc: 'Seamless appointment booking calendar with automated time-slot reservations.' },
-      { title: 'Certified Technician Dispatch', desc: 'Real-time assignment and status tracking for dispatching local repair experts.' },
-      { title: 'Transparent Customer Portal', desc: 'Digital invoices, service history, and online payment processing.' },
+      { title: 'Technician Dispatch Manager', desc: 'Real-time assignment and status tracking for dispatching local repair experts.' },
+      { title: 'Transparent Customer Vault', desc: 'Digital invoices, service history, and online payment processing.' },
     ],
   },
   'nexflow-com': {
-    tagline: 'High-Converting Plumbing & Commercial Piping Platform for NexFlow',
-    challenge: 'NexFlow needed a responsive digital platform to handle 24/7 emergency plumbing dispatches, online service booking, transparent pricing estimates, and customer reviews.',
+    tagline: '24/7 Commercial Plumbing & Emergency Dispatch Platform for NexFlow',
+    challenge: 'NexFlow needed a responsive digital platform to handle emergency plumbing dispatches, online service booking, transparent pricing estimates, and customer reviews.',
     solution: 'We engineered an intuitive web platform featuring an automated service booking engine, real-time technician dispatch tracker, plumbing cost calculator, and emergency hotline.',
     results: [
       { value: '4.2x', label: 'Online Bookings' },
-      { value: '< 600ms', label: 'Search Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '< 500ms', label: 'Search Latency' },
+      { value: '99.9%', label: 'Platform Uptime' },
     ],
     techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
     features: [
@@ -437,37 +454,37 @@ const caseStudyModalData: Record<string, {
     ],
   },
   'ironclad-co': {
-    tagline: 'High-Converting Roofing Contractor & Inspection Platform for Ironclad',
+    tagline: 'Residential & Commercial Roofing Inspection & Lead Generation Platform',
     challenge: 'Ironclad Roofing needed a high-performance web platform to generate residential and commercial leads, offer instant cost estimations, and streamline inspection requests.',
     solution: 'We engineered a modern, responsive website featuring an automated roofing calculator, online inspection scheduling, interactive project showcase, and emergency service dispatch.',
     results: [
       { value: '4.5x', label: 'Inbound Leads' },
-      { value: '< 650ms', label: 'Page Load Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '< 500ms', label: 'Page Load Speed' },
+      { value: '99.9%', label: 'Platform Uptime' },
     ],
     techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
     features: [
-      { title: 'Instant Estimate Calculator', desc: 'Interactive roof replacement and repair cost estimation tool for homeowners.' },
-      { title: 'Online Inspection Scheduler', desc: 'Seamless online calendar for booking free roof inspections and estimates.' },
-      { title: 'Commercial Project Showcase', desc: 'Interactive gallery showcasing past roofing projects, materials, and warranty information.' },
-      { title: 'Emergency Dispatch Portal', desc: '24/7 storm damage and urgent repair lead generation channel.' },
+      { title: 'Instant Roof Cost Estimator', desc: 'Interactive roof replacement and repair cost estimation tool for homeowners.' },
+      { title: 'Inspection Scheduling', desc: 'Direct online booking calendar for complimentary on-site roofing inspections.' },
+      { title: 'Storm Damage Hotline', desc: 'Priority emergency dispatch interface for urgent storm and leak repairs.' },
+      { title: 'Project Portfolio Gallery', desc: 'High-res gallery showcasing completed residential and commercial roofing projects.' },
     ],
   },
   'greendoors-com': {
-    tagline: 'Luxury Hotel Booking & Hospitality Web Portal for GreenDoors',
-    challenge: 'GreenDoors required a modern digital hotel showcase and high-converting reservation system to manage guest bookings, room availability, and luxury amenities.',
-    solution: 'We engineered a high-performance, responsive hotel website with real-time room availability, interactive room previews, guest portal, and seamless payment gateway.',
+    tagline: 'Eco-Friendly Home Marketplace & Energy Efficiency Rating Engine',
+    challenge: 'Homebuyers seeking eco-friendly housing lacked a specialized portal that aggregated verified energy efficiency certificates, solar specs, and green building scores.',
+    solution: 'We designed a modern property listing platform incorporating interactive energy rating filters, 360-degree virtual home tours, and automated mortgage calculator tools.',
     results: [
-      { value: '3.8x', label: 'Direct Bookings' },
-      { value: '< 700ms', label: 'Search Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '4.1x', label: 'Property Inquiries' },
+      { value: '< 600ms', label: 'Map Search Speed' },
+      { value: '12K+', label: 'Listed Green Homes' },
     ],
-    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'Stripe'],
+    techStack: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
     features: [
-      { title: 'Interactive Room Showcase', desc: 'High-res gallery previews, amenity filtering, and custom room upgrade options.' },
-      { title: 'Real-time Booking Engine', desc: 'Instant availability calendar, date picker, and multi-guest reservation system.' },
-      { title: 'Guest Experience Portal', desc: 'Manage reservations, check-in details, and special concierge requests online.' },
-      { title: 'Seamless Payment Checkout', desc: 'Secure multi-currency payment gateway integration with instant e-confirmation.' },
+      { title: 'Energy Efficiency Index', desc: 'Verified property ratings detailing solar capacity, insulation quality, and estimated utility savings.' },
+      { title: 'Interactive Map Search', desc: 'High-performance spatial property search with neighborhood walkability and transit filters.' },
+      { title: '360° Virtual Home Tours', desc: 'Seamless immersive 3D walkthroughs embedded directly inside property listing pages.' },
+      { title: 'Instant Tour Scheduling', desc: 'One-tap agent tour booking calendar with automated SMS appointment reminders.' },
     ],
   },
   'taskflow-pro': {
@@ -535,23 +552,6 @@ const caseStudyModalData: Record<string, {
       { title: 'Responsive Fashion Catalog', desc: 'Grid layout optimized for mobile, tablet, and desktop screens.' },
       { title: 'Instant Product Search', desc: 'Fast filtering by category, size, color, and price.' },
       { title: 'Streamlined Checkout Flow', desc: 'Seamless cart and payment gateway integrations.' },
-      { title: 'High-Resolution Media', desc: 'Optimized image loading for fast catalog browsing.' },
-    ],
-  },
-  'nexcojapan-com': {
-    tagline: 'Japanese Automotive Export & Vehicle Trading Platform',
-    challenge: 'Nexco Japan required a global web platform to display Japanese vehicle inventories, facilitate international bidding, and manage export shipping logistics.',
-    solution: 'We built a high-performance vehicle catalog with multi-currency conversion, search filtering by make/model, and an integrated inquiry pipeline.',
-    results: [
-      { value: '4.5x', label: 'Global Leads' },
-      { value: '< 850ms', label: 'Page Load Speed' },
-      { value: '99.9%', label: 'Uptime SLA' },
-    ],
-    techStack: ['React', 'Node.js', 'PostgreSQL', 'Tailwind CSS'],
-    features: [
-      { title: 'Japanese Vehicle Inventory', desc: 'Real-time catalog with specifications, inspection grades, and photo galleries.' },
-      { title: 'Multi-Currency Calculator', desc: 'Instant conversion for global buyers across USD, JPY, and EUR.' },
-      { title: 'Responsive Global UX', desc: 'Fast, mobile-optimized experience for international clients.' },
     ],
   },
   'coursepro-today': {
@@ -1306,28 +1306,68 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
               exit={{ opacity: 0 }}
             >
               <motion.div
-                className="relative bg-white rounded-[28px] w-full max-w-[840px] max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
+                className="relative bg-white rounded-[28px] w-full max-w-[880px] max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
                 initial={{ opacity: 0, scale: 0.92, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.92, y: 30 }}
                 transition={{ duration: 0.4, ease: [0.215, 0.61, 0.355, 1] }}
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Close Button */}
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer"
-                >
-                  <X className="w-5 h-5 text-slate-500" />
-                </button>
+                {/* Hero Image Preview Header */}
+                <div className="relative w-full h-[260px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
+                  {/* Ambient Radial Background Glow */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
 
-                {/* Header */}
-                <div className="p-8 sm:p-10 pb-4">
-                  <div className="flex items-center gap-3 mb-4 flex-wrap">
-                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-[#E6F8F9] text-[#14B8B0] border border-[#14B8B0]/30">
+                  {/* Desktop Browser Window Mockup Frame */}
+                  <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-[#080D1A] border border-white/15 shadow-2xl overflow-hidden flex flex-col">
+                    {/* Window Title Chrome Bar */}
+                    <div className="bg-[#050811] px-4 py-2.5 border-b border-white/10 flex items-center justify-between shrink-0">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                        <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                        <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
+                      </div>
+                      <div className="px-3.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-[340px]">
+                        {selectedProject.websiteUrl || 'https://devtasoft.com'}
+                      </div>
+                      <div className="w-12" />
+                    </div>
+
+                    {/* Full Size Crisp Image Preview */}
+                    <div className="relative flex-1 w-full overflow-hidden bg-[#0A0F1D] flex items-start justify-center">
+                      <img
+                        src={selectedProject.image}
+                        alt={selectedProject.title}
+                        className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Modal Close Button */}
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-xl border border-white/20"
+                  >
+                    <X className="w-5 h-5 text-white" />
+                  </button>
+
+                  {/* Floating Category Badges */}
+                  <div className="absolute bottom-6 left-8 z-20 flex items-center gap-3 flex-wrap pointer-events-none">
+                    <span className="bg-[#FF8706] text-white font-black text-xs px-4 py-1.5 rounded-full shadow-lg border border-white/20 backdrop-blur-md uppercase tracking-wider">
                       {selectedProject.category}
                     </span>
-                    <span className="text-xs font-bold text-slate-400">DevtaSoft Case Study</span>
+                    <span className="bg-slate-900/85 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/15 backdrop-blur-md">
+                      <Clock className="w-3.5 h-3.5 text-[#FF8706]" />
+                      Verified Case Study
+                    </span>
+                  </div>
+                </div>
+
+                {/* Header Info */}
+                <div className="p-8 sm:p-10 pb-4">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">DevtaSoft Case Study</span>
                   </div>
 
                   <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0D152A] mb-2">
@@ -1335,7 +1375,7 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
                   </h2>
 
                   <p className="font-display font-extrabold text-lg text-[#FF8706] mb-4">
-                    {caseStudyModalData[selectedProject.id].tagline}
+                    {caseStudyModalData[selectedProject.id]?.tagline || `${selectedProject.title} Platform`}
                   </p>
                 </div>
 
