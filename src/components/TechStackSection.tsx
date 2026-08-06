@@ -418,7 +418,7 @@ export const TechStackSection: React.FC = () => {
               <motion.div
                 key={tech.name}
                 whileHover={{ y: -6, scale: 1.03 }}
-                className="bg-white rounded-[22px] border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-all duration-300 px-6 sm:px-8 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[160px] flex-1 sm:flex-initial cursor-pointer group"
+                className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-6 sm:px-8 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[160px] flex-1 sm:flex-initial cursor-pointer group"
               >
                 <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {tech.icon}
@@ -453,7 +453,7 @@ export const TechStackSection: React.FC = () => {
               <motion.div
                 key={tech.name}
                 whileHover={{ y: -6, scale: 1.03 }}
-                className="bg-white rounded-[22px] border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-all duration-300 px-5 sm:px-7 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[130px] sm:min-w-[150px] flex-1 sm:flex-initial cursor-pointer group"
+                className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-5 sm:px-7 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[130px] sm:min-w-[150px] flex-1 sm:flex-initial cursor-pointer group"
               >
                 <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {tech.icon}
@@ -505,7 +505,7 @@ export const TechStackSection: React.FC = () => {
                 <motion.div
                   key={tech.name}
                   whileHover={{ y: -6, scale: 1.03 }}
-                  className="bg-white rounded-[22px] border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                  className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
                 >
                   <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {tech.icon}
@@ -542,7 +542,7 @@ export const TechStackSection: React.FC = () => {
                 <motion.div
                   key={tech.name}
                   whileHover={{ y: -6, scale: 1.03 }}
-                  className="bg-white rounded-[22px] border border-slate-100 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-slate-200 transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                  className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
                 >
                   <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {tech.icon}
@@ -559,7 +559,7 @@ export const TechStackSection: React.FC = () => {
 
         {/* ─── BOTTOM VALUE FEATURE STRIP (3 Items) ────────────────────── */}
         <motion.div
-          className="w-full max-w-[1100px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 bg-white rounded-3xl border border-slate-100 shadow-[0_15px_45px_rgba(0,0,0,0.03)] p-6 sm:p-8 divide-y sm:divide-y-0 sm:divide-x divide-slate-100"
+          className="w-full max-w-[1100px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 bg-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,0.04)] p-6 sm:p-8 divide-y sm:divide-y-0 sm:divide-x divide-slate-100"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
