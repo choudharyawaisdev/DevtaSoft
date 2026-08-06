@@ -138,16 +138,6 @@ const Vector404Illustration: React.FC = () => (
 
         {/* Clean Inner Arch Opening */}
         <rect x="265" y="112" width="70" height="193" rx="35" fill="url(#portalSky)" />
-
-        {/* Open Door Panel (Swung open to the right) */}
-        <g id="open-door-panel" transform="translate(330, 112)">
-          {/* Door panel side */}
-          <path d="M 0 0 L 20 -14 L 20 178 L 0 193 Z" fill="#D65F00" />
-          {/* Door panel front */}
-          <path d="M 0 0 L 16 -10 L 16 182 L 0 193 Z" fill="#FF8706" />
-          {/* Door Handle */}
-          <circle cx="5" cy="96" r="3.5" fill="#FFE5C4" />
-        </g>
       </g>
 
 
