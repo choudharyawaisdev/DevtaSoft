@@ -1208,17 +1208,20 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
                           <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
                         </a>
                       ) : (
-                        <div
-                          onClick={(e) => e.stopPropagation()}
-                          title="No live domain link provided"
-                          className="w-10 h-10 rounded-full border flex items-center justify-center shrink-0 opacity-40 cursor-not-allowed"
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProject(project);
+                          }}
+                          title="View Case Study"
+                          className="w-10 h-10 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 hover:bg-[#FF8706] hover:text-white hover:border-[#FF8706] shadow-xs cursor-pointer"
                           style={{
                             borderColor: `${project.accentColor}50`,
                             color: project.accentColor,
                           }}
                         >
-                          <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
-                        </div>
+                          <ArrowRight className="w-5 h-5 stroke-[2.5]" />
+                        </button>
                       )}
                     </div>
                   </div>
@@ -1314,71 +1317,38 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="overflow-y-auto w-full h-full custom-scrollbar rounded-[28px]">
-                  {/* Hero Image Preview Header */}
-                <div className="relative w-full h-[260px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
-                  {/* Ambient Radial Background Glow */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
+                  {/* Executive Case Study Text Header Banner (No Image Picture) */}
+                  <div className="relative p-8 sm:p-10 pb-8 border-b border-slate-100 bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] text-white rounded-t-[28px] overflow-hidden">
+                    {/* Ambient Radial Background Glow */}
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#FF8706]/20 via-[#14B8B0]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-                  {/* Desktop Browser Window Mockup Frame */}
-                  <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-[#080D1A] border border-white/15 shadow-2xl overflow-hidden flex flex-col">
-                    {/* Window Title Chrome Bar */}
-                    <div className="bg-[#050811] px-4 py-2.5 border-b border-white/10 flex items-center justify-between shrink-0">
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
-                        <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
-                        <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
-                      </div>
-                      <div className="px-3.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-[340px]">
-                        {selectedProject.websiteUrl || 'https://devtasoft.com'}
-                      </div>
-                      <div className="w-12" />
+                    {/* Modal Close Button */}
+                    <button
+                      onClick={() => setSelectedProject(null)}
+                      className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-lg border border-white/20"
+                    >
+                      <X className="w-5 h-5 text-white" />
+                    </button>
+
+                    {/* Badges Row */}
+                    <div className="flex items-center gap-3 mb-4 flex-wrap z-10 relative">
+                      <span className="bg-[#FF8706] text-white font-black text-xs px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+                        {selectedProject.categoryLabel || selectedProject.category}
+                      </span>
+                      <span className="bg-white/10 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 border border-white/15 backdrop-blur-md">
+                        <Clock className="w-3.5 h-3.5 text-[#14B8B0]" />
+                        <span>Verified Case Study</span>
+                      </span>
                     </div>
 
-                    {/* Full Size Crisp Image Preview */}
-                    <div className="relative flex-1 w-full overflow-hidden bg-[#0A0F1D] flex items-start justify-center">
-                      <img
-                        src={selectedProject.image}
-                        alt={selectedProject.title}
-                        className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
+                    {/* Title & Subtitle */}
+                    <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-white leading-tight mb-2 z-10 relative">
+                      {selectedProject.title}
+                    </h2>
+                    <p className="font-display font-extrabold text-base sm:text-lg text-[#14B8B0] z-10 relative">
+                      {caseStudyModalData[selectedProject.id]?.tagline || `${selectedProject.title} Platform`}
+                    </p>
                   </div>
-
-                  {/* Modal Close Button */}
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-xl border border-white/20"
-                  >
-                    <X className="w-5 h-5 text-white" />
-                  </button>
-
-                  {/* Floating Category Badges */}
-                  <div className="absolute bottom-6 left-8 z-20 flex items-center gap-3 flex-wrap pointer-events-none">
-                    <span className="bg-[#FF8706] text-white font-black text-xs px-4 py-1.5 rounded-full shadow-lg border border-white/20 backdrop-blur-md uppercase tracking-wider">
-                      {selectedProject.category}
-                    </span>
-                    <span className="bg-slate-900/85 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/15 backdrop-blur-md">
-                      <Clock className="w-3.5 h-3.5 text-[#FF8706]" />
-                      Verified Case Study
-                    </span>
-                  </div>
-                </div>
-
-                {/* Header Info */}
-                <div className="p-8 sm:p-10 pb-4">
-                  <div className="flex items-center gap-3 mb-2 flex-wrap">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">DevtaSoft Case Study</span>
-                  </div>
-
-                  <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0D152A] mb-2">
-                    {selectedProject.title}
-                  </h2>
-
-                  <p className="font-display font-extrabold text-lg text-[#FF8706] mb-4">
-                    {caseStudyModalData[selectedProject.id]?.tagline || `${selectedProject.title} Platform`}
-                  </p>
-                </div>
 
                 {/* Results Row */}
                 <div className="px-8 sm:px-10 py-4">

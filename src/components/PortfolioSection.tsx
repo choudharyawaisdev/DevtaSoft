@@ -323,62 +323,37 @@ const CaseStudyModal: React.FC<{
               onClick={(e) => e.stopPropagation()}
             >
               <div className="overflow-y-auto w-full h-full custom-scrollbar rounded-[28px]">
-                {/* Hero Image Preview Header */}
-                <div className="relative w-full h-[280px] sm:h-[340px] lg:h-[380px] overflow-hidden rounded-t-[28px] bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] p-4 sm:p-6 flex items-center justify-center">
+                {/* Executive Case Study Text Header Banner (No Image Picture) */}
+                <div className="relative p-8 sm:p-10 pb-8 border-b border-slate-100 bg-gradient-to-br from-[#0B132B] via-[#0D152A] to-[#162244] text-white rounded-t-[28px] overflow-hidden">
                   {/* Ambient Radial Background Glow */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#FF6B00]/20 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Desktop Browser Window Mockup Frame */}
-                  <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-[#080D1A] border border-white/15 shadow-2xl overflow-hidden flex flex-col">
-                    {/* Window Title Chrome Bar */}
-                    <div className="bg-[#050811] px-4 py-2.5 border-b border-white/10 flex items-center justify-between shrink-0">
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
-                        <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
-                        <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
-                      </div>
-                      <div className="px-3.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-[340px]">
-                        {project.websiteUrl || 'https://devtasoft.com'}
-                      </div>
-                      <div className="w-12" />
-                    </div>
-
-                    {/* Full Size Crisp Image Preview */}
-                    <div className="relative flex-1 w-full overflow-hidden bg-[#0A0F1D] flex items-start justify-center">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-700"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  </div>
+                  <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#FF8706]/20 via-[#14B8B0]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
 
                   {/* Modal Close Button */}
                   <button
                     onClick={onClose}
-                    className="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-xl border border-white/20"
+                    className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 z-20 cursor-pointer shadow-lg border border-white/20"
                   >
                     <X className="w-5 h-5 text-white" />
                   </button>
 
-                  {/* Floating Category & Timeline Badges */}
-                  <div className="absolute bottom-6 left-8 z-20 flex items-center gap-3 flex-wrap pointer-events-none">
-                    <span className={`${project.badgeBg} ${project.badgeTextColor} font-black text-xs px-4 py-1.5 rounded-full shadow-lg border border-white/20 backdrop-blur-md`}>
-                      {project.badgeText}
+                  {/* Badges Row */}
+                  <div className="flex items-center gap-3 mb-4 flex-wrap z-10 relative">
+                    <span className="bg-[#FF8706] text-white font-black text-xs px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+                      {project.badgeText || project.category}
                     </span>
-                    <span className="bg-slate-900/85 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg border border-white/15 backdrop-blur-md">
-                      <Clock className="w-3.5 h-3.5 text-[#FF8706]" />
-                      {details.timeline}
+                    <span className="bg-white/10 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 border border-white/15 backdrop-blur-md">
+                      <Clock className="w-3.5 h-3.5 text-[#14B8B0]" />
+                      <span>{details.timeline || 'Verified Case Study'}</span>
                     </span>
                   </div>
-                </div>
 
-                {/* Header */}
-                <div className="px-8 sm:px-10 pt-8">
-                  <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0D152A] leading-tight mb-1.5">{project.title}</h2>
-                  <p className="font-bold text-sm uppercase tracking-wider mb-3" style={{ color: details.color }}>{project.subtitle}</p>
-                  <p className="font-display font-extrabold text-lg" style={{ color: details.color }}>{details.tagline}</p>
+                  {/* Title & Subtitle */}
+                  <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-white leading-tight mb-2 z-10 relative">
+                    {project.title}
+                  </h2>
+                  <p className="font-display font-extrabold text-base sm:text-lg text-[#14B8B0] z-10 relative">
+                    {details.tagline || project.subtitle}
+                  </p>
                 </div>
 
                 {/* Results */}
@@ -444,10 +419,17 @@ const CaseStudyModal: React.FC<{
 
                 {/* Footer */}
                 <div className="px-8 sm:px-10 py-6 bg-slate-50 rounded-b-[28px] border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-                  <a href={project.websiteUrl} target="_blank" rel="noreferrer" className="font-bold text-sm text-[#14B8B0] hover:underline flex items-center gap-1.5">
-                    <span>Visit Live Website</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
+                  {project.websiteUrl && project.websiteUrl !== '#' ? (
+                    <a href={project.websiteUrl} target="_blank" rel="noreferrer" className="font-bold text-sm text-[#14B8B0] hover:underline flex items-center gap-1.5">
+                      <span>Visit Live Website</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                  ) : (
+                    <div className="flex items-center gap-2 text-slate-500 font-semibold text-xs">
+                      <CheckCircle2 className="w-4 h-4 text-[#14B8B0]" />
+                      <span>Verified Client Project</span>
+                    </div>
+                  )}
                   <button
                     onClick={() => {
                       onClose();
