@@ -737,30 +737,22 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
       </div>
 
-      {/* BOTTOM VALUE STRIP (Extra Wide Container Stretching Left & Right) */}
+      {/* BOTTOM VALUE STRIP (4 Columns with Vertical Divider Lines Between Every Item) */}
       <div className="max-w-[1560px] mx-auto px-3 sm:px-6 lg:px-10">
         <motion.div
-          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-[#ECECEC] shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 p-4 sm:p-12 lg:p-16"
+          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-slate-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 p-6 sm:p-10 lg:p-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-0">
-            {valueItems.map((item, idx) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-200/90">
+            {valueItems.map((item) => {
               const ValueIcon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className={`flex flex-col items-start ${
-                    idx > 0 ? 'border-t sm:border-t-0 border-slate-200/80 pt-6 sm:pt-0' : ''
-                  } ${
-                    idx % 2 === 1 ? 'sm:border-l sm:border-slate-200/80 sm:pl-8' : ''
-                  } ${
-                    idx >= 2 ? 'sm:border-t sm:border-slate-200/80 sm:pt-6 lg:border-t-0 lg:pt-0' : ''
-                  } ${
-                    idx > 0 ? 'lg:border-l lg:border-slate-200/80 lg:pl-8 xl:pl-10' : ''
-                  }`}
+                  className="flex flex-col items-start py-6 sm:py-4 lg:py-2 px-2 sm:px-6 lg:px-8 first:pt-0 last:pb-0 lg:first:pl-0 lg:last:pr-0"
                 >
                   <div className="flex items-center gap-3 sm:gap-3.5 mb-3 sm:mb-4">
                     <div
