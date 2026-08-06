@@ -417,8 +417,8 @@ export const TechStackSection: React.FC = () => {
             {frontendStack.map((tech) => (
               <motion.div
                 key={tech.name}
-                whileHover={{ y: -6, scale: 1.03 }}
-                className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-6 sm:px-8 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[160px] flex-1 sm:flex-initial cursor-pointer group"
+                whileHover={{ y: -4, scale: 1.03 }}
+                className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-6 sm:px-8 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[160px] flex-1 sm:flex-initial cursor-pointer group"
               >
                 <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {tech.icon}
@@ -452,8 +452,8 @@ export const TechStackSection: React.FC = () => {
             {backendStack.map((tech) => (
               <motion.div
                 key={tech.name}
-                whileHover={{ y: -6, scale: 1.03 }}
-                className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-5 sm:px-7 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[130px] sm:min-w-[150px] flex-1 sm:flex-initial cursor-pointer group"
+                whileHover={{ y: -4, scale: 1.03 }}
+                className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-7 py-5 sm:py-6 flex flex-col items-center justify-center gap-3 min-w-[130px] sm:min-w-[150px] flex-1 sm:flex-initial cursor-pointer group"
               >
                 <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {tech.icon}
@@ -504,8 +504,8 @@ export const TechStackSection: React.FC = () => {
               {mobileStack.map((tech) => (
                 <motion.div
                   key={tech.name}
-                  whileHover={{ y: -6, scale: 1.03 }}
-                  className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                  whileHover={{ y: -4, scale: 1.03 }}
+                  className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
                 >
                   <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {tech.icon}
@@ -541,8 +541,8 @@ export const TechStackSection: React.FC = () => {
               {aiStack.map((tech) => (
                 <motion.div
                   key={tech.name}
-                  whileHover={{ y: -6, scale: 1.03 }}
-                  className="bg-white rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.09)] transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
+                  whileHover={{ y: -4, scale: 1.03 }}
+                  className="bg-white rounded-[22px] shadow-none hover:shadow-xs transition-all duration-300 px-5 py-5 flex flex-col items-center justify-center gap-3 min-w-[125px] sm:min-w-[135px] flex-1 sm:flex-initial cursor-pointer group"
                 >
                   <div className="h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {tech.icon}
