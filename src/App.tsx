@@ -219,15 +219,15 @@ export default function App() {
   }, []);
 
   const isAdminLoggedIn = localStorage.getItem('devtasoft_admin_logged_in') === 'true';
-  const isAdminRoute = location.pathname === '/admin';
+  const isLoginOrAdminRoute = location.pathname === '/admin' || location.pathname === '/login';
 
-  // Strict Route Security for /admin: Unauthenticated access is IMPOSSIBLE. Immediately redirect to '/' and prompt login modal.
+  // Strict Route Security for /admin and /login URLs: Automatically prompt login modal when accessed via URL.
   useEffect(() => {
-    if (isAdminRoute && !isAdminLoggedIn) {
+    if (isLoginOrAdminRoute && !isAdminLoggedIn) {
       setIsLoginOpen(true);
       navigate('/', { replace: true });
     }
-  }, [isAdminRoute, isAdminLoggedIn, navigate]);
+  }, [isLoginOrAdminRoute, isAdminLoggedIn, navigate]);
 
   const handleContactClick = () => {
     if (visibility.pages.contact) {

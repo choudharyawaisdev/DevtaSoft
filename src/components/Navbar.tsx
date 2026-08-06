@@ -118,14 +118,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ArrowRight className="w-3.5 h-3.5 text-white stroke-[3]" />
             </div>
           </button>
-
-          {/* Login Button (Always Visible) */}
-          <button
-            onClick={onLoginClick}
-            className="button"
-          >
-            Login
-          </button>
         </div>
 
         {/* Mobile Hamburger Toggle (Persistent DOM Element for Smooth CSS Animation) */}
@@ -206,17 +198,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <span>Let's Talk</span>
                 <ArrowRight className="w-4 h-4 text-white stroke-[2.5]" />
-              </button>
-
-              {/* Full Width Login Button in Mobile Sidebar */}
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onLoginClick?.();
-                }}
-                className="button !w-full"
-              >
-                Login
               </button>
 
               <div className="text-center text-xs text-slate-400 font-medium pt-1">
