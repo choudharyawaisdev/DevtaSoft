@@ -23,6 +23,7 @@ import { IntersectingStrips } from './components/IntersectingStrips';
 import { Footer } from './components/Footer';
 import { Preloader } from './components/Preloader';
 import { AdminDashboard } from './components/AdminDashboard';
+import { NotFoundPage } from './components/NotFoundPage';
 import { dataService, VisibilitySettings } from './services/dataService';
 
 const containerVariants = {
@@ -389,6 +390,10 @@ export default function App() {
               />
             )
           }
+        />
+        <Route
+          path="*"
+          element={<NotFoundPage onContactClick={handleContactClick} />}
         />
       </Routes>
 
