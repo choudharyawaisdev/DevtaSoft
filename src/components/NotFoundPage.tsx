@@ -146,12 +146,6 @@ const Vector404Illustration: React.FC = () => (
         {/* Sky Portal Background inside Open Door */}
         <rect x="282" y="115" width="61" height="190" rx="30.5" fill="url(#portalSky)" />
 
-        {/* Clouds inside Portal */}
-        <ellipse cx="300" cy="180" rx="22" ry="14" fill="#FFFFFF" opacity="0.85" />
-        <ellipse cx="325" cy="175" rx="18" ry="12" fill="#FFFFFF" opacity="0.9" />
-        <ellipse cx="310" cy="200" rx="30" ry="16" fill="#F0F9FF" opacity="0.95" />
-        <ellipse cx="295" cy="225" rx="25" ry="12" fill="#E0F2FE" opacity="0.6" />
-
         {/* Open Door Panel (Swung open to the right with 3D perspective) */}
         <g id="open-door-panel" transform="translate(343, 115)">
           {/* Door panel extruded side */}
@@ -163,7 +157,6 @@ const Vector404Illustration: React.FC = () => (
           <rect x="2" y="94" width="8" height="2" rx="1" fill="#FFFFFF" />
         </g>
       </g>
-
 
       {/* ─── 3. RIGHT "4" (3D Navy Solid Numeral) ───────────────────── */}
       <g id="right-four" filter="url(#softShadow)">
@@ -177,66 +170,6 @@ const Vector404Illustration: React.FC = () => (
         {/* Horizontal Bar */}
         <rect x="355" y="215" width="145" height="42" rx="6" fill="url(#numeralDarkFront)" />
         <path d="M 355 215 L 500 215 L 500 222 L 355 222 Z" fill="url(#numeralDarkTop)" />
-      </g>
-
-
-      {/* ─── 4. ASTRONAUT CHARACTER (Sitting in Front, Confused) ──────── */}
-      <g id="astronaut-character" transform="translate(182, 195)" filter="url(#softShadow)">
-        {/* Soft Drop Shadow under Astronaut */}
-        <ellipse cx="65" cy="122" rx="45" ry="10" fill="#0F172A" opacity="0.12" />
-
-        {/* Backpack (Oxygen tank behind suit) */}
-        <rect x="32" y="32" width="62" height="65" rx="16" fill="url(#suitShadow)" />
-        <rect x="36" y="36" width="54" height="57" rx="12" fill="#E2E8F0" />
-        <circle cx="45" cy="46" r="4" fill="#FF8706" />
-        <circle cx="56" cy="46" r="4" fill="#14B8B0" />
-
-        {/* Suit Torso / Body */}
-        <path d="M 38 45 C 38 35 92 35 92 45 L 96 95 C 96 105 34 105 34 95 Z" fill="url(#suitWhite)" />
-        {/* Torso Side Shading */}
-        <path d="M 34 50 Q 36 90 40 100 L 34 95 Z" fill="url(#suitShadow)" />
-        <path d="M 96 50 Q 94 90 90 100 L 96 95 Z" fill="url(#suitShadow)" />
-
-        {/* Chest Control Box & DevtaSoft Logo */}
-        <rect x="52" y="52" width="26" height="24" rx="5" fill="#F1F5F9" stroke="#CBD5E1" strokeWidth="1.5" />
-        {/* Mini Orange DevtaSoft Logo Icon on Chest */}
-        <path d="M 58 64 L 65 57 L 72 64 L 65 71 Z" fill="#FF8706" />
-        <path d="M 62 64 L 65 61 L 68 64 L 65 67 Z" fill="#FFFFFF" />
-
-        {/* Suit Collar / Neck Ring */}
-        <ellipse cx="65" cy="38" rx="24" ry="7" fill="#CBD5E1" />
-        <ellipse cx="65" cy="36" rx="22" ry="5.5" fill="#94A3B8" />
-
-        {/* Helmet (Big glossy bubble) */}
-        <circle cx="65" cy="22" r="30" fill="url(#suitWhite)" />
-        <circle cx="65" cy="22" r="28" fill="#CBD5E1" />
-
-        {/* Visor Glass */}
-        <ellipse cx="65" cy="22" rx="24" ry="20" fill="url(#visorGlass)" />
-        
-        {/* Visor Reflection Gloss */}
-        <path d="M 52 10 A 18 14 0 0 1 76 10 A 20 16 0 0 0 52 10 Z" fill="#FFFFFF" opacity="0.3" />
-        <ellipse cx="55" cy="18" rx="5" ry="3" fill="#FFFFFF" opacity="0.4" transform="rotate(-20 55 18)" />
-
-        {/* Left Arm (Resting on Knee) */}
-        <path d="M 38 48 Q 20 65 24 85 Q 32 95 44 88 Q 38 75 42 55 Z" fill="url(#suitWhite)" />
-        <circle cx="23" cy="86" r="7" fill="#FF8706" /> {/* Orange Glove */}
-
-        {/* Right Arm (Raised to Helmet / Scratching Head in Confusion) */}
-        <path d="M 90 48 Q 110 30 96 15 Q 82 12 78 25 Q 90 28 84 52 Z" fill="url(#suitWhite)" />
-        <circle cx="92" cy="16" r="7.5" fill="#FF8706" /> {/* Orange Glove touching Visor */}
-
-        {/* Left Leg (Crossed / Folded forward) */}
-        <path d="M 42 92 C 30 95 18 105 25 118 C 35 125 55 120 62 110 C 52 105 48 98 42 92 Z" fill="url(#suitWhite)" />
-        {/* Boot Left */}
-        <path d="M 20 114 C 18 122 32 126 40 124 C 42 118 32 112 20 114 Z" fill="#334155" />
-        <path d="M 22 120 L 38 122" stroke="#FF8706" strokeWidth="2" strokeLinecap="round" />
-
-        {/* Right Leg (Folded forward) */}
-        <path d="M 88 92 C 100 95 112 105 105 118 C 95 125 75 120 68 110 C 78 105 82 98 88 92 Z" fill="url(#suitWhite)" />
-        {/* Boot Right */}
-        <path d="M 110 114 C 112 122 98 126 90 124 C 88 118 98 112 110 114 Z" fill="#334155" />
-        <path d="M 108 120 L 92 122" stroke="#FF8706" strokeWidth="2" strokeLinecap="round" />
       </g>
     </svg>
   </div>
