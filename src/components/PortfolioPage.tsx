@@ -1090,7 +1090,7 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display font-black text-4xl sm:text-5xl lg:text-[56px] text-[#0D152A] leading-[1.12] tracking-tight mb-6"
+            className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[66px] leading-[1.08] tracking-tight text-[#0D152A] mb-6"
           >
             Work we're proud of, <br />
             results that <span className="text-[#FF8706]">speak.</span>
@@ -1101,7 +1101,7 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal"
+            className="mt-6 sm:mt-8 text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal"
           >
             Explore a selection of projects we've designed, developed and delivered for clients across different industries.
           </motion.p>

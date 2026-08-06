@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="flex items-center gap-3 mt-2">
               {/* LinkedIn: #0A66C2 */}
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/company/devtasoft" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="w-10 h-10 rounded-full bg-[#0A66C2]/15 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#0A66C2]/30 shadow-sm hover:scale-110"
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({
 
               {/* Facebook: #1877F2 */}
               <a 
-                href="https://facebook.com" 
+                href="https://facebook.com/devtasoft" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="w-10 h-10 rounded-full bg-[#1877F2]/15 text-[#1877F2] hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#1877F2]/30 shadow-sm hover:scale-110"
@@ -90,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({
 
               {/* Instagram: Gradient #E4405F */}
               <a 
-                href="https://instagram.com" 
+                href="https://instagram.com/devtasoft" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="w-10 h-10 rounded-full bg-[#E4405F]/15 text-[#E4405F] hover:bg-gradient-to-tr hover:from-[#833AB4] hover:via-[#FD1D1D] hover:to-[#F77737] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#E4405F]/30 shadow-sm hover:scale-110"

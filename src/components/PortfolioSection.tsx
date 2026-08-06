@@ -614,10 +614,10 @@ export const PortfolioSection: React.FC<{
               <span className="text-[#14B8B0] font-black text-xs sm:text-sm uppercase tracking-[0.2em]">OUR PORTFOLIO</span>
               <span className="h-[2px] w-12 bg-[#14B8B0] rounded-full inline-block" />
             </div>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#0D152A] leading-[1.1] tracking-tight mb-6">
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[66px] leading-[1.08] tracking-tight text-[#0D152A] mb-6">
               Digital products <br />we're <span className="text-[#FF6B00]">proud of.</span>
             </h2>
-            <p className="text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal mb-8">
+            <p className="mt-6 sm:mt-8 text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal mb-8">
               Explore a selection of our work where design, technology, and strategy come together to create real impact.
             </p>
             <div className="flex items-center gap-4">
@@ -679,9 +679,6 @@ export const PortfolioSection: React.FC<{
               variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] } } }}
               whileHover={{ y: -8, scale: 1.02 }}>
               <div className="w-full h-[250px] sm:h-[270px] relative bg-[#F8FAFC] p-3 sm:p-4 overflow-hidden shrink-0 rounded-t-[32px] border-b border-slate-100 flex items-center justify-center">
-                <div className={`absolute top-4 left-4 z-20 ${project.badgeBg} ${project.badgeTextColor} font-extrabold text-xs px-3.5 py-1.5 rounded-full shadow-xs border border-slate-200/60`}>
-                  {project.badgeText}
-                </div>
                 <img
                   src={project.image}
                   alt={project.title}
