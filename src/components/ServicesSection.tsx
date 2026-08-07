@@ -592,17 +592,107 @@ const ServiceDetailModal: React.FC<{
 
 // ─── 3D Floating Cube Signature Illustration Component ──────────────────────
 const Services3DCubeIllustration: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Rotation angles & interaction states
+  const [rotX, setRotX] = useState(20);
+  const [rotY, setRotY] = useState(30);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const pointerStartRef = useRef<{ x: number; y: number; startRotX: number; startRotY: number }>({
+    x: 0,
+    y: 0,
+    startRotX: 20,
+    startRotY: 30,
+  });
+
+  // Continuous auto-spin when mouse is NOT interacting or dragging
+  useEffect(() => {
+    let animationFrameId: number;
+    let lastTime = performance.now();
+
+    const animateSpin = (time: number) => {
+      const delta = (time - lastTime) / 1000;
+      lastTime = time;
+
+      if (!isHovered && !isDragging) {
+        setRotY((prev) => (prev + delta * 24) % 360);
+      }
+
+      animationFrameId = requestAnimationFrame(animateSpin);
+    };
+
+    animationFrameId = requestAnimationFrame(animateSpin);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isHovered, isDragging]);
+
+  // Track cursor movement across container
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const normX = (e.clientX - centerX) / (rect.width / 2); // -1 to 1
+    const normY = (e.clientY - centerY) / (rect.height / 2); // -1 to 1
+
+    // Dynamic 3D tilt tracking cursor
+    setRotX(20 - normY * 45);
+    setRotY(normX * 180 + 30);
+  };
+
+  // Drag interaction handlers
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    pointerStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      startRotX: rotX,
+      startRotY: rotY,
+    };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const dx = e.clientX - pointerStartRef.current.x;
+    const dy = e.clientY - pointerStartRef.current.y;
+
+    setRotY(pointerStartRef.current.startRotY + dx * 0.75);
+    setRotX(Math.max(-80, Math.min(80, pointerStartRef.current.startRotX - dy * 0.75)));
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+  };
+
   return (
-    <div className="relative w-full max-w-[480px] lg:max-w-none h-[380px] sm:h-[420px] mx-auto flex items-center justify-center select-none">
+    <div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative w-full max-w-[480px] lg:max-w-none h-[380px] sm:h-[420px] mx-auto flex items-center justify-center select-none"
+    >
       {/* Background Ambient Radial Glow Lights */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(255,135,6,0.18)_0%,rgba(20,184,176,0.12)_50%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-[#14B8B0]/20 rounded-full animate-ping opacity-25 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-[#FF8706]/15 rounded-full pointer-events-none" />
 
+      {/* Interactive Cursor Indicator Badge */}
+      <div className="absolute bottom-2 z-30 bg-slate-900/80 backdrop-blur-md text-white/90 border border-white/10 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold tracking-wide shadow-lg flex items-center gap-2 pointer-events-none">
+        <Sparkles className="w-3.5 h-3.5 text-[#FF8706] animate-pulse" />
+        <span>Move cursor or drag to spin 3D Cube</span>
+      </div>
+
       {/* Orbiting Service Satellite Cards (6 Icons Around Cube) */}
       {/* 1. API */}
       <motion.div
-        className="absolute top-4 sm:top-6 left-1 sm:left-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
+        className="absolute top-4 sm:top-6 left-1 sm:left-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
       >
@@ -614,7 +704,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 2. Database */}
       <motion.div
-        className="absolute top-6 sm:top-12 right-1 sm:right-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
+        className="absolute top-6 sm:top-12 right-1 sm:right-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
         transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
       >
@@ -626,7 +716,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 3. Mobile */}
       <motion.div
-        className="absolute bottom-6 sm:bottom-12 right-1 sm:right-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
+        className="absolute bottom-6 sm:bottom-12 right-1 sm:right-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -7, 0], x: [0, -5, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
       >
@@ -638,7 +728,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 4. Cloud */}
       <motion.div
-        className="absolute bottom-4 sm:bottom-8 left-1 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
+        className="absolute bottom-4 sm:bottom-8 left-1 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 7, 0], x: [0, 5, 0] }}
         transition={{ duration: 4.0, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
       >
@@ -650,7 +740,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 5. AI */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
+        className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
       >
@@ -662,7 +752,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 6. Design */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 left-0 sm:left-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2"
+        className="absolute top-1/2 -translate-y-1/2 left-0 sm:left-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.0 }}
       >
@@ -673,25 +763,30 @@ const Services3DCubeIllustration: React.FC = () => {
       </motion.div>
 
       {/* Small Glowing Floating Particles */}
-      <span className="absolute top-14 left-1/4 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-75" />
-      <span className="absolute bottom-20 right-1/4 w-2.5 h-2.5 rounded-full bg-[#14B8B0] animate-pulse" />
-      <span className="absolute top-1/3 right-12 w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
-      <span className="absolute bottom-1/3 left-12 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-60" />
+      <span className="absolute top-14 left-1/4 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-75 pointer-events-none" />
+      <span className="absolute bottom-20 right-1/4 w-2.5 h-2.5 rounded-full bg-[#14B8B0] animate-pulse pointer-events-none" />
+      <span className="absolute top-1/3 right-12 w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse pointer-events-none" />
+      <span className="absolute bottom-1/3 left-12 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-60 pointer-events-none" />
 
-      {/* ─── 3D PERSPECTIVE STAGE ───────────────────────────────────── */}
-      <div className="perspective-[1000px] w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
-        {/* 3D ROTATING CUBE CONTAINER */}
+      {/* ─── 3D PERSPECTIVE STAGE WITH CURSOR DRAG & MOVE INTERACTION ───────────────────────────────────── */}
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        className="perspective-[1000px] w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center cursor-grab active:cursor-grabbing z-20"
+      >
+        {/* 3D INTERACTIVE ROTATING CUBE CONTAINER */}
         <motion.div
           className="relative w-40 h-40 sm:w-44 sm:h-44 [transform-style:preserve-3d]"
           animate={{
-            rotateX: [20, 30, 20],
-            rotateY: [0, 360],
-            y: [-12, 12, -12],
+            rotateX: rotX,
+            rotateY: rotY,
           }}
           transition={{
-            rotateY: { duration: 16, repeat: Infinity, ease: 'linear' },
-            rotateX: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
-            y: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+            type: 'spring',
+            stiffness: isDragging ? 300 : 120,
+            damping: isDragging ? 30 : 16,
+            mass: 0.8,
           }}
         >
           {/* CUBE FACE 1: FRONT (WEB) */}
