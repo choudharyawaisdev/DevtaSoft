@@ -45,6 +45,46 @@ const PORTFOLIO_CATEGORIES = [
   'AI & Automation',
 ];
 
+const compressImage = (file: File, maxWidth = 1200, maxHeight = 1200, quality = 0.85): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width / height > maxWidth / maxHeight) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(e.target?.result as string);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+        resolve(compressedBase64);
+      };
+      img.onerror = () => resolve(e.target?.result as string);
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+};
+
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, onLogout }) => {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [products, setProducts] = useState<ProductItem[]>([]);
@@ -165,25 +205,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
     }
   };
 
-  // Image Upload Handler (Base64 conversion)
+  // Image Upload Handler (Compressed Base64 conversion)
   const handleImageUpload = (file: File, callback: (base64: string) => void) => {
     if (!file) return;
     if (!file.type.match(/image\/(png|jpg|jpeg|webp)/i)) {
       showToast('Please upload a valid image (PNG, JPG, JPEG, or WebP).', 'error');
       return;
     }
-    if (file.size > 5 * 1024 * 1024) {
-      showToast('Image size must be under 5MB.', 'error');
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('Image size must be under 10MB.', 'error');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result) {
-        callback(e.target.result as string);
-      }
-    };
-    reader.readAsDataURL(file);
+    compressImage(file)
+      .then((compressedBase64) => {
+        callback(compressedBase64);
+      })
+      .catch(() => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (e.target?.result) {
+            callback(e.target.result as string);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
   };
 
   // Open Product Modal (Add or Edit)
@@ -226,20 +272,25 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
     setProductLoading(true);
 
     setTimeout(() => {
-      dataService.saveProduct(
-        {
-          name: productName.trim(),
-          domain: normalizeUrl(productDomain),
-          description: productDesc.trim() || undefined,
-          image: productImage,
-          showOnLanding: productShowOnLanding,
-        },
-        editingProductId || undefined
-      );
+      try {
+        dataService.saveProduct(
+          {
+            name: productName.trim(),
+            domain: normalizeUrl(productDomain),
+            description: productDesc.trim() || undefined,
+            image: productImage,
+            showOnLanding: productShowOnLanding,
+          },
+          editingProductId || undefined
+        );
 
-      setProductLoading(false);
-      closeProductModal();
-      showToast(editingProductId ? 'Product updated successfully!' : 'New product added successfully!');
+        setProductLoading(false);
+        closeProductModal();
+        showToast(editingProductId ? 'Product updated successfully!' : 'New product added successfully!');
+      } catch (err: any) {
+        setProductLoading(false);
+        showToast(err?.message || 'Failed to save product. Storage limit exceeded.', 'error');
+      }
     }, 400);
   };
 
@@ -292,21 +343,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
     setPortfolioLoading(true);
 
     setTimeout(() => {
-      dataService.savePortfolio(
-        {
-          name: portfolioName.trim(),
-          domain: normalizeUrl(portfolioDomain),
-          category: portfolioCategory,
-          description: portfolioDesc.trim() || undefined,
-          image: portfolioImage,
-          showOnLanding: portfolioShowOnLanding,
-        },
-        editingPortfolioId || undefined
-      );
+      try {
+        dataService.savePortfolio(
+          {
+            name: portfolioName.trim(),
+            domain: normalizeUrl(portfolioDomain),
+            category: portfolioCategory,
+            description: portfolioDesc.trim() || undefined,
+            image: portfolioImage,
+            showOnLanding: portfolioShowOnLanding,
+          },
+          editingPortfolioId || undefined
+        );
 
-      setPortfolioLoading(false);
-      closePortfolioModal();
-      showToast(editingPortfolioId ? 'Project updated successfully!' : 'New portfolio project added successfully!');
+        setPortfolioLoading(false);
+        closePortfolioModal();
+        showToast(editingPortfolioId ? 'Project updated successfully!' : 'New portfolio project added successfully!');
+      } catch (err: any) {
+        setPortfolioLoading(false);
+        showToast(err?.message || 'Failed to save portfolio project.', 'error');
+      }
     }, 400);
   };
 
@@ -1581,7 +1637,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
 
             <form onSubmit={handleSaveProduct} className="space-y-5">
               
-              {/* Image Upload Field */}
+              {/* Image Upload / URL Field */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Product Image *
@@ -1593,19 +1649,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
                     <button
                       type="button"
                       onClick={() => setProductImage('')}
-                      className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+                      className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-90 hover:opacity-100 transition-opacity cursor-pointer shadow-md"
+                      title="Remove image"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
                 ) : (
-                  <div
-                    onClick={() => productFileInputRef.current?.click()}
-                    className="border-2 border-dashed border-slate-200 hover:border-[#FF8706] bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-6 text-center cursor-pointer transition-colors"
-                  >
-                    <UploadCloud className="w-8 h-8 text-[#FF8706] mx-auto mb-2" />
-                    <p className="text-xs font-bold text-[#1E2340]">Upload image or drag & drop</p>
-                    <p className="text-[11px] text-slate-400 mt-1">PNG, JPG up to 5MB</p>
+                  <div className="space-y-2.5">
+                    <div
+                      onClick={() => productFileInputRef.current?.click()}
+                      className="border-2 border-dashed border-slate-200 hover:border-[#FF8706] bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-5 text-center cursor-pointer transition-colors"
+                    >
+                      <UploadCloud className="w-7 h-7 text-[#FF8706] mx-auto mb-1.5" />
+                      <p className="text-xs font-bold text-[#1E2340]">Upload image file (auto-compressed)</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">PNG, JPG, WebP up to 10MB</p>
+                    </div>
+
+                    <div className="flex items-center gap-2 my-1">
+                      <div className="h-[1px] bg-slate-200 flex-1" />
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">or paste image URL</span>
+                      <div className="h-[1px] bg-slate-200 flex-1" />
+                    </div>
+
+                    <input
+                      type="text"
+                      placeholder="https://images.unsplash.com/... or /image.png"
+                      value={productImage}
+                      onChange={(e) => setProductImage(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 focus:border-[#FF8706] focus:ring-2 focus:ring-[#FF8706]/20 outline-none text-xs font-medium transition-all"
+                    />
                   </div>
                 )}
                 <input
@@ -1727,7 +1800,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
 
             <form onSubmit={handleSavePortfolio} className="space-y-5">
               
-              {/* Image Upload Field */}
+              {/* Image Upload / URL Field */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Project Image / Mockup *
@@ -1739,19 +1812,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
                     <button
                       type="button"
                       onClick={() => setPortfolioImage('')}
-                      className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-90 hover:opacity-100 transition-opacity cursor-pointer"
+                      className="absolute top-2 right-2 bg-red-600 text-white p-1.5 rounded-full opacity-90 hover:opacity-100 transition-opacity cursor-pointer shadow-md"
+                      title="Remove image"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
                 ) : (
-                  <div
-                    onClick={() => portfolioFileInputRef.current?.click()}
-                    className="border-2 border-dashed border-slate-200 hover:border-[#00C2CC] bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-6 text-center cursor-pointer transition-colors"
-                  >
-                    <UploadCloud className="w-8 h-8 text-[#00C2CC] mx-auto mb-2" />
-                    <p className="text-xs font-bold text-[#1E2340]">Upload image or drag & drop</p>
-                    <p className="text-[11px] text-slate-400 mt-1">PNG, JPG up to 5MB</p>
+                  <div className="space-y-2.5">
+                    <div
+                      onClick={() => portfolioFileInputRef.current?.click()}
+                      className="border-2 border-dashed border-slate-200 hover:border-[#00C2CC] bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-5 text-center cursor-pointer transition-colors"
+                    >
+                      <UploadCloud className="w-7 h-7 text-[#00C2CC] mx-auto mb-1.5" />
+                      <p className="text-xs font-bold text-[#1E2340]">Upload image file (auto-compressed)</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">PNG, JPG, WebP up to 10MB</p>
+                    </div>
+
+                    <div className="flex items-center gap-2 my-1">
+                      <div className="h-[1px] bg-slate-200 flex-1" />
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">or paste image URL</span>
+                      <div className="h-[1px] bg-slate-200 flex-1" />
+                    </div>
+
+                    <input
+                      type="text"
+                      placeholder="https://images.unsplash.com/... or /image.png"
+                      value={portfolioImage}
+                      onChange={(e) => setPortfolioImage(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 focus:border-[#00C2CC] focus:ring-2 focus:ring-[#00C2CC]/20 outline-none text-xs font-medium transition-all"
+                    />
                   </div>
                 )}
                 <input

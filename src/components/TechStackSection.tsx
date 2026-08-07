@@ -22,7 +22,7 @@ const uiuxStack: TechItem[] = [
   {
     name: 'Adobe XD',
     category: 'uiux',
-    icon: <img src="/Adobe XD.png" alt="Adobe XD" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
+    icon: <img src="/Adobe-XD.png" alt="Adobe XD" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Sketch',
@@ -57,7 +57,7 @@ const frontendStack: TechItem[] = [
   {
     name: 'Tailwind CSS',
     category: 'frontend',
-    icon: <img src="/Tailwind CSS.png" alt="Tailwind CSS" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
+    icon: <img src="/Tailwind-CSS.png" alt="Tailwind CSS" className="h-13 sm:h-15 w-auto max-w-[68px] object-contain" />,
   },
   {
     name: 'Framer Motion',
@@ -219,21 +219,20 @@ export const TechStackSection: React.FC = () => {
 
       <div className="max-w-[1400px] mx-auto relative z-10">
         
-        {/* ─── SECTION HEADER (CENTERED) ─────────────────────────────────── */}
+        {/* ─── SECTION HEADER (LEFT ALIGNED) ─────────────────────────────── */}
         <motion.div
-          className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 sm:mb-20"
+          className="flex flex-col items-start text-left max-w-3xl mb-16 sm:mb-20 pl-4 sm:pl-6 lg:pl-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
         >
-          {/* Top Pill Eyebrow */}
+          {/* Top Eyebrow */}
           <div className="flex items-center gap-3 mb-4">
-            <span className="h-[2px] w-8 bg-[#FF8706] rounded-full inline-block" />
             <span className="text-[#FF8706] font-extrabold text-xs sm:text-sm uppercase tracking-[0.22em]">
               TECH STACK
             </span>
-            <span className="h-[2px] w-8 bg-[#FF8706] rounded-full inline-block" />
+            <span className="h-[2px] w-10 bg-[#FF8706] rounded-full inline-block" />
           </div>
 
           {/* Headline */}

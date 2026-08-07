@@ -438,15 +438,23 @@ export const dataService = {
       products.unshift(updatedItem);
     }
 
-    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
-    notifyDataChanged();
+    try {
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      notifyDataChanged();
+    } catch (err) {
+      console.error('Failed to save product to storage:', err);
+    }
     return updatedItem;
   },
 
   deleteProduct(id: string): void {
     const products = this.getProducts().filter((p) => p.id !== id);
-    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
-    notifyDataChanged();
+    try {
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      notifyDataChanged();
+    } catch (err) {
+      console.error('Failed to delete product from storage:', err);
+    }
   },
 
   getPortfolio(): PortfolioItem[] {
@@ -456,20 +464,7 @@ export const dataService = {
         localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(defaultPortfolio));
         return defaultPortfolio;
       }
-      let parsed: PortfolioItem[] = JSON.parse(stored);
-      let updated = false;
-
-      defaultPortfolio.forEach((defItem) => {
-        if (!parsed.some((item) => item.id === defItem.id || item.name.toLowerCase() === defItem.name.toLowerCase())) {
-          parsed.unshift(defItem);
-          updated = true;
-        }
-      });
-
-      if (updated) {
-        localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(parsed));
-      }
-      return parsed;
+      return JSON.parse(stored);
     } catch {
       return defaultPortfolio;
     }
@@ -504,15 +499,24 @@ export const dataService = {
       portfolio.unshift(updatedItem);
     }
 
-    localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(portfolio));
-    notifyDataChanged();
+    try {
+      localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(portfolio));
+      notifyDataChanged();
+    } catch (err) {
+      console.error('Failed to save portfolio item to storage:', err);
+      throw new Error('Browser storage quota exceeded. Try using an Image URL instead of a large uploaded file.');
+    }
     return updatedItem;
   },
 
   deletePortfolio(id: string): void {
     const portfolio = this.getPortfolio().filter((p) => p.id !== id);
-    localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(portfolio));
-    notifyDataChanged();
+    try {
+      localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(portfolio));
+      notifyDataChanged();
+    } catch (err) {
+      console.error('Failed to delete portfolio item from storage:', err);
+    }
   },
 
   toggleProductLanding(id: string): ProductItem[] {
