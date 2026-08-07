@@ -219,7 +219,13 @@ export default function App() {
     return dataService.subscribe(updateVisibility);
   }, []);
 
-  const isAdminLoggedIn = localStorage.getItem('devtasoft_admin_logged_in') === 'true';
+  const isAdminLoggedIn = (() => {
+    try {
+      return localStorage.getItem('devtasoft_admin_logged_in') === 'true';
+    } catch {
+      return false;
+    }
+  })();
   const isAdminRoute = location.pathname === '/admin' || location.pathname === '/login';
 
   // Strict Route Security for /admin and /login URLs: Automatically prompt login modal when accessed via URL.
