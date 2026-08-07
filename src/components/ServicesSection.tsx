@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -592,7 +592,7 @@ const ServiceDetailModal: React.FC<{
 
 // ─── 3D Floating Cube Signature Illustration Component ──────────────────────
 const Services3DCubeIllustration: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   // Rotation angles & interaction states
   const [rotX, setRotX] = useState(20);
@@ -600,7 +600,7 @@ const Services3DCubeIllustration: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const pointerStartRef = useRef<{ x: number; y: number; startRotX: number; startRotY: number }>({
+  const pointerStartRef = React.useRef<{ x: number; y: number; startRotX: number; startRotY: number }>({
     x: 0,
     y: 0,
     startRotX: 20,
