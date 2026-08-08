@@ -25,16 +25,23 @@ import {
   Lock,
   Unlock,
   Menu,
+  MessageSquare,
+  Mail,
+  Phone,
+  Building2,
+  Clock,
+  Search,
 } from 'lucide-react';
 import { Logo } from './Logo';
-import { dataService, ProductItem, PortfolioItem, VisibilitySettings } from '../services/dataService';
+import { dataService, ProductItem, PortfolioItem, VisibilitySettings, ContactMessage } from '../services/dataService';
 
 interface AdminDashboardProps {
   onViewWebsite: () => void;
   onLogout: () => void;
 }
 
-type TabType = 'dashboard' | 'visibility' | 'products' | 'portfolio';
+type TabType = 'dashboard' | 'visibility' | 'products' | 'portfolio' | 'inquiries';
+
 
 const PORTFOLIO_CATEGORIES = [
   'Web Development',
@@ -89,6 +96,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [portfolio, setPortfolio] = useState<PortfolioItem[]>([]);
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
+  const [messageSearch, setMessageSearch] = useState('');
+  const [messageFilter, setMessageFilter] = useState<'all' | 'unread'>('all');
+  const [deleteMessageConfirmId, setDeleteMessageConfirmId] = useState<string | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Toast Notification State
@@ -109,16 +121,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
     },
     {
       id: '2',
-      title: 'System Services Operational',
-      desc: 'All DevtaSoft web development pages and section controls are online.',
-      time: '15m ago',
+      title: 'System Health Check Passed',
+      desc: 'All 15 products and 22 portfolio projects are active with clean responsive design.',
+      time: '2 hours ago',
       read: false,
     },
     {
       id: '3',
-      title: 'Data Synchronization Complete',
-      desc: 'Products and portfolio data synchronized with storage.',
-      time: '1h ago',
+      title: 'Database & SMTP Sync Active',
+      desc: 'Supabase real-time cloud data sync and Gmail SMTP contact notifications are operational.',
+      time: 'Yesterday',
       read: false,
     },
   ];
@@ -168,6 +180,38 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
 
   const [visibilitySettings, setVisibilitySettings] = useState<VisibilitySettings>(dataService.getVisibility());
 
+  // Export / Import JSON Modal States
+  const [jsonModalOpen, setJsonModalOpen] = useState(false);
+  const [jsonMode, setJsonMode] = useState<'export' | 'import'>('export');
+  const [jsonText, setJsonText] = useState('');
+
+  const openExportModal = () => {
+    setJsonMode('export');
+    setJsonText(dataService.exportDataJSON());
+    setJsonModalOpen(true);
+  };
+
+  const openImportModal = () => {
+    setJsonMode('import');
+    setJsonText('');
+    setJsonModalOpen(true);
+  };
+
+  const handleImportJSON = () => {
+    try {
+      dataService.importDataJSON(jsonText);
+      showToast('Data imported successfully!', 'success');
+      setJsonModalOpen(false);
+    } catch (err: any) {
+      showToast(err.message || 'Invalid JSON data.', 'error');
+    }
+  };
+
+  const handleCopyJSON = () => {
+    navigator.clipboard.writeText(jsonText);
+    showToast('JSON copied to clipboard!', 'success');
+  };
+
   // Load items on mount and subscribe to data service changes
   useEffect(() => {
     const loadData = () => {
@@ -205,8 +249,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
     }
   };
 
-  // Image Upload Handler (Compressed Base64 conversion)
-  const handleImageUpload = (file: File, callback: (base64: string) => void) => {
+  // Image Upload Handler (Supabase Cloud Storage with Base64 fallback)
+  const handleImageUpload = async (file: File, callback: (url: string) => void) => {
     if (!file) return;
     if (!file.type.match(/image\/(png|jpg|jpeg|webp)/i)) {
       showToast('Please upload a valid image (PNG, JPG, JPEG, or WebP).', 'error');
@@ -217,6 +261,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
       return;
     }
 
+    // Try uploading directly to Supabase Cloud Storage if configured
+    const publicUrl = await dataService.uploadImageToSupabase(file);
+    if (publicUrl) {
+      callback(publicUrl);
+      showToast('Image uploaded to Supabase Storage!');
+      return;
+    }
+
+    // Fallback to compressed Base64
     compressImage(file)
       .then((compressedBase64) => {
         callback(compressedBase64);
@@ -231,6 +284,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
         reader.readAsDataURL(file);
       });
   };
+
 
   // Open Product Modal (Add or Edit)
   const openProductModal = (product?: ProductItem) => {
@@ -487,6 +541,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
                 <Briefcase className={`w-5 h-5 ${activeTab === 'portfolio' ? 'text-[#00C2CC]' : 'text-slate-400'}`} />
                 <span>Portfolio</span>
               </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab('inquiries');
+                  setMobileSidebarOpen(false);
+                }}
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-sm transition-all cursor-pointer ${
+                  activeTab === 'inquiries'
+                    ? 'bg-slate-800/80 text-white shadow-md border-l-4 border-l-[#14B8B0]'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800/40'
+                }`}
+              >
+                <div className="flex items-center gap-3.5">
+                  <MessageSquare className={`w-5 h-5 ${activeTab === 'inquiries' ? 'text-[#14B8B0]' : 'text-slate-400'}`} />
+                  <span>Inquiries</span>
+                </div>
+                {messages.filter((m) => !m.read).length > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-[#FF6B00] text-white text-[11px] font-extrabold animate-pulse">
+                    {messages.filter((m) => !m.read).length}
+                  </span>
+                )}
+              </button>
             </nav>
           </div>
 
@@ -556,17 +632,29 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
                 {activeTab === 'visibility' && 'Page & Section Controls'}
                 {activeTab === 'products' && 'Products'}
                 {activeTab === 'portfolio' && 'Portfolio Projects'}
+                {activeTab === 'inquiries' && 'Contact Form Inquiries'}
               </h1>
               <p className="text-xs sm:text-sm text-[#667085] font-medium hidden sm:block">
                 {activeTab === 'dashboard' && "Welcome back! Here's what's happening."}
                 {activeTab === 'visibility' && 'Hide or show pages, navbar items, and landing page sections.'}
                 {activeTab === 'products' && 'Manage all products displayed on the DevtaSoft website.'}
                 {activeTab === 'portfolio' && 'Manage all portfolio projects displayed on the website.'}
+                {activeTab === 'inquiries' && 'View and manage all messages submitted by website visitors.'}
               </p>
+
             </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
+            <button
+              onClick={openExportModal}
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E6F8F9] text-[#14B8B0] hover:bg-[#14B8B0] hover:text-white font-bold text-xs transition-all cursor-pointer border border-[#14B8B0]/30 shadow-xs"
+              title="Export Data JSON for Vercel Deployment"
+            >
+              <UploadCloud className="w-4 h-4" />
+              <span>Export JSON</span>
+            </button>
+
             <div className="relative" ref={notificationRef}>
               <button
                 onClick={() => {
@@ -651,6 +739,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
           {activeTab === 'dashboard' && (
             <div className="space-y-8 animate-in fade-in duration-300">
               
+              {/* Notice Banner for Multi-Device Visibility */}
+              <div className="bg-gradient-to-r from-[#0D152A] to-[#1E2340] text-white rounded-3xl p-6 sm:p-7 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-700">
+                <div className="space-y-1.5 max-w-2xl">
+                  <div className="flex items-center gap-2 text-[#FF8706] font-extrabold text-xs uppercase tracking-wider">
+                    <Globe className="w-4 h-4 text-[#14B8B0]" /> Multi-Device & Vercel Sync Guide
+                  </div>
+                  <h3 className="font-display font-extrabold text-lg sm:text-xl text-white">
+                    Added projects & products save locally in your browser storage.
+                  </h3>
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    To make your new projects and products visible to <strong>every visitor on all devices globally</strong> on devtasoft.vercel.app, click <strong>Export JSON</strong> and paste the output into your project code before building.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <button
+                    onClick={openExportModal}
+                    className="bg-[#14B8B0] hover:bg-[#0FA39C] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-2xl flex items-center gap-2 shadow-md shadow-[#14B8B0]/20 transition-all cursor-pointer"
+                  >
+                    <UploadCloud className="w-4 h-4" />
+                    <span>Export JSON Data</span>
+                  </button>
+                  <button
+                    onClick={openImportModal}
+                    className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl flex items-center gap-2 transition-all cursor-pointer border border-white/20"
+                  >
+                    <span>Import JSON</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Summary Cards Row */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 
@@ -1614,6 +1732,208 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
             </div>
           )}
 
+          {/* ═══════════════════════════════════════════
+              CONTACT INQUIRIES TAB VIEW
+          ═══════════════════════════════════════════ */}
+          {activeTab === 'inquiries' && (
+            <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
+              
+              {/* Header Stats Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#E6F8F9] text-[#14B8B0] flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Total Inquiries</p>
+                    <h3 className="font-display font-extrabold text-2xl text-[#1E2340]">{messages.length}</h3>
+                  </div>
+                </div>
+
+                <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FFEFE5] text-[#FF8706] flex items-center justify-center shrink-0">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Unread Messages</p>
+                    <h3 className="font-display font-extrabold text-2xl text-[#FF8706]">
+                      {messages.filter((m) => !m.read).length}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Reviewed / Read</p>
+                    <h3 className="font-display font-extrabold text-2xl text-emerald-600">
+                      {messages.filter((m) => m.read).length}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Table / List Container */}
+              <div className="bg-white border border-[#E7EAF0] rounded-3xl p-5 sm:p-8 shadow-xs space-y-6">
+                
+                {/* Search & Filter Header */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                  <div className="relative flex-1 max-w-md">
+                    <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      placeholder="Search inquiries by name, email, or message..."
+                      value={messageSearch}
+                      onChange={(e) => setMessageSearch(e.target.value)}
+                      className="w-full pl-11 pr-4 py-2.5 rounded-2xl border border-slate-200 focus:outline-none focus:border-[#14B8B0] focus:ring-2 focus:ring-[#14B8B0]/20 text-xs font-semibold text-[#1E2340]"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setMessageFilter('all')}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        messageFilter === 'all'
+                          ? 'bg-[#14B8B0] text-white shadow-sm'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      All ({messages.length})
+                    </button>
+                    <button
+                      onClick={() => setMessageFilter('unread')}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        messageFilter === 'unread'
+                          ? 'bg-[#FF8706] text-white shadow-sm'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      Unread ({messages.filter((m) => !m.read).length})
+                    </button>
+                  </div>
+                </div>
+
+                {/* Messages List */}
+                {messages.length === 0 ? (
+                  <div className="text-center py-16 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200 space-y-3">
+                    <MessageSquare className="w-10 h-10 text-slate-300 mx-auto" />
+                    <h4 className="font-display font-extrabold text-base text-[#1E2340]">No Contact Messages Yet</h4>
+                    <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                      Submissions from the website contact forms will appear here in real-time.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {messages
+                      .filter((m) => {
+                        if (messageFilter === 'unread' && m.read) return false;
+                        if (!messageSearch) return true;
+                        const query = messageSearch.toLowerCase();
+                        return (
+                          m.name.toLowerCase().includes(query) ||
+                          m.email.toLowerCase().includes(query) ||
+                          (m.subject && m.subject.toLowerCase().includes(query)) ||
+                          m.message.toLowerCase().includes(query)
+                        );
+                      })
+                      .map((msg) => (
+                        <div
+                          key={msg.id}
+                          onClick={() => {
+                            setSelectedMessage(msg);
+                            if (!msg.read) {
+                              dataService.markMessageRead(msg.id);
+                              setMessages(dataService.getMessages());
+                            }
+                          }}
+                          className={`p-4 sm:p-5 rounded-2xl border transition-all cursor-pointer group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                            !msg.read
+                              ? 'bg-[#E6F8F9]/30 border-[#14B8B0]/40 shadow-xs hover:border-[#14B8B0]'
+                              : 'bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50/50'
+                          }`}
+                        >
+                          <div className="flex items-start gap-4 flex-1">
+                            <div className={`w-11 h-11 rounded-2xl flex items-center justify-center font-extrabold text-sm shrink-0 shadow-xs ${
+                              !msg.read ? 'bg-[#14B8B0] text-white' : 'bg-slate-100 text-slate-600'
+                            }`}>
+                              {msg.name.charAt(0).toUpperCase()}
+                            </div>
+
+                            <div className="space-y-1 overflow-hidden">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <h4 className="font-extrabold text-sm text-[#1E2340] group-hover:text-[#14B8B0] transition-colors">
+                                  {msg.name}
+                                </h4>
+                                {!msg.read && (
+                                  <span className="px-2 py-0.5 rounded-full bg-[#FF8706] text-white text-[10px] font-extrabold">
+                                    NEW UNREAD
+                                  </span>
+                                )}
+                                {msg.subject && (
+                                  <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold border border-slate-200">
+                                    {msg.subject}
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="flex items-center gap-4 text-xs text-slate-500 font-medium flex-wrap">
+                                <span className="flex items-center gap-1">
+                                  <Mail className="w-3.5 h-3.5 text-slate-400" />
+                                  {msg.email}
+                                </span>
+                                {msg.company && (
+                                  <span className="flex items-center gap-1">
+                                    <Building2 className="w-3.5 h-3.5 text-slate-400" />
+                                    {msg.company}
+                                  </span>
+                                )}
+                                {msg.phone && (
+                                  <span className="flex items-center gap-1">
+                                    <Phone className="w-3.5 h-3.5 text-slate-400" />
+                                    {msg.phone}
+                                  </span>
+                                )}
+                              </div>
+
+                              <p className="text-xs text-slate-600 line-clamp-2 font-normal pt-1">
+                                {msg.message}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                            <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5" />
+                              {new Date(msg.createdAt).toLocaleDateString(undefined, {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setDeleteMessageConfirmId(msg.id);
+                              }}
+                              className="p-2 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-colors cursor-pointer"
+                              title="Delete Message"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+
         </main>
       </div>
 
@@ -2019,6 +2339,207 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
         </div>
       )}
 
+      {/* JSON Export / Import Modal */}
+      {jsonModalOpen && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border border-[#E7EAF0] rounded-3xl w-full max-w-2xl p-6 sm:p-8 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-xl bg-[#E6F8F9] text-[#14B8B0] flex items-center justify-center">
+                  <UploadCloud className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-display font-extrabold text-lg text-[#1E2340]">
+                    {jsonMode === 'export' ? 'Export Data JSON' : 'Import Data JSON'}
+                  </h4>
+                  <p className="text-xs text-slate-500">
+                    {jsonMode === 'export'
+                      ? 'Copy this JSON data to synchronize products and portfolio projects across all devices.'
+                      : 'Paste valid JSON data below to import products, portfolio projects, and visibility settings.'}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setJsonModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <label className="font-bold text-xs text-[#1E2340] block">
+                {jsonMode === 'export' ? 'Data JSON Output' : 'Paste JSON Data'}
+              </label>
+              <textarea
+                value={jsonText}
+                onChange={(e) => setJsonText(e.target.value)}
+                readOnly={jsonMode === 'export'}
+                rows={12}
+                placeholder="Paste JSON content here..."
+                className="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50 font-mono text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#14B8B0]/30 resize-none custom-scrollbar"
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => dataService.resetToDefaults()}
+                className="px-4 py-2 rounded-xl text-red-500 hover:bg-red-50 font-bold text-xs cursor-pointer"
+              >
+                Reset to Code Defaults
+              </button>
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setJsonModalOpen(false)}
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-50 cursor-pointer"
+                >
+                  Close
+                </button>
+                {jsonMode === 'export' ? (
+                  <button
+                    type="button"
+                    onClick={handleCopyJSON}
+                    className="px-5 py-2.5 rounded-xl bg-[#14B8B0] hover:bg-[#0FA39C] text-white font-bold text-xs shadow-md shadow-[#14B8B0]/20 cursor-pointer"
+                  >
+                    Copy JSON to Clipboard
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleImportJSON}
+                    className="px-5 py-2.5 rounded-xl bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-xs shadow-md shadow-[#FF8706]/20 cursor-pointer"
+                  >
+                    Import & Save Data
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Message Full Detail Modal */}
+      {selectedMessage && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border border-[#E7EAF0] rounded-3xl w-full max-w-xl p-6 sm:p-8 shadow-2xl space-y-6 relative animate-in zoom-in-95 duration-200">
+            <button
+              onClick={() => setSelectedMessage(null)}
+              className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 bg-slate-100 p-2 rounded-full cursor-pointer transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-start gap-4 pb-4 border-b border-slate-100 pr-8">
+              <div className="w-12 h-12 rounded-2xl bg-[#E6F8F9] text-[#14B8B0] flex items-center justify-center font-extrabold text-lg shrink-0">
+                {selectedMessage.name.charAt(0).toUpperCase()}
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-display font-extrabold text-xl text-[#1E2340]">
+                  {selectedMessage.name}
+                </h3>
+                <div className="flex items-center gap-3 text-xs text-slate-500 font-medium flex-wrap">
+                  <span className="flex items-center gap-1 text-[#14B8B0] font-bold">
+                    <Mail className="w-3.5 h-3.5" />
+                    {selectedMessage.email}
+                  </span>
+                  {selectedMessage.phone && (
+                    <span className="flex items-center gap-1">
+                      <Phone className="w-3.5 h-3.5 text-slate-400" />
+                      {selectedMessage.phone}
+                    </span>
+                  )}
+                  {selectedMessage.company && (
+                    <span className="flex items-center gap-1">
+                      <Building2 className="w-3.5 h-3.5 text-slate-400" />
+                      {selectedMessage.company}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {selectedMessage.subject && (
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-bold text-[#1E2340]">
+                Subject: <span className="text-[#FF8706]">{selectedMessage.subject}</span>
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">
+                Message Body
+              </label>
+              <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 text-sm text-slate-700 font-medium whitespace-pre-wrap leading-relaxed max-h-60 overflow-y-auto">
+                {selectedMessage.message}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+              <span className="text-xs text-slate-400 font-medium">
+                Received: {new Date(selectedMessage.createdAt).toLocaleString()}
+              </span>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setDeleteMessageConfirmId(selectedMessage.id)}
+                  className="px-4 py-2 rounded-xl text-red-500 hover:bg-red-50 font-bold text-xs cursor-pointer flex items-center gap-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete</span>
+                </button>
+
+                <a
+                  href={`mailto:${selectedMessage.email}?subject=Re: ${encodeURIComponent(selectedMessage.subject || 'DevtaSoft Inquiry')}`}
+                  className="px-5 py-2.5 rounded-xl bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-xs shadow-md shadow-[#FF8706]/20 inline-flex items-center gap-2"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Reply via Email</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Message Confirmation Modal */}
+      {deleteMessageConfirmId && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border border-[#E7EAF0] rounded-3xl w-full max-w-sm p-6 text-center shadow-2xl space-y-4">
+            <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center mx-auto">
+              <AlertTriangle className="w-6 h-6" />
+            </div>
+            <h4 className="font-display font-extrabold text-lg text-[#1E2340]">Delete Message?</h4>
+            <p className="text-xs text-slate-500">
+              Are you sure you want to delete this contact message? This action cannot be undone.
+            </p>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setDeleteMessageConfirmId(null)}
+                className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  dataService.deleteMessage(deleteMessageConfirmId);
+                  setMessages(dataService.getMessages());
+                  setDeleteMessageConfirmId(null);
+                  if (selectedMessage?.id === deleteMessageConfirmId) setSelectedMessage(null);
+                  showToast('Message deleted');
+                }}
+                className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md shadow-red-500/20"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
+

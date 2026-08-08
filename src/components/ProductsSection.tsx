@@ -331,6 +331,24 @@ const productModalDetails: Record<string, {
     themeColor: '#06B6D4',
     themeBg: '#EFF8FA',
   },
+  notepad: {
+    tagline: 'Secure, Cloud-Synced Workspace for Quick Ideas',
+    longDesc: 'Online Notepad offers a lightweight, distraction-free environment for rapid note-taking, rich-text editing, password-protected notes, and cloud syncing.',
+    stats: [
+      { value: '100%', label: 'End-to-End Encrypted' },
+      { value: 'Zero', label: 'Lag Performance' },
+      { value: 'Cloud', label: 'Cross-Device Sync' }
+    ],
+    features: [
+      { title: 'Encrypted Password Lock', desc: 'Protect sensitive notes with AES-256 password protection.' },
+      { title: 'Rich Formatting Bar', desc: 'Clean formatting tools for headers, lists, code blocks, and links.' },
+      { title: 'Live Collaboration', desc: 'Share editable note links with teammates with live cursor sync.' },
+      { title: 'Offline Web App (PWA)', desc: 'Works seamlessly offline and syncs back when connectivity restores.' }
+    ],
+    badges: ['Encrypted', 'PWA Offline', 'Live Collaboration', 'Cloud Sync'],
+    themeColor: '#06B6D4',
+    themeBg: '#EFF8FA',
+  },
   numblee: {
     tagline: 'Gamified Mathematics That Makes Learning Addictive',
     longDesc: 'NUMBLEE transforms math practice for kids and students into interactive games, timed daily puzzles, and competitive global leaderboards.',
@@ -351,6 +369,32 @@ const productModalDetails: Record<string, {
   },
 };
 
+const getProductDetails = (product: Product) => {
+  const details =
+    productModalDetails[product.id] ||
+    productModalDetails[product.id.replace('_', '')] ||
+    productModalDetails[product.name.toLowerCase().replace(/[^a-z]/g, '')];
+
+  if (details) return details;
+
+  return {
+    tagline: product.name,
+    longDesc: product.description || `${product.name} is an intelligent digital product built by DevtaSoft.`,
+    stats: [
+      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '< 1s', label: 'Response Latency' },
+      { value: '24/7', label: 'Availability' },
+    ],
+    features: [
+      { title: 'High Performance Core', desc: 'Engineered for fast rendering and seamless user interaction.' },
+      { title: 'Secure & Reliable', desc: 'Built following modern web standards and security best practices.' },
+    ],
+    badges: ['DevtaSoft Product', 'Verified App'],
+    themeColor: '#FF8706',
+    themeBg: '#FFEFE5',
+  };
+};
+
 // ─── Product Detail Modal Component ─────────────────────────────────────
 const ProductDetailModal: React.FC<{
   product: Product | null;
@@ -358,8 +402,8 @@ const ProductDetailModal: React.FC<{
   onExploreAll?: () => void;
 }> = ({ product, onClose, onExploreAll }) => {
   if (!product) return null;
-  const details = productModalDetails[product.id];
-  if (!details) return null;
+  const details = getProductDetails(product);
+
 
   return (
     <AnimatePresence>

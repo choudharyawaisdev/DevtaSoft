@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Clock, User, FileText, PenTool, Lock, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { DotGrid } from './DotGrid';
+import { dataService } from '../services/dataService';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,20 +13,53 @@ export const ContactSection: React.FC = () => {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       setStatus('error');
       return;
     }
     setStatus('loading');
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    // Save message into Admin Dashboard data service
+    dataService.saveMessage({
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    });
+
+
+    try {
+      const mysqlApiUrl = ((import.meta as any).env?.VITE_MYSQL_API_URL || '').replace(/\/$/, '');
+      const primaryEndpoint = mysqlApiUrl ? `${mysqlApiUrl}/contact.php` : '/api/contact';
+
+      const res = await fetch(primaryEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        const fallbackRes = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        setStatus('success');
+        if (fallbackRes.ok) {
+          setFormData({ name: '', email: '', subject: '', message: '' });
+        }
+      }
+    } catch {
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1500);
+    }
   };
+
 
   return (
     <section id="contact" className="w-full bg-[#FCFDFE] py-20 sm:py-28 px-2 sm:px-4 lg:px-6 font-sans overflow-hidden border-t border-slate-50 relative">

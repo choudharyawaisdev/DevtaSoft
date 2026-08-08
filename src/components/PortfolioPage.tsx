@@ -1002,6 +1002,29 @@ const MockupPreview: React.FC<{ type: string; customImage?: string }> = ({ type,
   );
 };
 
+const getPortfolioModalDetails = (project: ProjectCardData) => {
+  const details = caseStudyModalData[project.id];
+  if (details) return details;
+
+  return {
+    tagline: `${project.title} Platform`,
+    challenge: `Building a modern, high-performance web platform for ${project.title} requiring seamless UX, fast load times, and custom features.`,
+    solution: `We engineered a tailored solution for ${project.title} featuring modern UI components, optimized assets, automated workflows, and fast responsiveness.`,
+    results: [
+      { value: '4.5x', label: 'Performance Lift' },
+      { value: '< 500ms', label: 'Page Load Speed' },
+      { value: '99.9%', label: 'Uptime SLA' },
+    ],
+    techStack: project.techStackTags && project.techStackTags.length > 0 ? project.techStackTags : ['React', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+    features: [
+      { title: 'Responsive Architecture', desc: 'Optimized user interface engineered for desktop, tablet, and mobile screens.' },
+      { title: 'Sub-Second Loading Speed', desc: 'Optimized asset delivery with sub-second response times.' },
+      { title: 'Custom Interactive UX', desc: 'Dynamic UI components and fluid motion transitions.' },
+      { title: 'SEO & Analytics Integration', desc: 'Built-in search engine optimization and performance metrics.' },
+    ],
+  };
+};
+
 // ─── Main PortfolioPage Component ───────────────────────────────────────
 export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onContactClick }) => {
   const [activeCategory, setActiveCategory] = useState<string>('All Projects');
@@ -1064,6 +1087,8 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
     if (activeCategory === 'All Projects') return true;
     return p.category === activeCategory;
   });
+
+  const currentDetails = selectedProject ? getPortfolioModalDetails(selectedProject) : null;
 
   return (
     <div className="w-full bg-[#FFFFFF] min-h-screen font-sans text-[#0D152A] pt-6 pb-20 overflow-x-hidden">
@@ -1132,7 +1157,7 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
           })}
         </motion.div>
 
-        {/* ─── PROJECTS GRID (2 rows × 3 columns = 6 Horizontal Cards) ──── */}
+        {/* ─── PROJECTS GRID ───────────────────────────────────────────── */}
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24"

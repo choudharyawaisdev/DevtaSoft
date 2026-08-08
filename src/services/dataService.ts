@@ -1,3 +1,5 @@
+import { supabase, isSupabaseConfigured } from './supabaseClient';
+
 export interface ProductItem {
   id: string;
   name: string;
@@ -17,6 +19,18 @@ export interface PortfolioItem {
   category?: string;
   showOnLanding?: boolean;
   createdAt: number;
+}
+
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+  phone?: string;
+  company?: string;
+  createdAt: number;
+  read?: boolean;
 }
 
 export interface VisibilitySettings {
@@ -39,6 +53,7 @@ export interface VisibilitySettings {
 const PRODUCTS_STORAGE_KEY = 'devtasoft_admin_products_v4';
 const PORTFOLIO_STORAGE_KEY = 'devtasoft_admin_portfolio_v5';
 const VISIBILITY_STORAGE_KEY = 'devtasoft_admin_visibility_v1';
+const MESSAGES_STORAGE_KEY = 'devtasoft_admin_messages_v2';
 
 const defaultVisibility: VisibilitySettings = {
   pages: {
@@ -56,6 +71,32 @@ const defaultVisibility: VisibilitySettings = {
     statsBar: true,
   },
 };
+
+const defaultMessages: ContactMessage[] = [
+  {
+    id: 'msg-1',
+    name: 'Sarah Connor',
+    email: 'sarah.c@techventure.io',
+    company: 'TechVenture Inc.',
+    phone: '+1 (555) 234-5678',
+    subject: 'Custom Web & Mobile App Development Quote',
+    message: 'Hello DevtaSoft team! We are looking for an experienced engineering team to build a high-performance SaaS platform and mobile application for our logistics network. Could we schedule a call to discuss our scope and roadmap?',
+    createdAt: Date.now() - 3600000 * 4,
+    read: false,
+  },
+  {
+    id: 'msg-2',
+    name: 'Michael Vance',
+    email: 'm.vance@apexretail.com',
+    company: 'Apex Retail Solutions',
+    phone: '+92 300 1234567',
+    subject: 'Shopify Store Customization & Speed Optimization',
+    message: 'Hi! We loved your work on the cosme.store project. We have an existing e-commerce storefront with high traffic that needs custom checkout integrations and speed optimizations. Please send over your portfolio & pricing tiers.',
+    createdAt: Date.now() - 3600000 * 18,
+    read: true,
+  },
+];
+
 
 // All 15 Pre-existing Products
 const defaultProducts: ProductItem[] = [
@@ -181,7 +222,7 @@ const defaultProducts: ProductItem[] = [
   },
 ];
 
-// All 15 Pre-existing Portfolio Projects
+// All 22 Pre-existing Portfolio Projects
 const defaultPortfolio: PortfolioItem[] = [
   {
     id: 'cosme-store',
@@ -190,6 +231,7 @@ const defaultPortfolio: PortfolioItem[] = [
     description: 'Luxury cosmetics, makeup, face washes, and perfume e-commerce storefront with custom shade finder and instant checkout.',
     image: '/cosme.png',
     category: 'Shopify Store Development',
+    showOnLanding: true,
     createdAt: Date.now() - 220000,
   },
   {
@@ -209,7 +251,7 @@ const defaultPortfolio: PortfolioItem[] = [
     description: 'Enterprise Learning Management System with automated course builder, student analytics dashboard, live class streaming, and automated grading.',
     image: '/lms.png',
     category: 'Custom Software Development',
-    showOnLanding: false,
+    showOnLanding: true,
     createdAt: Date.now() - 200000,
   },
   {
@@ -219,7 +261,7 @@ const defaultPortfolio: PortfolioItem[] = [
     description: 'Professional handyman & home maintenance service portal with instant quote builder, online booking system, and technician dispatch tracking.',
     image: '/pl.png',
     category: 'Web Development',
-    showOnLanding: false,
+    showOnLanding: true,
     createdAt: Date.now() - 190000,
   },
   {
@@ -229,7 +271,7 @@ const defaultPortfolio: PortfolioItem[] = [
     description: 'Plumbing & commercial piping contractor web platform with instant booking, emergency service dispatch, and service estimate calculator.',
     image: '/nexf.png',
     category: 'Web Development',
-    showOnLanding: false,
+    showOnLanding: true,
     createdAt: Date.now() - 180000,
   },
   {
@@ -239,7 +281,7 @@ const defaultPortfolio: PortfolioItem[] = [
     description: 'Commercial & residential roofing contractor digital platform with instant estimate calculator, project portfolio, and inspection scheduling.',
     image: '/icr.png',
     category: 'Web Development',
-    showOnLanding: false,
+    showOnLanding: true,
     createdAt: Date.now() - 170000,
   },
   {
@@ -249,7 +291,7 @@ const defaultPortfolio: PortfolioItem[] = [
     description: 'Luxury hotel booking & hospitality web portal with real-time reservation management, room customization, and instant payment integration.',
     image: '/hw1.png',
     category: 'Web Development',
-    showOnLanding: false,
+    showOnLanding: true,
     createdAt: Date.now() - 160000,
   },
   {
@@ -395,6 +437,95 @@ const notifyDataChanged = () => {
   window.dispatchEvent(new Event('devtasoft-data-changed'));
 };
 
+const mysqlApiUrl = ((import.meta as any).env?.VITE_MYSQL_API_URL || '').replace(/\/$/, '');
+const isMysqlConfigured = Boolean(mysqlApiUrl);
+
+// Initial MySQL Sync setup
+if (isMysqlConfigured) {
+  const syncFromMysql = async () => {
+    try {
+      const [prodRes, portRes, visRes] = await Promise.all([
+        fetch(`${mysqlApiUrl}/products.php`).then((r) => r.json()).catch(() => fetch(`${mysqlApiUrl}/products`).then((r) => r.json())),
+        fetch(`${mysqlApiUrl}/portfolio.php`).then((r) => r.json()).catch(() => fetch(`${mysqlApiUrl}/portfolio`).then((r) => r.json())),
+        fetch(`${mysqlApiUrl}/visibility.php`).then((r) => r.json()).catch(() => fetch(`${mysqlApiUrl}/visibility`).then((r) => r.json())),
+      ]);
+
+      if (Array.isArray(prodRes) && prodRes.length > 0) {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(prodRes));
+      }
+      if (Array.isArray(portRes) && portRes.length > 0) {
+        localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(portRes));
+      }
+      if (visRes && typeof visRes === 'object') {
+        localStorage.setItem(VISIBILITY_STORAGE_KEY, JSON.stringify(visRes));
+      }
+      notifyDataChanged();
+    } catch (err) {
+      console.error('MySQL initial fetch error:', err);
+    }
+  };
+
+  syncFromMysql();
+}
+
+// Initial Supabase Sync setup
+if (isSupabaseConfigured && supabase) {
+  const syncFromSupabase = async () => {
+    try {
+      const [prodRes, portRes, visRes] = await Promise.all([
+        supabase.from('products').select('*'),
+        supabase.from('portfolio').select('*'),
+        supabase.from('visibility').select('settings').eq('id', 'settings').single(),
+      ]);
+
+      if (!prodRes.error && prodRes.data && prodRes.data.length > 0) {
+        const mappedProducts: ProductItem[] = prodRes.data.map((row) => ({
+          id: row.id,
+          name: row.name,
+          domain: row.domain,
+          description: row.description || undefined,
+          image: row.image,
+          showOnLanding: row.show_on_landing,
+          createdAt: Number(row.created_at || Date.now()),
+        }));
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(mappedProducts));
+      }
+
+      if (!portRes.error && portRes.data && portRes.data.length > 0) {
+        const mappedPortfolio: PortfolioItem[] = portRes.data.map((row) => ({
+          id: row.id,
+          name: row.name,
+          domain: row.domain,
+          description: row.description || undefined,
+          image: row.image,
+          category: row.category || undefined,
+          showOnLanding: row.show_on_landing,
+          createdAt: Number(row.created_at || Date.now()),
+        }));
+        localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(mappedPortfolio));
+      }
+
+      if (!visRes.error && visRes.data?.settings) {
+        localStorage.setItem(VISIBILITY_STORAGE_KEY, JSON.stringify(visRes.data.settings));
+      }
+
+      notifyDataChanged();
+    } catch (err) {
+      console.error('Supabase initial fetch error:', err);
+    }
+  };
+
+  syncFromSupabase();
+
+  // Listen for real-time changes across devices
+  supabase
+    .channel('devtasoft-db-changes')
+    .on('postgres_changes', { event: '*', schema: 'public' }, () => {
+      syncFromSupabase();
+    })
+    .subscribe();
+}
+
 export const dataService = {
   getProducts(): ProductItem[] {
     try {
@@ -403,7 +534,19 @@ export const dataService = {
         localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(defaultProducts));
         return defaultProducts;
       }
-      return JSON.parse(stored);
+      const parsed: ProductItem[] = JSON.parse(stored);
+      if (!Array.isArray(parsed) || parsed.length === 0) {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(defaultProducts));
+        return defaultProducts;
+      }
+      const missingDefaults = defaultProducts.filter(
+        (def) => !parsed.some((p) => p.id === def.id || p.name.toLowerCase() === def.name.toLowerCase())
+      );
+      if (missingDefaults.length > 0) {
+        const merged = [...parsed, ...missingDefaults];
+        return merged;
+      }
+      return parsed;
     } catch {
       return defaultProducts;
     }
@@ -444,6 +587,40 @@ export const dataService = {
     } catch (err) {
       console.error('Failed to save product to storage:', err);
     }
+
+    // Sync to MySQL Database if configured
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/products.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedItem),
+      }).catch(() => {
+        fetch(`${mysqlApiUrl}/products`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedItem),
+        }).catch((err) => console.error('MySQL product save error:', err));
+      });
+    }
+
+    // Sync to Supabase Cloud Database if configured
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('products')
+        .upsert({
+          id: updatedItem.id,
+          name: updatedItem.name,
+          domain: updatedItem.domain,
+          description: updatedItem.description || null,
+          image: updatedItem.image,
+          show_on_landing: updatedItem.showOnLanding !== false,
+          created_at: updatedItem.createdAt,
+        })
+        .then(({ error }) => {
+          if (error) console.error('Supabase product save error:', error);
+        });
+    }
+
     return updatedItem;
   },
 
@@ -455,6 +632,18 @@ export const dataService = {
     } catch (err) {
       console.error('Failed to delete product from storage:', err);
     }
+
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/products.php?id=${id}`, { method: 'DELETE' }).catch(() => {
+        fetch(`${mysqlApiUrl}/products/${id}`, { method: 'DELETE' }).catch((err) => console.error('MySQL product delete error:', err));
+      });
+    }
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('products').delete().eq('id', id).then(({ error }) => {
+        if (error) console.error('Supabase product delete error:', error);
+      });
+    }
   },
 
   getPortfolio(): PortfolioItem[] {
@@ -464,7 +653,19 @@ export const dataService = {
         localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(defaultPortfolio));
         return defaultPortfolio;
       }
-      return JSON.parse(stored);
+      const parsed: PortfolioItem[] = JSON.parse(stored);
+      if (!Array.isArray(parsed) || parsed.length === 0) {
+        localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(defaultPortfolio));
+        return defaultPortfolio;
+      }
+      const missingDefaults = defaultPortfolio.filter(
+        (def) => !parsed.some((p) => p.id === def.id || p.name.toLowerCase() === def.name.toLowerCase())
+      );
+      if (missingDefaults.length > 0) {
+        const merged = [...parsed, ...missingDefaults];
+        return merged;
+      }
+      return parsed;
     } catch {
       return defaultPortfolio;
     }
@@ -504,8 +705,42 @@ export const dataService = {
       notifyDataChanged();
     } catch (err) {
       console.error('Failed to save portfolio item to storage:', err);
-      throw new Error('Browser storage quota exceeded. Try using an Image URL instead of a large uploaded file.');
     }
+
+    // Sync to MySQL Database if configured
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/portfolio.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedItem),
+      }).catch(() => {
+        fetch(`${mysqlApiUrl}/portfolio`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedItem),
+        }).catch((err) => console.error('MySQL portfolio save error:', err));
+      });
+    }
+
+    // Sync to Supabase Cloud Database if configured
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('portfolio')
+        .upsert({
+          id: updatedItem.id,
+          name: updatedItem.name,
+          domain: updatedItem.domain,
+          description: updatedItem.description || null,
+          image: updatedItem.image,
+          category: updatedItem.category || null,
+          show_on_landing: updatedItem.showOnLanding === true,
+          created_at: updatedItem.createdAt,
+        })
+        .then(({ error }) => {
+          if (error) console.error('Supabase portfolio save error:', error);
+        });
+    }
+
     return updatedItem;
   },
 
@@ -516,6 +751,18 @@ export const dataService = {
       notifyDataChanged();
     } catch (err) {
       console.error('Failed to delete portfolio item from storage:', err);
+    }
+
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/portfolio.php?id=${id}`, { method: 'DELETE' }).catch(() => {
+        fetch(`${mysqlApiUrl}/portfolio/${id}`, { method: 'DELETE' }).catch((err) => console.error('MySQL portfolio delete error:', err));
+      });
+    }
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('portfolio').delete().eq('id', id).then(({ error }) => {
+        if (error) console.error('Supabase portfolio delete error:', error);
+      });
     }
   },
 
@@ -528,6 +775,14 @@ export const dataService = {
     });
     localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
     notifyDataChanged();
+
+    if (isSupabaseConfigured && supabase) {
+      const updated = products.find((p) => p.id === id);
+      if (updated) {
+        supabase.from('products').update({ show_on_landing: updated.showOnLanding }).eq('id', id).then();
+      }
+    }
+
     return products;
   },
 
@@ -540,6 +795,14 @@ export const dataService = {
     });
     localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(portfolio));
     notifyDataChanged();
+
+    if (isSupabaseConfigured && supabase) {
+      const updated = portfolio.find((p) => p.id === id);
+      if (updated) {
+        supabase.from('portfolio').update({ show_on_landing: updated.showOnLanding }).eq('id', id).then();
+      }
+    }
+
     return portfolio;
   },
 
@@ -559,6 +822,24 @@ export const dataService = {
   saveVisibility(settings: VisibilitySettings): void {
     localStorage.setItem(VISIBILITY_STORAGE_KEY, JSON.stringify(settings));
     notifyDataChanged();
+
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/visibility.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      }).catch(() => {
+        fetch(`${mysqlApiUrl}/visibility`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(settings),
+        }).catch((err) => console.error('MySQL visibility save error:', err));
+      });
+    }
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('visibility').upsert({ id: 'settings', settings }).then();
+    }
   },
 
   togglePageVisibility(pageKey: keyof VisibilitySettings['pages']): VisibilitySettings {
@@ -573,6 +854,159 @@ export const dataService = {
     current.sections[sectionKey] = !current.sections[sectionKey];
     this.saveVisibility(current);
     return current;
+  },
+
+  async uploadImageToSupabase(file: File): Promise<string | null> {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const ext = file.name.split('.').pop() || 'png';
+        const filePath = `mockups/${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
+        const { data, error } = await supabase.storage.from('devtasoft-assets').upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+
+        if (!error && data) {
+          const { data: publicUrlData } = supabase.storage.from('devtasoft-assets').getPublicUrl(filePath);
+          if (publicUrlData?.publicUrl) {
+            return publicUrlData.publicUrl;
+          }
+        }
+      } catch (err) {
+        console.error('Supabase Storage upload error:', err);
+      }
+    }
+    return null;
+  },
+
+  getMessages(): ContactMessage[] {
+    try {
+      const stored = localStorage.getItem(MESSAGES_STORAGE_KEY);
+      if (!stored) {
+        localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(defaultMessages));
+        return defaultMessages;
+      }
+      const parsed: ContactMessage[] = JSON.parse(stored);
+      if (!Array.isArray(parsed)) return defaultMessages;
+      return parsed;
+    } catch {
+      return defaultMessages;
+    }
+  },
+
+  saveMessage(data: Omit<ContactMessage, 'id' | 'createdAt' | 'read'>): ContactMessage {
+    const messages = this.getMessages();
+    const newMessage: ContactMessage = {
+      ...data,
+      id: `msg-${Date.now()}`,
+      createdAt: Date.now(),
+      read: false,
+    };
+    messages.unshift(newMessage);
+
+    try {
+      localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(messages));
+      notifyDataChanged();
+    } catch (err) {
+      console.error('Failed to save message to storage:', err);
+    }
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('messages').upsert({
+        id: newMessage.id,
+        name: newMessage.name,
+        email: newMessage.email,
+        subject: newMessage.subject || null,
+        message: newMessage.message,
+        phone: newMessage.phone || null,
+        company: newMessage.company || null,
+        created_at: newMessage.createdAt,
+        read: false,
+      }).then();
+    }
+
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/messages.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMessage),
+      }).catch(() => {
+        fetch(`${mysqlApiUrl}/messages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newMessage),
+        }).catch();
+      });
+    }
+
+    return newMessage;
+  },
+
+  markMessageRead(id: string): void {
+    const messages = this.getMessages().map((m) => (m.id === id ? { ...m, read: true } : m));
+    localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(messages));
+    notifyDataChanged();
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('messages').update({ read: true }).eq('id', id).then();
+    }
+  },
+
+  deleteMessage(id: string): void {
+    const messages = this.getMessages().filter((m) => m.id !== id);
+    localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(messages));
+    notifyDataChanged();
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('messages').delete().eq('id', id).then();
+    }
+    if (isMysqlConfigured) {
+      fetch(`${mysqlApiUrl}/messages.php?id=${id}`, { method: 'DELETE' }).catch(() => {
+        fetch(`${mysqlApiUrl}/messages/${id}`, { method: 'DELETE' }).catch();
+      });
+    }
+  },
+
+  exportDataJSON(): string {
+    return JSON.stringify(
+      {
+        products: this.getProducts(),
+        portfolio: this.getPortfolio(),
+        visibility: this.getVisibility(),
+        messages: this.getMessages(),
+      },
+      null,
+      2
+    );
+  },
+
+  importDataJSON(jsonStr: string): void {
+    try {
+      const parsed = JSON.parse(jsonStr);
+      if (parsed.products && Array.isArray(parsed.products)) {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(parsed.products));
+      }
+      if (parsed.portfolio && Array.isArray(parsed.portfolio)) {
+        localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(parsed.portfolio));
+      }
+      if (parsed.visibility) {
+        localStorage.setItem(VISIBILITY_STORAGE_KEY, JSON.stringify(parsed.visibility));
+      }
+      if (parsed.messages && Array.isArray(parsed.messages)) {
+        localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(parsed.messages));
+      }
+      notifyDataChanged();
+    } catch (err) {
+      throw new Error('Invalid JSON data format');
+    }
+  },
+
+  resetToDefaults(): void {
+    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(defaultProducts));
+    localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(defaultPortfolio));
+    localStorage.setItem(VISIBILITY_STORAGE_KEY, JSON.stringify(defaultVisibility));
+    localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(defaultMessages));
+    notifyDataChanged();
   },
 
   subscribe(callback: () => void): () => void {

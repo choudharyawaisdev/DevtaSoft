@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Send, CheckCircle2, Sparkles, Building2, User, Mail, DollarSign } from 'lucide-react';
 import { ContactFormData } from '../types';
+import { dataService } from '../services/dataService';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -21,13 +22,52 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => {
-      // Auto dismiss after brief success view if desired, or let user close
-    }, 3000);
+
+    // Save message into Admin Dashboard data service
+    dataService.saveMessage({
+      name: formData.fullName,
+      email: formData.email,
+      subject: `${formData.serviceType} Inquiry (${formData.budget || 'Flexible Budget'})`,
+      message: formData.message,
+      company: formData.company,
+    });
+
+
+    try {
+      const mysqlApiUrl = ((import.meta as any).env?.VITE_MYSQL_API_URL || '').replace(/\/$/, '');
+      const primaryEndpoint = mysqlApiUrl ? `${mysqlApiUrl}/contact.php` : '/api/contact';
+
+      await fetch(primaryEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          subject: `${formData.serviceType} Inquiry (${formData.budget || 'Flexible Budget'})`,
+          message: formData.message,
+          company: formData.company,
+        }),
+      }).catch(() => {
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.fullName,
+            email: formData.email,
+            subject: `${formData.serviceType} Inquiry`,
+            message: formData.message,
+            company: formData.company,
+          }),
+        });
+      });
+    } catch (err) {
+      console.error('Contact modal submit error:', err);
+    }
   };
+
 
   const handleReset = () => {
     setSubmitted(false);

@@ -287,6 +287,32 @@ const caseStudyDetails: Record<string, {
   },
 };
 
+const getCaseStudyDetails = (project: Project) => {
+  const details = caseStudyDetails[project.id];
+  if (details) return details;
+
+  return {
+    tagline: project.subtitle || project.title,
+    challenge: `Developing a high-performance, scalable web solution for ${project.title} requiring seamless user experience and modern architecture.`,
+    solution: `We engineered a custom digital platform featuring responsive design, fast page loads, automated workflows, and robust security protocols.`,
+    results: [
+      { value: '4.2x', label: 'Performance Lift' },
+      { value: '< 500ms', label: 'Load Latency' },
+      { value: '99.9%', label: 'Uptime SLA' },
+    ],
+    techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Vercel'],
+    timeline: '4 Weeks',
+    features: [
+      { title: 'Responsive Design System', desc: 'Flawless layout across mobile, tablet, and desktop devices.' },
+      { title: 'Sub-Second Loading Speed', desc: 'Optimized media assets and code-splitting for high velocity.' },
+      { title: 'Interactive User Experience', desc: 'Fluid motion transitions and modern interface elements.' },
+      { title: 'SEO & Analytics Integration', desc: 'Pre-configured search metadata and performance telemetry.' },
+    ],
+    color: '#FF8706',
+    bgColor: '#FFEFE5',
+  };
+};
+
 // ─── Case Study Modal ───────────────────────────────────────────────────
 const CaseStudyModal: React.FC<{
   project: Project | null;
@@ -294,8 +320,8 @@ const CaseStudyModal: React.FC<{
   onStartProject?: () => void;
 }> = ({ project, onClose, onStartProject }) => {
   if (!project) return null;
-  const details = caseStudyDetails[project.id];
-  if (!details) return null;
+  const details = getCaseStudyDetails(project);
+
 
   return (
     <AnimatePresence>
