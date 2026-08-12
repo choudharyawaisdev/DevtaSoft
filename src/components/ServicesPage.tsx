@@ -410,6 +410,8 @@ export const ServicesPage: React.FC<{ onContactClick: () => void }> = ({ onConta
             <img
               src="/illustrationservice.png"
               alt="DevtaSoft Services Illustration"
+              fetchPriority="high"
+              decoding="async"
               className="relative z-10 w-full h-auto max-w-[580px] object-contain filter drop-shadow-xl"
               referrerPolicy="no-referrer"
             />

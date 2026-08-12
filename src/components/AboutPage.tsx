@@ -362,6 +362,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onContactClick, onStartPro
                   <img
                     src="/illustration.png"
                     alt="DevtaSoft Team Builders and Thinkers"
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-auto object-contain max-h-[620px] drop-shadow-sm transition-transform duration-700 hover:scale-[1.02]"
                     referrerPolicy="no-referrer"
                   />
