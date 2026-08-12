@@ -743,37 +743,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
           {/* TAB 1: DASHBOARD OVERVIEW */}
           {activeTab === 'dashboard' && (
             <div className="space-y-8 animate-in fade-in duration-300">
-              
-              {/* Notice Banner for Multi-Device Visibility */}
-              <div className="bg-gradient-to-r from-[#0D152A] to-[#1E2340] text-white rounded-3xl p-6 sm:p-7 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-700">
-                <div className="space-y-1.5 max-w-2xl">
-                  <div className="flex items-center gap-2 text-[#FF8706] font-extrabold text-xs uppercase tracking-wider">
-                    <Globe className="w-4 h-4 text-[#14B8B0]" /> Multi-Device & Vercel Sync Guide
-                  </div>
-                  <h3 className="font-display font-extrabold text-lg sm:text-xl text-white">
-                    Added projects & products save locally in your browser storage.
-                  </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                    To make your new projects and products visible to <strong>every visitor on all devices globally</strong> on devtasoft.vercel.app, click <strong>Export JSON</strong> and paste the output into your project code before building.
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <button
-                    onClick={openExportModal}
-                    className="bg-[#14B8B0] hover:bg-[#0FA39C] text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-2xl flex items-center gap-2 shadow-md shadow-[#14B8B0]/20 transition-all cursor-pointer"
-                  >
-                    <UploadCloud className="w-4 h-4" />
-                    <span>Export JSON Data</span>
-                  </button>
-                  <button
-                    onClick={openImportModal}
-                    className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl flex items-center gap-2 transition-all cursor-pointer border border-white/20"
-                  >
-                    <span>Import JSON</span>
-                  </button>
-                </div>
-              </div>
-
               {/* Summary Cards Row */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 
