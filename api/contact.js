@@ -37,54 +37,124 @@ module.exports = async (req, res) => {
     },
   });
 
+  const formattedDate = new Date().toLocaleString('en-US', {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  });
+
   const mailOptions = {
-    from: `"DevtaSoft Contact Form" <${smtpUser}>`,
+    from: `"DevtaSoft Web Portal" <${smtpUser}>`,
     to: receiverEmail,
     replyTo: `"${name}" <${email}>`,
-    subject: `🚀 New Contact Form Submission: ${subject || 'General Inquiry'}`,
+    subject: `🚀 DevtaSoft Lead: ${subject || 'New Business Inquiry'} from ${name}`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
-        <div style="background-color: #0D152A; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
-          <h2 style="color: #14B8B0; margin: 0;">DevtaSoft Contact Notification</h2>
-        </div>
-        <div style="padding: 20px; background-color: #ffffff;">
-          <p style="font-size: 16px; color: #1e293b;">You have received a new contact inquiry from your website:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevtaSoft Contact Notification</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0B0F19; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #0B0F19; padding: 30px 10px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" max-width="620" cellspacing="0" cellpadding="0" border="0" style="max-width: 620px; background-color: #111827; border-radius: 20px; overflow: hidden; border: 1px solid #1F2937; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);">
           
-          <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #475569; width: 120px;">Name:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #0f172a;">${name}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #475569;">Email:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #0f172a;"><a href="mailto:${email}">${email}</a></td>
-            </tr>
-            ${phone ? `
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #475569;">Phone:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #0f172a;">${phone}</td>
-            </tr>` : ''}
-            ${company ? `
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #475569;">Company:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #0f172a;">${company}</td>
-            </tr>` : ''}
-            <tr>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #475569;">Subject:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #0f172a;">${subject || 'N/A'}</td>
-            </tr>
-          </table>
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #0D152A 0%, #1E2640 100%); padding: 32px 28px; text-align: center; border-bottom: 3px solid #00C2CC;">
+              <div style="display: inline-block; padding: 5px 14px; background-color: rgba(0, 194, 204, 0.15); border: 1px solid rgba(0, 194, 204, 0.4); border-radius: 50px; color: #00C2CC; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;">
+                DevtaSoft Web Portal Inquiry
+              </div>
+              <h1 style="color: #FFFFFF; font-size: 22px; font-weight: 800; margin: 0;">
+                🚀 New Lead Received
+              </h1>
+              <p style="color: #9CA3AF; font-size: 12px; margin: 6px 0 0 0;">
+                Submitted on ${formattedDate}
+              </p>
+            </td>
+          </tr>
 
-          <div style="margin-top: 20px; padding: 15px; background-color: #f8fafc; border-left: 4px solid #FF6B00; border-radius: 4px;">
-            <p style="font-weight: bold; margin-top: 0; color: #334155;">Message:</p>
-            <p style="color: #1e293b; white-space: pre-wrap; margin-bottom: 0;">${message}</p>
-          </div>
-        </div>
-        <div style="background-color: #f1f5f9; padding: 12px; text-align: center; font-size: 12px; color: #64748b; border-radius: 0 0 8px 8px;">
-          Sent automatically from DevtaSoft Contact Form
-        </div>
-      </div>
-    `,
+          <!-- Client Info Card -->
+          <tr>
+            <td style="padding: 28px 28px 14px 28px;">
+              <div style="background-color: #1F2937; border-radius: 14px; border: 1px solid #374151; padding: 20px;">
+                <h3 style="color: #FF8706; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; margin: 0 0 14px 0;">
+                  👤 Client Details
+                </h3>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td style="padding: 6px 0; color: #9CA3AF; font-size: 13px; font-weight: 600; width: 100px;">Full Name:</td>
+                    <td style="padding: 6px 0; color: #FFFFFF; font-size: 14px; font-weight: 700;">${name}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 0; color: #9CA3AF; font-size: 13px; font-weight: 600;">Email:</td>
+                    <td style="padding: 6px 0; color: #00C2CC; font-size: 14px; font-weight: 700;">
+                      <a href="mailto:${email}" style="color: #00C2CC; text-decoration: none;">${email}</a>
+                    </td>
+                  </tr>
+                  ${phone ? `
+                  <tr>
+                    <td style="padding: 6px 0; color: #9CA3AF; font-size: 13px; font-weight: 600;">Phone:</td>
+                    <td style="padding: 6px 0; color: #FFFFFF; font-size: 14px; font-weight: 700;">
+                      <a href="tel:${phone}" style="color: #FFFFFF; text-decoration: none;">${phone}</a>
+                    </td>
+                  </tr>` : ''}
+                  ${company ? `
+                  <tr>
+                    <td style="padding: 6px 0; color: #9CA3AF; font-size: 13px; font-weight: 600;">Company:</td>
+                    <td style="padding: 6px 0; color: #FFFFFF; font-size: 14px; font-weight: 700;">${company}</td>
+                  </tr>` : ''}
+                  <tr>
+                    <td style="padding: 6px 0; color: #9CA3AF; font-size: 13px; font-weight: 600;">Subject:</td>
+                    <td style="padding: 6px 0; color: #FF8706; font-size: 14px; font-weight: 700;">${subject || 'General Inquiry'}</td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Message Body -->
+          <tr>
+            <td style="padding: 14px 28px 28px 28px;">
+              <div style="background-color: #1F2937; border-radius: 14px; border: 1px solid #374151; border-left: 4px solid #00C2CC; padding: 20px;">
+                <h4 style="color: #00C2CC; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; margin: 0 0 10px 0;">
+                  💬 Client Message
+                </h4>
+                <p style="color: #E5E7EB; font-size: 14px; line-height: 1.6; white-space: pre-wrap; margin: 0;">
+                  ${message}
+                </p>
+              </div>
+
+              <!-- Quick Action Button -->
+              <div style="margin-top: 24px; text-align: center;">
+                <a href="mailto:${email}?subject=Re: ${encodeURIComponent(subject || 'DevtaSoft Inquiry')}" style="display: inline-block; background: linear-gradient(135deg, #00C2CC 0%, #14B8B0 100%); color: #0D152A; font-weight: 800; font-size: 13px; padding: 12px 28px; border-radius: 10px; text-decoration: none; box-shadow: 0 8px 16px -4px rgba(0, 194, 204, 0.4);">
+                  ✉️ Reply Direct to ${name.split(' ')[0]}
+                </a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #0D152A; padding: 20px 28px; text-align: center; border-top: 1px solid #1F2937;">
+              <p style="color: #6B7280; font-size: 11px; margin: 0 0 4px 0;">
+                Sent automatically via DevtaSoft Enterprise Email Engine
+              </p>
+              <p style="color: #4B5563; font-size: 10px; margin: 0;">
+                © ${new Date().getFullYear()} DevtaSoft Software House. All rights reserved.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `,
   };
 
   try {
