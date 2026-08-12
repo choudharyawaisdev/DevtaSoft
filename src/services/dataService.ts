@@ -475,7 +475,7 @@ if (isSupabaseConfigured && supabase) {
       const [prodRes, portRes, visRes] = await Promise.all([
         supabase.from('products').select('*'),
         supabase.from('portfolio').select('*'),
-        supabase.from('visibility').select('settings').eq('id', 'settings').single(),
+        supabase.from('visibility').select('settings').eq('id', 'settings').maybeSingle(),
       ]);
 
       if (!prodRes.error && prodRes.data && prodRes.data.length > 0) {
@@ -507,6 +507,10 @@ if (isSupabaseConfigured && supabase) {
 
       if (!visRes.error && visRes.data?.settings) {
         localStorage.setItem(VISIBILITY_STORAGE_KEY, JSON.stringify(visRes.data.settings));
+      } else if (!visRes.error && !visRes.data) {
+        // Initial setup: Upsert default visibility settings to Supabase
+        const currentVis = dataService.getVisibility();
+        supabase.from('visibility').upsert({ id: 'settings', settings: currentVis }).then();
       }
 
       notifyDataChanged();
@@ -838,7 +842,12 @@ export const dataService = {
     }
 
     if (isSupabaseConfigured && supabase) {
-      supabase.from('visibility').upsert({ id: 'settings', settings }).then();
+      supabase
+        .from('visibility')
+        .upsert({ id: 'settings', settings })
+        .then(({ error }) => {
+          if (error) console.error('Supabase visibility save error:', error);
+        });
     }
   },
 
