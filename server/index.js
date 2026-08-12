@@ -232,8 +232,8 @@ app.post('/api/contact', async (req, res) => {
   }
 
   const smtpUser = process.env.SMTP_USER || 'chawaisdev92@gmail.com';
-  const smtpPass = (process.env.SMTP_PASS || 'joibjdbzgflhjpit').replace(/\s+/g, '');
-  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || 'chawaisdev92@gmail.com';
+  const smtpPass = (process.env.SMTP_PASS || '').replace(/\s+/g, '');
+  const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || smtpUser || 'chawaisdev92@gmail.com';
 
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
