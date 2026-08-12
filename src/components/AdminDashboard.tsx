@@ -660,15 +660,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
               <span>{isSupabaseConfigured ? 'Supabase Live' : 'LocalStorage Mode'}</span>
             </div>
 
-            <button
-              onClick={openExportModal}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E6F8F9] text-[#14B8B0] hover:bg-[#14B8B0] hover:text-white font-bold text-xs transition-all cursor-pointer border border-[#14B8B0]/30 shadow-xs"
-              title="Export Data JSON for Vercel Deployment"
-            >
-              <UploadCloud className="w-4 h-4" />
-              <span>Export JSON</span>
-            </button>
-
             <div className="relative" ref={notificationRef}>
               <button
                 onClick={() => {
