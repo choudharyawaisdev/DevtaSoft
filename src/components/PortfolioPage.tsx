@@ -25,7 +25,7 @@ interface ProjectCardData {
   id: string;
   title: string;
   categoryLabel: string;
-  category: 'Web Development' | 'WordPress Development' | 'Shopify Store Development' | 'Custom Software Development' | 'UI/UX Design' | 'AI & Automation' | string;
+  category: 'Web Development' | 'App Development' | 'Mobile App Development' | 'WordPress Development' | 'Shopify Store Development' | 'Custom Software Development' | 'UI/UX Design' | 'AI & Automation' | string;
   description: string;
   techStackTags: string[];
   accentColor: string;

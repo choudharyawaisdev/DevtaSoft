@@ -46,6 +46,8 @@ type TabType = 'dashboard' | 'visibility' | 'products' | 'portfolio' | 'inquirie
 
 const PORTFOLIO_CATEGORIES = [
   'Web Development',
+  'App Development',
+  'Mobile App Development',
   'WordPress Development',
   'Custom Software Development',
   'Shopify Store Development',
