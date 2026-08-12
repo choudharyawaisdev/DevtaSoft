@@ -8,7 +8,7 @@ export const Preloader: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1600);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, []);

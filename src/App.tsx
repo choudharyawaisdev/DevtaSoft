@@ -12,19 +12,22 @@ import { LoginModal } from './components/LoginModal';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
 import { TechStackSection } from './components/TechStackSection';
-import { AboutPage } from './components/AboutPage';
-import { PortfolioPage } from './components/PortfolioPage';
-import { ProductsPage } from './components/ProductsPage';
-import { ServicesPage } from './components/ServicesPage';
 import { PortfolioSection } from './components/PortfolioSection';
 import { ProductsSection } from './components/ProductsSection';
-import { ContactPage } from './components/ContactPage';
 import { IntersectingStrips } from './components/IntersectingStrips';
 import { Footer } from './components/Footer';
 import { Preloader } from './components/Preloader';
-import { AdminDashboard } from './components/AdminDashboard';
-import { NotFoundPage } from './components/NotFoundPage';
 import { dataService, VisibilitySettings } from './services/dataService';
+
+// Code-split heavy pages to optimize initial bundle size & load speed
+const AboutPage = React.lazy(() => import('./components/AboutPage').then(m => ({ default: m.AboutPage })));
+const PortfolioPage = React.lazy(() => import('./components/PortfolioPage').then(m => ({ default: m.PortfolioPage })));
+const ProductsPage = React.lazy(() => import('./components/ProductsPage').then(m => ({ default: m.ProductsPage })));
+const ServicesPage = React.lazy(() => import('./components/ServicesPage').then(m => ({ default: m.ServicesPage })));
+const ContactPage = React.lazy(() => import('./components/ContactPage').then(m => ({ default: m.ContactPage })));
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
+const NotFoundPage = React.lazy(() => import('./components/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -129,7 +132,14 @@ function HomePage({
 
               {/* Secondary CTA: Explore Work */}
               <button
-                onClick={() => onProjectsClick()}
+                onClick={() => {
+                  const elem = document.getElementById('portfolio');
+                  if (elem) {
+                    elem.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    navigate('/portfolio');
+                  }
+                }}
                 className="group bg-transparent hover:bg-[#00C2CC]/10 text-[#0D152A] hover:text-[#009099] font-semibold text-base sm:text-lg px-7 py-3.5 rounded-2xl border-2 border-[#00C2CC]/60 hover:border-[#00C2CC] flex items-center gap-2.5 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer"
               >
                 <span>Explore Work</span>
@@ -301,107 +311,109 @@ export default function App() {
         }}
       />
 
-      {/* Routes */}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              onContactClick={handleContactClick}
-              onProjectsClick={() => setIsProjectsOpen(true)}
-            />
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            visibility.pages.about ? (
-              <AboutPage
-                onContactClick={handleContactClick}
-                onStartProjectClick={() => setIsContactOpen(true)}
-              />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/portfolio"
-          element={
-            visibility.pages.portfolio ? (
-              <PortfolioPage onContactClick={handleContactClick} />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            visibility.pages.products ? (
-              <ProductsPage onContactClick={handleContactClick} />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/services"
-          element={
-            visibility.pages.services ? (
-              <ServicesPage onContactClick={handleContactClick} />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            visibility.pages.contact ? (
-              <ContactPage onStartProjectClick={() => setIsContactOpen(true)} />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            isAdminLoggedIn ? (
-              <AdminDashboard
-                onViewWebsite={() => navigate('/')}
-                onLogout={() => {
-                  localStorage.removeItem('devtasoft_admin_logged_in');
-                  navigate('/');
-                }}
-              />
-            ) : (
+      {/* Routes with React.Suspense fallback for code-split pages */}
+      <React.Suspense fallback={<div className="min-h-screen bg-white" />}>
+        <Routes>
+          <Route
+            path="/"
+            element={
               <HomePage
                 onContactClick={handleContactClick}
                 onProjectsClick={() => setIsProjectsOpen(true)}
               />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            isAdminLoggedIn ? (
-              <Navigate to="/admin" replace />
-            ) : (
-              <HomePage
-                onContactClick={handleContactClick}
-                onProjectsClick={() => setIsProjectsOpen(true)}
-              />
-            )
-          }
-        />
-        <Route
-          path="*"
-          element={<NotFoundPage onContactClick={handleContactClick} />}
-        />
-      </Routes>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              visibility.pages.about ? (
+                <AboutPage
+                  onContactClick={handleContactClick}
+                  onStartProjectClick={() => setIsContactOpen(true)}
+                />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/portfolio"
+            element={
+              visibility.pages.portfolio ? (
+                <PortfolioPage onContactClick={handleContactClick} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              visibility.pages.products ? (
+                <ProductsPage onContactClick={handleContactClick} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/services"
+            element={
+              visibility.pages.services ? (
+                <ServicesPage onContactClick={handleContactClick} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              visibility.pages.contact ? (
+                <ContactPage onStartProjectClick={() => setIsContactOpen(true)} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              isAdminLoggedIn ? (
+                <AdminDashboard
+                  onViewWebsite={() => navigate('/')}
+                  onLogout={() => {
+                    localStorage.removeItem('devtasoft_admin_logged_in');
+                    navigate('/');
+                  }}
+                />
+              ) : (
+                <HomePage
+                  onContactClick={handleContactClick}
+                  onProjectsClick={() => setIsProjectsOpen(true)}
+                />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              isAdminLoggedIn ? (
+                <Navigate to="/admin" replace />
+              ) : (
+                <HomePage
+                  onContactClick={handleContactClick}
+                  onProjectsClick={() => setIsProjectsOpen(true)}
+                />
+              )
+            }
+          />
+          <Route
+            path="*"
+            element={<NotFoundPage onContactClick={handleContactClick} />}
+          />
+        </Routes>
+      </React.Suspense>
 
       {/* Deep Footer Section */}
       <Footer 

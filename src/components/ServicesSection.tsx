@@ -202,6 +202,8 @@ const servicesData = [
       <img
         src="/editor.png"
         alt="Editor Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -219,6 +221,8 @@ const servicesData = [
       <img
         src="/robotai.png"
         alt="AI & Automation Robot Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -236,6 +240,8 @@ const servicesData = [
       <img
         src="/webpc.png"
         alt="Web Development PC Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -253,6 +259,8 @@ const servicesData = [
       <img
         src="/mobileapp.png"
         alt="Mobile App Development Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -270,6 +278,8 @@ const servicesData = [
       <img
         src="/uiux.png"
         alt="UI/UX Design Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -287,6 +297,8 @@ const servicesData = [
       <img
         src="/devops.png"
         alt="Cloud & DevOps Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -304,6 +316,8 @@ const servicesData = [
       <img
         src="/seo.png"
         alt="SEO Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -321,6 +335,8 @@ const servicesData = [
       <img
         src="/wp.png"
         alt="WordPress Development Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -338,6 +354,8 @@ const servicesData = [
       <img
         src="/shopify.png"
         alt="Shopify Store Development Mockup"
+        loading="lazy"
+        decoding="async"
         className="w-24 h-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm"
         referrerPolicy="no-referrer"
       />
@@ -593,12 +611,17 @@ const ServiceDetailModal: React.FC<{
 // ─── 3D Floating Cube Signature Illustration Component ──────────────────────
 const Services3DCubeIllustration: React.FC = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const cubeRef = React.useRef<HTMLDivElement>(null);
 
-  // Rotation angles & interaction states
-  const [rotX, setRotX] = useState(20);
-  const [rotY, setRotY] = useState(30);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+  // High-performance rotation & interaction refs (prevents 60-120fps React re-renders)
+  const rotXRef = React.useRef(20);
+  const rotYRef = React.useRef(30);
+  const targetRotXRef = React.useRef(20);
+  const targetRotYRef = React.useRef(30);
+
+  const isHoveredRef = React.useRef(false);
+  const isDraggingRef = React.useRef(false);
+  const isVisibleRef = React.useRef(false);
 
   const pointerStartRef = React.useRef<{ x: number; y: number; startRotX: number; startRotY: number }>({
     x: 0,
@@ -607,64 +630,96 @@ const Services3DCubeIllustration: React.FC = () => {
     startRotY: 30,
   });
 
-  // Continuous auto-spin when mouse is NOT interacting or dragging
+  // Direct DOM style transform updater (zero React re-renders for buttery smooth performance)
+  const updateCubeTransform = () => {
+    if (cubeRef.current) {
+      cubeRef.current.style.transform = `rotateX(${rotXRef.current}deg) rotateY(${rotYRef.current}deg)`;
+    }
+  };
+
+  // Setup Viewport IntersectionObserver and GPU-optimized animation loop
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
     let animationFrameId: number;
     let lastTime = performance.now();
 
     const animateSpin = (time: number) => {
-      const delta = (time - lastTime) / 1000;
+      const delta = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
-      if (!isHovered && !isDragging) {
-        setRotY((prev) => (prev + delta * 24) % 360);
+      // Only perform transform calculations when element is visible in viewport
+      if (isVisibleRef.current) {
+        if (!isHoveredRef.current && !isDraggingRef.current) {
+          rotYRef.current = (rotYRef.current + delta * 20) % 360;
+          rotXRef.current += (targetRotXRef.current - rotXRef.current) * 0.05;
+        } else if (!isDraggingRef.current) {
+          // Smooth interpolation when hovering
+          rotXRef.current += (targetRotXRef.current - rotXRef.current) * 0.08;
+          rotYRef.current += (targetRotYRef.current - rotYRef.current) * 0.08;
+        }
+        updateCubeTransform();
       }
 
       animationFrameId = requestAnimationFrame(animateSpin);
     };
 
     animationFrameId = requestAnimationFrame(animateSpin);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isHovered, isDragging]);
 
-  // Track cursor movement across container
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  // Mouse move handler for hover tilt effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging || !containerRef.current) return;
+    if (isDraggingRef.current || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    const normX = (e.clientX - centerX) / (rect.width / 2); // -1 to 1
-    const normY = (e.clientY - centerY) / (rect.height / 2); // -1 to 1
+    const normX = (e.clientX - centerX) / (rect.width / 2);
+    const normY = (e.clientY - centerY) / (rect.height / 2);
 
-    // Dynamic 3D tilt tracking cursor
-    setRotX(20 - normY * 45);
-    setRotY(normX * 180 + 30);
+    targetRotXRef.current = 20 - normY * 35;
+    targetRotYRef.current = rotYRef.current + normX * 1.5;
   };
 
   // Drag interaction handlers
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(true);
+    isDraggingRef.current = true;
     pointerStartRef.current = {
       x: e.clientX,
       y: e.clientY,
-      startRotX: rotX,
-      startRotY: rotY,
+      startRotX: rotXRef.current,
+      startRotY: rotYRef.current,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
     const dx = e.clientX - pointerStartRef.current.x;
     const dy = e.clientY - pointerStartRef.current.y;
 
-    setRotY(pointerStartRef.current.startRotY + dx * 0.75);
-    setRotX(Math.max(-80, Math.min(80, pointerStartRef.current.startRotX - dy * 0.75)));
+    rotYRef.current = pointerStartRef.current.startRotY + dx * 0.75;
+    rotXRef.current = Math.max(-80, Math.min(80, pointerStartRef.current.startRotX - dy * 0.75));
+    updateCubeTransform();
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(false);
+    isDraggingRef.current = false;
+    targetRotXRef.current = 20;
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
     } catch {}
@@ -674,92 +729,97 @@ const Services3DCubeIllustration: React.FC = () => {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="relative w-full max-w-[480px] lg:max-w-none h-[380px] sm:h-[420px] mx-auto flex items-center justify-center select-none"
+      onMouseEnter={() => {
+        isHoveredRef.current = true;
+      }}
+      onMouseLeave={() => {
+        isHoveredRef.current = false;
+        targetRotXRef.current = 20;
+      }}
+      className="relative w-full max-w-[480px] lg:max-w-none h-[400px] sm:h-[420px] mx-auto flex items-center justify-center select-none px-2"
     >
       {/* Background Ambient Radial Glow Lights */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(255,135,6,0.18)_0%,rgba(20,184,176,0.12)_50%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(255,135,6,0.15)_0%,rgba(20,184,176,0.1)_50%,transparent_70%)] rounded-full blur-2xl pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-[#14B8B0]/20 rounded-full animate-ping opacity-25 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-[#FF8706]/15 rounded-full pointer-events-none" />
 
       {/* Interactive Cursor Indicator Badge */}
-      <div className="absolute bottom-2 z-30 bg-slate-900/80 backdrop-blur-md text-white/90 border border-white/10 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold tracking-wide shadow-lg flex items-center gap-2 pointer-events-none">
+      <div className="absolute bottom-1 z-40 bg-slate-900/95 backdrop-blur-sm text-white/90 border border-white/10 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-extrabold tracking-wide shadow-lg flex items-center gap-2 pointer-events-none">
         <Sparkles className="w-3.5 h-3.5 text-[#FF8706] animate-pulse" />
         <span>Move cursor or drag to spin 3D Cube</span>
       </div>
 
-      {/* Orbiting Service Satellite Cards (6 Icons Around Cube) */}
+      {/* Orbiting Service Satellite Cards (6 Icons Around Cube - Layered ON TOP with z-30) */}
       {/* 1. API */}
       <motion.div
-        className="absolute top-4 sm:top-6 left-1 sm:left-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute top-2 sm:top-6 left-1 sm:left-6 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
-          <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
+          <Code2 className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">API</span>
+        <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">API</span>
       </motion.div>
 
       {/* 2. Database */}
       <motion.div
-        className="absolute top-6 sm:top-12 right-1 sm:right-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute top-2 sm:top-12 right-1 sm:right-6 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
         transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
       >
-        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
-          <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
+          <Database className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Database</span>
+        <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">Database</span>
       </motion.div>
 
       {/* 3. Mobile */}
       <motion.div
-        className="absolute bottom-6 sm:bottom-12 right-1 sm:right-8 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute bottom-10 sm:bottom-12 right-1 sm:right-6 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -7, 0], x: [0, -5, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
       >
-        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
-          <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-xl bg-[#FFEFE5] flex items-center justify-center text-[#FF8706]">
+          <Smartphone className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Mobile</span>
+        <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">Mobile</span>
       </motion.div>
 
       {/* 4. Cloud */}
       <motion.div
-        className="absolute bottom-4 sm:bottom-8 left-1 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute bottom-10 sm:bottom-8 left-1 sm:left-6 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 7, 0], x: [0, 5, 0] }}
         transition={{ duration: 4.0, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
       >
-        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
-          <Cloud className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-xl bg-[#E6F8F9] flex items-center justify-center text-[#14B8B0]">
+          <Cloud className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Cloud</span>
+        <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">Cloud</span>
       </motion.div>
 
       {/* 5. AI */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-2 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
       >
-        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#F0ECFF] flex items-center justify-center text-[#7C3AED]">
-          <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-xl bg-[#F0ECFF] flex items-center justify-center text-[#7C3AED]">
+          <Bot className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">AI</span>
+        <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">AI</span>
       </motion.div>
 
       {/* 6. Design */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 left-0 sm:left-0 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute top-1/2 -translate-y-1/2 left-0 sm:left-2 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.0 }}
       >
-        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-xl bg-[#FFF0F5] flex items-center justify-center text-[#FF0055]">
-          <Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-xl bg-[#FFF0F5] flex items-center justify-center text-[#FF0055]">
+          <Palette className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
-        <span className="font-display font-extrabold text-[11px] sm:text-xs text-[#0D152A]">Design</span>
+        <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">Design</span>
       </motion.div>
 
       {/* Small Glowing Floating Particles */}
@@ -773,25 +833,17 @@ const Services3DCubeIllustration: React.FC = () => {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        className="perspective-[1000px] w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center cursor-grab active:cursor-grabbing z-20"
+        className="perspective-[1000px] w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center cursor-grab active:cursor-grabbing z-10 scale-90 sm:scale-100 transition-transform duration-300"
       >
         {/* 3D INTERACTIVE ROTATING CUBE CONTAINER */}
-        <motion.div
-          className="relative w-40 h-40 sm:w-44 sm:h-44 [transform-style:preserve-3d]"
-          animate={{
-            rotateX: rotX,
-            rotateY: rotY,
-          }}
-          transition={{
-            type: 'spring',
-            stiffness: isDragging ? 300 : 120,
-            damping: isDragging ? 30 : 16,
-            mass: 0.8,
-          }}
+        <div
+          ref={cubeRef}
+          className="relative w-40 h-40 sm:w-44 sm:h-44 [transform-style:preserve-3d] will-change-transform transition-transform duration-75 ease-out"
+          style={{ transform: 'rotateX(20deg) rotateY(30deg)' }}
         >
           {/* CUBE FACE 1: FRONT (WEB) */}
           <div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#142347] to-[#0A1224] border-2 border-[#14B8B0]/80 shadow-[0_0_30px_rgba(20,184,176,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#142347] to-[#0A1224] border-2 border-[#14B8B0]/80 shadow-[0_0_20px_rgba(20,184,176,0.25)] flex flex-col items-center justify-center p-4 text-white [backface-visibility:hidden]"
             style={{ transform: 'translateZ(88px)' }}
           >
             <div className="w-11 h-11 rounded-2xl bg-[#14B8B0]/20 border border-[#14B8B0]/50 flex items-center justify-center mb-2 shadow-inner">
@@ -803,7 +855,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
           {/* CUBE FACE 2: BACK (DESIGN) */}
           <div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#241432] to-[#0A1224] border-2 border-[#FF0055]/80 shadow-[0_0_30px_rgba(255,0,85,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#241432] to-[#0A1224] border-2 border-[#FF0055]/80 shadow-[0_0_20px_rgba(255,0,85,0.25)] flex flex-col items-center justify-center p-4 text-white [backface-visibility:hidden]"
             style={{ transform: 'rotateY(180deg) translateZ(88px)' }}
           >
             <div className="w-11 h-11 rounded-2xl bg-[#FF0055]/20 border border-[#FF0055]/50 flex items-center justify-center mb-2 shadow-inner">
@@ -815,7 +867,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
           {/* CUBE FACE 3: RIGHT (MOBILE) */}
           <div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#1D1438] to-[#0A1224] border-2 border-[#7C3AED]/80 shadow-[0_0_30px_rgba(124,58,237,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#1D1438] to-[#0A1224] border-2 border-[#7C3AED]/80 shadow-[0_0_20px_rgba(124,58,237,0.25)] flex flex-col items-center justify-center p-4 text-white [backface-visibility:hidden]"
             style={{ transform: 'rotateY(90deg) translateZ(88px)' }}
           >
             <div className="w-11 h-11 rounded-2xl bg-[#7C3AED]/20 border border-[#7C3AED]/50 flex items-center justify-center mb-2 shadow-inner">
@@ -827,7 +879,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
           {/* CUBE FACE 4: LEFT (CLOUD) */}
           <div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#122A3A] to-[#0A1224] border-2 border-[#00E5FF]/80 shadow-[0_0_30px_rgba(0,229,255,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#122A3A] to-[#0A1224] border-2 border-[#00E5FF]/80 shadow-[0_0_20px_rgba(0,229,255,0.25)] flex flex-col items-center justify-center p-4 text-white [backface-visibility:hidden]"
             style={{ transform: 'rotateY(-90deg) translateZ(88px)' }}
           >
             <div className="w-11 h-11 rounded-2xl bg-[#00E5FF]/20 border border-[#00E5FF]/50 flex items-center justify-center mb-2 shadow-inner">
@@ -839,7 +891,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
           {/* CUBE FACE 5: TOP (AI) */}
           <div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#331E0F] to-[#0A1224] border-2 border-[#FF8706]/90 shadow-[0_0_35px_rgba(255,135,6,0.4)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#331E0F] to-[#0A1224] border-2 border-[#FF8706]/90 shadow-[0_0_25px_rgba(255,135,6,0.3)] flex flex-col items-center justify-center p-4 text-white [backface-visibility:hidden]"
             style={{ transform: 'rotateX(90deg) translateZ(88px)' }}
           >
             <div className="w-11 h-11 rounded-2xl bg-[#FF8706]/20 border border-[#FF8706]/50 flex items-center justify-center mb-2 shadow-inner">
@@ -851,7 +903,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
           {/* CUBE FACE 6: BOTTOM (CUSTOM) */}
           <div
-            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#1B2A4A] to-[#0A1224] border-2 border-[#FFBD2E]/80 shadow-[0_0_30px_rgba(255,189,46,0.35)] flex flex-col items-center justify-center p-4 backdrop-blur-xl text-white"
+            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0D152A] via-[#1B2A4A] to-[#0A1224] border-2 border-[#FFBD2E]/80 shadow-[0_0_20px_rgba(255,189,46,0.25)] flex flex-col items-center justify-center p-4 text-white [backface-visibility:hidden]"
             style={{ transform: 'rotateX(-90deg) translateZ(88px)' }}
           >
             <div className="w-11 h-11 rounded-2xl bg-[#FFBD2E]/20 border border-[#FFBD2E]/50 flex items-center justify-center mb-2 shadow-inner">
@@ -860,7 +912,7 @@ const Services3DCubeIllustration: React.FC = () => {
             <span className="font-display font-black text-base tracking-wider text-white">CUSTOM</span>
             <span className="text-[10px] font-bold text-[#FFBD2E] uppercase tracking-widest mt-0.5">Software</span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
