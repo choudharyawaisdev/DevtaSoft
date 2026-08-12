@@ -11,6 +11,12 @@ export const isSupabaseConfigured = Boolean(
     supabaseAnonKey !== 'your-supabase-anon-key'
 );
 
+if (isSupabaseConfigured) {
+  console.log('🟢 Supabase Connected:', supabaseUrl);
+} else {
+  console.warn('🟡 Supabase not configured in Vercel environment variables. Using LocalStorage mode.');
+}
+
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;

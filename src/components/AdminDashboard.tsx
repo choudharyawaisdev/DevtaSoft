@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import { Logo } from './Logo';
 import { dataService, ProductItem, PortfolioItem, VisibilitySettings, ContactMessage } from '../services/dataService';
+import { isSupabaseConfigured } from '../services/supabaseClient';
 
 interface AdminDashboardProps {
   onViewWebsite: () => void;
@@ -646,6 +647,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onViewWebsite, o
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
+            {/* Supabase Connection Status Badge */}
+            <div
+              className={`hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold shadow-2xs ${
+                isSupabaseConfigured
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                  : 'bg-amber-50 border-amber-200 text-amber-700'
+              }`}
+              title={isSupabaseConfigured ? 'Supabase Database Connected' : 'Supabase Not Configured in Vercel Environment Variables'}
+            >
+              <span className={`w-2 h-2 rounded-full ${isSupabaseConfigured ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+              <span>{isSupabaseConfigured ? 'Supabase Live' : 'LocalStorage Mode'}</span>
+            </div>
+
             <button
               onClick={openExportModal}
               className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E6F8F9] text-[#14B8B0] hover:bg-[#14B8B0] hover:text-white font-bold text-xs transition-all cursor-pointer border border-[#14B8B0]/30 shadow-xs"
