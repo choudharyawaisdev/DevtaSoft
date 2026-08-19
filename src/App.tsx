@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { TealDoodleUnderline } from './components/TealDoodleUnderline';
 import { StatsBar } from './components/StatsBar';
@@ -19,6 +19,26 @@ import { Footer } from './components/Footer';
 import { Preloader } from './components/Preloader';
 import { dataService, VisibilitySettings } from './services/dataService';
 
+const pageTransitionVariants = {
+  initial: { opacity: 0, y: 15 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.215, 0.61, 0.355, 1] } },
+  exit: { opacity: 0, y: -15, transition: { duration: 0.25, ease: 'easeInOut' } },
+};
+
+function PageWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageTransitionVariants}
+      className="w-full flex-grow flex flex-col justify-start"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 // Code-split heavy pages to optimize initial bundle size & load speed
 const AboutPage = React.lazy(() => import('./components/AboutPage').then(m => ({ default: m.AboutPage })));
 const PortfolioPage = React.lazy(() => import('./components/PortfolioPage').then(m => ({ default: m.PortfolioPage })));
@@ -27,6 +47,8 @@ const ServicesPage = React.lazy(() => import('./components/ServicesPage').then(m
 const ContactPage = React.lazy(() => import('./components/ContactPage').then(m => ({ default: m.ContactPage })));
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
 const NotFoundPage = React.lazy(() => import('./components/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+const PrivacyPage = React.lazy(() => import('./components/PrivacyPage').then(m => ({ default: m.PrivacyPage })));
+const TermsPage = React.lazy(() => import('./components/TermsPage').then(m => ({ default: m.TermsPage })));
 
 
 const containerVariants = {
@@ -159,12 +181,22 @@ function HomePage({
               {/* Soft ambient background glow */}
               <div className="absolute -inset-4 sm:-inset-6 rounded-full bg-gradient-to-tr from-[#00C2CC]/30 via-[#FF6B00]/25 to-[#00C2CC]/35 blur-3xl opacity-50 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500 pointer-events-none" />
 
-              <img
-                src="/heroimage.png"
-                alt="DevtaSoft Digital Agency & Software Solutions"
-                className="relative z-10 w-full h-auto max-h-[480px] sm:max-h-[580px] lg:max-h-[700px] xl:max-h-[780px] object-contain filter drop-shadow-2xl lg:scale-[1.12] scale-100 lg:origin-right origin-center transition-transform duration-300 group-hover:scale-[1.03] lg:group-hover:scale-[1.16]"
-                referrerPolicy="no-referrer"
-              />
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 60,
+                  ease: "linear"
+                }}
+                className="relative z-10 w-full flex justify-center lg:justify-end origin-center"
+              >
+                <img
+                  src="/heroimage.png"
+                  alt="DevtaSoft Digital Agency & Software Solutions"
+                  className="w-full h-auto max-h-[480px] sm:max-h-[580px] lg:max-h-[700px] xl:max-h-[780px] object-contain filter drop-shadow-2xl lg:scale-[1.12] scale-100 origin-center transition-transform duration-300 group-hover:scale-[1.03] lg:group-hover:scale-[1.16]"
+                  referrerPolicy="no-referrer"
+                />
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -268,7 +300,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#F5F6FA] text-[#0D152A] font-sans overflow-x-hidden flex flex-col justify-between selection:bg-[#FF6B00]/20 selection:text-[#FF6B00]">
+    <div className="relative min-h-screen bg-white text-[#0D152A] font-sans overflow-x-hidden flex flex-col justify-between selection:bg-[#FF6B00]/20 selection:text-[#FF6B00]">
       {/* Preloader overlay with Uiverse Dual-Block Spinner */}
       <Preloader />
 
@@ -313,106 +345,146 @@ export default function App() {
 
       {/* Routes with React.Suspense fallback for code-split pages */}
       <React.Suspense fallback={<div className="min-h-screen bg-white" />}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                onContactClick={handleContactClick}
-                onProjectsClick={() => setIsProjectsOpen(true)}
-              />
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              visibility.pages.about ? (
-                <AboutPage
-                  onContactClick={handleContactClick}
-                  onStartProjectClick={() => setIsContactOpen(true)}
-                />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/portfolio"
-            element={
-              visibility.pages.portfolio ? (
-                <PortfolioPage onContactClick={handleContactClick} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/products"
-            element={
-              visibility.pages.products ? (
-                <ProductsPage onContactClick={handleContactClick} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/services"
-            element={
-              visibility.pages.services ? (
-                <ServicesPage onContactClick={handleContactClick} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              visibility.pages.contact ? (
-                <ContactPage onStartProjectClick={() => setIsContactOpen(true)} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              isAdminLoggedIn ? (
-                <AdminDashboard
-                  onViewWebsite={() => navigate('/')}
-                  onLogout={() => {
-                    localStorage.removeItem('devtasoft_admin_logged_in');
-                    navigate('/');
-                  }}
-                />
-              ) : (
-                <HomePage
-                  onContactClick={handleContactClick}
-                  onProjectsClick={() => setIsProjectsOpen(true)}
-                />
-              )
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              isAdminLoggedIn ? (
-                <Navigate to="/admin" replace />
-              ) : (
-                <HomePage
-                  onContactClick={handleContactClick}
-                  onProjectsClick={() => setIsProjectsOpen(true)}
-                />
-              )
-            }
-          />
-          <Route
-            path="*"
-            element={<NotFoundPage onContactClick={handleContactClick} />}
-          />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} {...{ key: location.pathname }}>
+            <Route
+              path="/"
+              element={
+                <PageWrapper>
+                  <HomePage
+                    onContactClick={handleContactClick}
+                    onProjectsClick={() => setIsProjectsOpen(true)}
+                  />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                visibility.pages.about ? (
+                  <PageWrapper>
+                    <AboutPage
+                      onContactClick={handleContactClick}
+                      onStartProjectClick={() => setIsContactOpen(true)}
+                    />
+                  </PageWrapper>
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            />
+            <Route
+              path="/portfolio"
+              element={
+                visibility.pages.portfolio ? (
+                  <PageWrapper>
+                    <PortfolioPage onContactClick={handleContactClick} />
+                  </PageWrapper>
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                visibility.pages.products ? (
+                  <PageWrapper>
+                    <ProductsPage onContactClick={handleContactClick} />
+                  </PageWrapper>
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            />
+            <Route
+              path="/services"
+              element={
+                visibility.pages.services ? (
+                  <PageWrapper>
+                    <ServicesPage onContactClick={handleContactClick} />
+                  </PageWrapper>
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                visibility.pages.contact ? (
+                  <PageWrapper>
+                    <ContactPage onStartProjectClick={() => setIsContactOpen(true)} />
+                  </PageWrapper>
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                isAdminLoggedIn ? (
+                  <PageWrapper>
+                    <AdminDashboard
+                      onViewWebsite={() => navigate('/')}
+                      onLogout={() => {
+                        localStorage.removeItem('devtasoft_admin_logged_in');
+                        navigate('/');
+                      }}
+                    />
+                  </PageWrapper>
+                ) : (
+                  <PageWrapper>
+                    <HomePage
+                      onContactClick={handleContactClick}
+                      onProjectsClick={() => setIsProjectsOpen(true)}
+                    />
+                  </PageWrapper>
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                isAdminLoggedIn ? (
+                  <Navigate to="/admin" replace />
+                ) : (
+                  <PageWrapper>
+                    <HomePage
+                      onContactClick={handleContactClick}
+                      onProjectsClick={() => setIsProjectsOpen(true)}
+                    />
+                  </PageWrapper>
+                )
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <PageWrapper>
+                  <PrivacyPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/terms"
+              element={
+                <PageWrapper>
+                  <TermsPage />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <PageWrapper>
+                  <NotFoundPage onContactClick={handleContactClick} />
+                </PageWrapper>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </React.Suspense>
 
       {/* Deep Footer Section */}

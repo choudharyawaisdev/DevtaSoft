@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from './Logo';
 import { ArrowRight, Menu, X, LogIn } from 'lucide-react';
 import { dataService, VisibilitySettings } from '../services/dataService';
@@ -94,13 +95,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-4 py-2 rounded-full font-semibold text-sm tracking-tight transition-all duration-300 cursor-pointer ${
+                className={`relative px-4 py-2 rounded-full font-semibold text-sm tracking-tight transition-all duration-300 cursor-pointer select-none ${
                   active
-                    ? 'bg-[#FF6B00] text-white shadow-md shadow-[#FF6B00]/30'
+                    ? 'text-white'
                     : 'text-[#111827] hover:text-[#FF6B00] hover:bg-slate-100/80'
                 }`}
               >
-                {item.label}
+                {active && (
+                  <motion.div
+                    layoutId="activeNavTab"
+                    className="absolute inset-0 bg-[#FF6B00] rounded-full shadow-md shadow-[#FF6B00]/30 -z-10"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
               </button>
             );
           })}
@@ -109,15 +117,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right Action Buttons */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
           {/* Let's Talk Button */}
-          <button
+          <motion.button
             onClick={onContactClick}
-            className="group h-11 sm:h-12 px-5 sm:px-[26px] rounded-[16px] bg-gradient-to-r from-[#FF6B00] to-[#FA6400] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF6B00]/25 transition-all duration-300 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-[#FF6B00]/35 active:translate-y-0 cursor-pointer"
+            whileHover={{ y: -2, scale: 1.025, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+            whileTap={{ scale: 0.98 }}
+            className="group h-11 sm:h-12 px-5 sm:px-[26px] rounded-[16px] bg-gradient-to-r from-[#FF6B00] to-[#FA6400] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF6B00]/25 cursor-pointer"
           >
             <span>Let's Talk</span>
             <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
               <ArrowRight className="w-3.5 h-3.5 text-white stroke-[3]" />
             </div>
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile Hamburger Toggle (Persistent DOM Element for Smooth CSS Animation) */}
@@ -137,76 +147,88 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Right Sidebar Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-50 flex justify-end">
-          {/* Backdrop Blur Overlay */}
-          <div
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
-            onClick={() => setMobileMenuOpen(false)}
-          />
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-50 flex justify-end">
+            {/* Backdrop Blur Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
 
-          {/* Right Sidebar Container */}
-          <div className="relative z-50 w-[290px] sm:w-[320px] max-w-[85vw] h-full bg-white shadow-2xl flex flex-col justify-between px-6 pt-5 pb-6 overflow-y-auto animate-in slide-in-from-right duration-300 ml-auto">
-            <div>
-              {/* Sidebar Header with Logo */}
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+            {/* Right Sidebar Container */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+              className="relative z-50 w-[290px] sm:w-[320px] max-w-[85vw] h-full bg-white shadow-2xl flex flex-col justify-between px-6 pt-5 pb-6 overflow-y-auto ml-auto"
+            >
+              <div>
+                {/* Sidebar Header with Logo */}
+                <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                  <button
+                    onClick={() => {
+                      onHomeClick();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="text-left focus:outline-none cursor-pointer select-none"
+                  >
+                    <Logo />
+                  </button>
+                  {/* Spacer box reserving space for persistent top toggle */}
+                  <div className="w-10 h-10 shrink-0" />
+                </div>
+
+                {/* Navigation Links */}
+                <nav className="flex flex-col gap-2">
+                  {visibleNavItems.map((item) => {
+                    const active = isItemActive(item.id, item.path);
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => handleNavClick(item.id)}
+                        className={`w-full text-left font-bold text-base px-4 py-3.5 rounded-2xl flex items-center justify-between transition-all duration-200 cursor-pointer ${
+                          active
+                            ? 'bg-[#FF6B00] text-white shadow-lg shadow-[#FF6B00]/25'
+                            : 'text-[#0D152A] hover:bg-slate-100 hover:text-[#FF6B00]'
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                        {active && (
+                          <span className="w-2.5 h-2.5 rounded-full bg-white" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Bottom Actions inside Sidebar */}
+              <div className="pt-6 border-t border-slate-100 flex flex-col gap-3">
                 <button
                   onClick={() => {
-                    onHomeClick();
                     setMobileMenuOpen(false);
+                    onContactClick();
                   }}
-                  className="text-left focus:outline-none cursor-pointer select-none"
+                  className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#FF6B00] to-[#FA6400] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF6B00]/25 active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  <Logo />
+                  <span>Let's Talk</span>
+                  <ArrowRight className="w-4 h-4 text-white stroke-[2.5]" />
                 </button>
-                {/* Spacer box reserving space for persistent top toggle */}
-                <div className="w-10 h-10 shrink-0" />
+
+                <div className="text-center text-xs text-slate-400 font-medium pt-1">
+                  © DevtaSoft. All rights reserved.
+                </div>
               </div>
-
-              {/* Navigation Links */}
-              <nav className="flex flex-col gap-2">
-                {visibleNavItems.map((item) => {
-                  const active = isItemActive(item.id, item.path);
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => handleNavClick(item.id)}
-                      className={`w-full text-left font-bold text-base px-4 py-3.5 rounded-2xl flex items-center justify-between transition-all duration-200 cursor-pointer ${
-                        active
-                          ? 'bg-[#FF6B00] text-white shadow-lg shadow-[#FF6B00]/25'
-                          : 'text-[#0D152A] hover:bg-slate-100 hover:text-[#FF6B00]'
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      {active && (
-                        <span className="w-2.5 h-2.5 rounded-full bg-white" />
-                      )}
-                    </button>
-                  );
-                })}
-              </nav>
-            </div>
-
-            {/* Bottom Actions inside Sidebar */}
-            <div className="pt-6 border-t border-slate-100 flex flex-col gap-3">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onContactClick();
-                }}
-                className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#FF6B00] to-[#FA6400] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#FF6B00]/25 active:scale-[0.98] transition-all cursor-pointer"
-              >
-                <span>Let's Talk</span>
-                <ArrowRight className="w-4 h-4 text-white stroke-[2.5]" />
-              </button>
-
-              <div className="text-center text-xs text-slate-400 font-medium pt-1">
-                © DevtaSoft. All rights reserved.
-              </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </header>
   );
 };

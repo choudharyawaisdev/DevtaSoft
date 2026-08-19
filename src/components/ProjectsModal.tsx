@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, ExternalLink, Sparkles, Smartphone, Globe, Palette } from 'lucide-react';
 import { Project } from '../types';
 
@@ -54,15 +55,28 @@ const sampleProjects: Project[] = [
 export const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose, onContactClick }) => {
   const [activeTab, setActiveTab] = useState<'All' | 'UI/UX Design' | 'Mobile Apps' | 'Web Apps'>('All');
 
-  if (!isOpen) return null;
 
   const filteredProjects = activeTab === 'All'
     ? sampleProjects
     : sampleProjects.filter(p => p.category === activeTab);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 flex flex-col">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 16 }}
+            transition={{ duration: 0.3, ease: [0.215, 0.61, 0.355, 1] }}
+            className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 flex flex-col"
+          >
         {/* Header */}
         <div className="p-6 sm:p-8 border-b border-slate-100 flex items-center justify-between">
           <div>
@@ -185,7 +199,9 @@ export const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose, o
             Start Your Project
           </button>
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

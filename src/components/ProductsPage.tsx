@@ -628,25 +628,6 @@ export const ProductsPage: React.FC<{ onContactClick: () => void }> = ({ onConta
                   </p>
                 </div>
 
-                {/* Key Stats Bar */}
-                <div className="px-8 sm:px-10 py-4">
-                  <div className="grid grid-cols-3 gap-4">
-                    {selectedProduct.stats.map((stat) => (
-                      <div
-                        key={stat.label}
-                        className="rounded-2xl p-4 text-center border border-slate-100 shadow-xs"
-                        style={{ backgroundColor: selectedProduct.themeBg }}
-                      >
-                        <span className="font-display font-black text-2xl sm:text-3xl block mb-1" style={{ color: selectedProduct.themeColor }}>
-                          {stat.value}
-                        </span>
-                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Features List */}
                 <div className="px-8 sm:px-10 py-6">

@@ -567,13 +567,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onContactClick, onStartPro
             viewport={{ once: true, margin: '-80px' }}
             variants={heroContainer}
           >
-            {/* Background Tiny Floating Particles / Dot Grid */}
-            <div className="absolute top-4 left-4 opacity-40 pointer-events-none">
-              <DotGrid rows={6} cols={8} dotColor="#FF8706" />
-            </div>
-            <div className="absolute bottom-4 right-4 opacity-30 pointer-events-none">
-              <DotGrid rows={6} cols={8} dotColor="#53E5E7" />
-            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
               

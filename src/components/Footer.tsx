@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Logo } from './Logo';
 import { 
   Linkedin, 
@@ -23,6 +24,7 @@ export const Footer: React.FC<FooterProps> = ({
   onContactClick,
   onProjectsClick,
 }) => {
+  const navigate = useNavigate();
   const [visibility, setVisibility] = useState<VisibilitySettings>(dataService.getVisibility());
 
   useEffect(() => {
@@ -154,61 +156,80 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Core Suite Products Column */}
+          {/* Our Services Column */}
           <div className="lg:col-span-3 flex flex-col gap-5">
             <h4 className="font-display font-black text-white text-sm tracking-wider uppercase">
-              Featured Tools
+             Our Services
             </h4>
             <ul className="flex flex-col gap-3">
               <li>
                 <a 
-                  href="#products" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('products'); }}
-                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2"
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
                 >
-                  <span className="text-[#8E44AD] font-bold text-xs">REPOSTSEO</span>
-                  <span className="text-slate-600 text-xs">•</span>
-                  <span className="text-[11px] text-[#FF6B00] bg-[#FF6B00]/10 px-1.5 py-0.5 rounded font-black">AI</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF8706] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>Custom Software Development</span>
                 </a>
               </li>
               <li>
                 <a 
-                  href="#products" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('products'); }}
-                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2"
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
                 >
-                  <span className="text-[#14B8B0] font-bold text-xs">Editpad</span>
-                  <span className="text-slate-600 text-xs">•</span>
-                  <span className="text-[11px] text-slate-500">Editor</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#14B8B0] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>AI & Automation</span>
                 </a>
               </li>
               <li>
                 <a 
-                  href="#products" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('products'); }}
-                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2"
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
                 >
-                  <span className="text-[#10B981] font-bold text-xs">AllMath</span>
-                  <span className="text-slate-600 text-xs">•</span>
-                  <span className="text-[11px] text-slate-500">Solver</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>Web Development</span>
                 </a>
               </li>
               <li>
                 <a 
-                  href="#products" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('products'); }}
-                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2"
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
                 >
-                  <span className="text-slate-300 font-bold text-xs">Calculators.tech</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C2CC] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>Mobile App Development</span>
                 </a>
               </li>
               <li>
                 <a 
-                  href="#products" 
-                  onClick={(e) => { e.preventDefault(); handleNavClick('products'); }}
-                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2"
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
                 >
-                  <span className="text-[#06B6D4] font-bold text-xs">Online Notepad</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>UI/UX Design</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#14B8B0] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>Cloud & DevOps</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#services" 
+                  onClick={(e) => { e.preventDefault(); handleNavClick('services'); }}
+                  className="text-slate-400 hover:text-[#FF6B00] transition-colors text-sm sm:text-base font-semibold flex items-center gap-2 group"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF8706] opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                  <span>SEO Services</span>
                 </a>
               </li>
             </ul>
@@ -260,7 +281,23 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           {/* Legal and Back to Top Row */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6">
+            <a
+              href="/privacy"
+              onClick={(e) => { e.preventDefault(); navigate('/privacy'); }}
+              className="text-slate-500 hover:text-[#FF6B00] text-xs sm:text-sm font-semibold transition-colors cursor-pointer select-none"
+            >
+              Privacy Policy
+            </a>
+            <span className="text-slate-700 text-xs hidden sm:inline">•</span>
+            <a
+              href="/terms"
+              onClick={(e) => { e.preventDefault(); navigate('/terms'); }}
+              className="text-slate-500 hover:text-[#FF6B00] text-xs sm:text-sm font-semibold transition-colors cursor-pointer select-none"
+            >
+              Terms & Conditions
+            </a>
+            <span className="text-slate-700 text-xs hidden sm:inline">•</span>
             
             {/* Back to top dynamic float circular link */}
             <button

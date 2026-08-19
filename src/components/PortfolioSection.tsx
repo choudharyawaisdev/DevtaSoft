@@ -319,13 +319,20 @@ const CaseStudyModal: React.FC<{
   onClose: () => void;
   onStartProject?: () => void;
 }> = ({ project, onClose, onStartProject }) => {
-  if (!project) return null;
-  const details = getCaseStudyDetails(project);
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
 
+  useEffect(() => {
+    if (project) {
+      setActiveProject(project);
+    }
+  }, [project]);
+
+  const isOpen = Boolean(project);
+  const details = activeProject ? getCaseStudyDetails(activeProject) : null;
 
   return (
     <AnimatePresence>
-      {project && (
+      {isOpen && activeProject && details && (
         <>
           <motion.div
             className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm"
@@ -335,13 +342,13 @@ const CaseStudyModal: React.FC<{
             onClick={onClose}
           />
           <motion.div
-            className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 lg:p-8"
+            className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 lg:p-8 pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white rounded-[28px] w-full max-w-[900px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100"
+              className="relative bg-white rounded-[28px] w-full max-w-[900px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100 pointer-events-auto"
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
@@ -365,7 +372,7 @@ const CaseStudyModal: React.FC<{
                   {/* Badges Row */}
                   <div className="flex items-center gap-3 mb-4 flex-wrap z-10 relative">
                     <span className="bg-[#FF8706] text-white font-black text-xs px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
-                      {project.badgeText || project.category}
+                      {activeProject.badgeText || activeProject.category}
                     </span>
                     <span className="bg-white/10 text-white font-bold text-xs px-3.5 py-1.5 rounded-full flex items-center gap-1.5 border border-white/15 backdrop-blur-md">
                       <Clock className="w-3.5 h-3.5 text-[#14B8B0]" />
@@ -375,10 +382,10 @@ const CaseStudyModal: React.FC<{
 
                   {/* Title & Subtitle */}
                   <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-white leading-tight mb-2 z-10 relative">
-                    {project.title}
+                    {activeProject.title}
                   </h2>
                   <p className="font-display font-extrabold text-base sm:text-lg text-[#14B8B0] z-10 relative">
-                    {details.tagline || project.subtitle}
+                    {details.tagline || activeProject.subtitle}
                   </p>
                 </div>
 
@@ -445,8 +452,8 @@ const CaseStudyModal: React.FC<{
 
                 {/* Footer */}
                 <div className="px-8 sm:px-10 py-6 bg-slate-50 rounded-b-[28px] border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-                  {project.websiteUrl && project.websiteUrl !== '#' ? (
-                    <a href={project.websiteUrl} target="_blank" rel="noreferrer" className="font-bold text-sm text-[#14B8B0] hover:underline flex items-center gap-1.5">
+                  {activeProject.websiteUrl && activeProject.websiteUrl !== '#' ? (
+                    <a href={activeProject.websiteUrl} target="_blank" rel="noreferrer" className="font-bold text-sm text-[#14B8B0] hover:underline flex items-center gap-1.5">
                       <span>Visit Live Website</span>
                       <ArrowUpRight className="w-4 h-4" />
                     </a>
@@ -780,15 +787,21 @@ export const PortfolioSection: React.FC<{
               <span className="text-[#14B8B0] font-black text-xs sm:text-sm uppercase tracking-[0.2em]">OUR PORTFOLIO</span>
               <span className="h-[2px] w-12 bg-[#14B8B0] rounded-full inline-block" />
             </div>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[66px] leading-[1.08] tracking-tight text-[#0D152A] mb-6">
+            <motion.h2 
+              className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[66px] leading-[1.08] tracking-tight text-[#0D152A] mb-6"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
               Digital products <br />we're <span className="text-[#FF6B00]">proud of.</span>
-            </h2>
+            </motion.h2>
             <p className="mt-6 sm:mt-8 text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal mb-8">
               Explore a selection of our work where design, technology, and strategy come together to create real impact.
             </p>
             <div className="flex items-center gap-4">
               {/* Start a Project Button */}
-              <button
+              <motion.button
                 onClick={() => {
                   if (location.pathname !== '/') {
                     navigate('/');
@@ -804,11 +817,13 @@ export const PortfolioSection: React.FC<{
                     }
                   }
                 }}
-                className="inline-flex items-center gap-2.5 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-sm sm:text-base px-7 py-3.5 rounded-full shadow-md shadow-[#FF8706]/20 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group"
+                whileHover={{ y: -2, scale: 1.02, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2.5 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-sm sm:text-base px-7 py-3.5 rounded-full shadow-md shadow-[#FF8706]/20 cursor-pointer group"
               >
                 <span>Start a Project</span>
                 <ArrowRight className="w-4 h-4 text-white stroke-[2.5] transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
+              </motion.button>
             </div>
           </div>
 
@@ -840,10 +855,10 @@ export const PortfolioSection: React.FC<{
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-14" initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
           variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15 } } }}>
           {allProjectsCombined.slice(0, 3).map((project) => (
-            <motion.div key={project.id} className="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-[#0D152A]/10 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full group cursor-pointer"
+            <motion.div key={project.id} className="bg-white rounded-[32px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-[#0D152A]/10 transition-shadow duration-300 flex flex-col h-full group cursor-pointer"
               onClick={() => setActiveProject(project)}
               variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] } } }}
-              whileHover={{ y: -8, scale: 1.02 }}>
+              whileHover={{ y: -8, scale: 1.015, transition: { type: 'spring', stiffness: 300, damping: 20 } }}>
               <div className="w-full h-[250px] sm:h-[270px] relative bg-[#F8FAFC] p-3 sm:p-4 overflow-hidden shrink-0 rounded-t-[32px] border-b border-slate-100 flex items-center justify-center">
                 <img
                   src={project.image}
@@ -880,15 +895,17 @@ export const PortfolioSection: React.FC<{
 
         {/* View All Projects Button (Moved Downward below the cards) */}
         <div className="flex items-center justify-center mb-20">
-          <button
+          <motion.button
             onClick={() => navigate('/portfolio')}
-            className="inline-flex items-center gap-3 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-base sm:text-lg px-9 py-4 rounded-full shadow-lg shadow-[#FF8706]/25 hover:shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] cursor-pointer group"
+            whileHover={{ y: -3, scale: 1.02, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-base sm:text-lg px-9 py-4 rounded-full shadow-lg shadow-[#FF8706]/25 cursor-pointer group shadow-md"
           >
             <span>View All Projects</span>
             <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
               <ArrowUpRight className="w-4 h-4 text-white stroke-[2.5]" />
             </div>
-          </button>
+          </motion.button>
         </div>
 
         {/* Bottom CTA Banner */}
@@ -900,10 +917,15 @@ export const PortfolioSection: React.FC<{
               <h4 className="font-display font-black text-[#0D152A] text-xl sm:text-2xl mb-1.5 tracking-tight">Have a project in mind?</h4>
               <p className="text-[#6B7280] text-sm font-medium">Let's build something amazing together.</p>
             </div>
-            <button onClick={onStartProjectClick} className="inline-flex items-center gap-2.5 bg-[#FF8706] hover:bg-[#E05B00] text-white font-bold text-sm sm:text-base px-8 py-3.5 rounded-full shadow-lg shadow-[#FF8706]/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] cursor-pointer group">
+            <motion.button
+              onClick={onStartProjectClick}
+              whileHover={{ y: -2, scale: 1.02, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center gap-2.5 bg-[#FF8706] hover:bg-[#E05B00] text-white font-bold text-sm sm:text-base px-8 py-3.5 rounded-full shadow-lg shadow-[#FF8706]/20 cursor-pointer group"
+            >
               <span>Start a Project</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            </motion.button>
           </div>
         </div>
 

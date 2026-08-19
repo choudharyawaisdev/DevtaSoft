@@ -497,27 +497,6 @@ const ServiceDetailModal: React.FC<{
                   </p>
                 </div>
 
-                {/* ─── Stats Row ──────────────────────────────────────── */}
-                <div className="px-8 sm:px-10 py-6">
-                  <div className="grid grid-cols-3 gap-4">
-                    {details.stats.map((stat) => (
-                      <div
-                        key={stat.label}
-                        className="bg-slate-50 rounded-2xl p-4 text-center border border-slate-100"
-                      >
-                        <span
-                          className="font-display font-extrabold text-2xl sm:text-3xl block mb-1"
-                          style={{ color: resolvedColor }}
-                        >
-                          {stat.value}
-                        </span>
-                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
 
                 {/* ─── Features Grid ──────────────────────────────────── */}
                 <div className="px-8 sm:px-10 pb-6">
@@ -741,7 +720,18 @@ const Services3DCubeIllustration: React.FC = () => {
       {/* Background Ambient Radial Glow Lights */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[radial-gradient(circle_at_center,rgba(255,135,6,0.15)_0%,rgba(20,184,176,0.1)_50%,transparent_70%)] rounded-full blur-2xl pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-[#14B8B0]/20 rounded-full animate-ping opacity-25 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-[#FF8706]/15 rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] h-[85vw] max-w-[384px] max-h-[384px] border border-[#FF8706]/15 rounded-full pointer-events-none">
+        {/* Small Glowing Floating Particles Symmetrically Placed Exactly On The Circular Ring */}
+        <span className="absolute top-[14.6%] left-[14.6%] -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-75" />
+        <span className="absolute top-[14.6%] left-[14.6%] -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#FF8706]" />
+
+        <span className="absolute top-[85.4%] left-[85.4%] -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#14B8B0] animate-pulse" />
+
+        <span className="absolute top-[14.6%] left-[85.4%] -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse" />
+
+        <span className="absolute top-[85.4%] left-[14.6%] -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-60" />
+        <span className="absolute top-[85.4%] left-[14.6%] -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#FF8706]" />
+      </div>
 
       {/* Interactive Cursor Indicator Badge */}
       <div className="absolute bottom-1 z-40 bg-slate-900/95 backdrop-blur-sm text-white/90 border border-white/10 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-extrabold tracking-wide shadow-lg flex items-center gap-2 pointer-events-none">
@@ -800,7 +790,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 5. AI */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-2 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute top-1/2 -translate-y-1/2 right-[-24px] min-[360px]:right-[-16px] min-[400px]:right-[-6px] min-[480px]:right-0 sm:right-2 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
       >
@@ -812,7 +802,7 @@ const Services3DCubeIllustration: React.FC = () => {
 
       {/* 6. Design */}
       <motion.div
-        className="absolute top-1/2 -translate-y-1/2 left-0 sm:left-2 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
+        className="absolute top-1/2 -translate-y-1/2 left-[-24px] min-[360px]:left-[-16px] min-[400px]:left-[-6px] min-[480px]:left-0 sm:left-2 z-30 bg-white/95 border border-slate-200/90 shadow-lg px-2 sm:px-3.5 py-1 sm:py-2 rounded-2xl flex items-center gap-1.5 sm:gap-2 pointer-events-none"
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.0 }}
       >
@@ -822,18 +812,13 @@ const Services3DCubeIllustration: React.FC = () => {
         <span className="font-display font-extrabold text-[10px] sm:text-xs text-[#0D152A]">Design</span>
       </motion.div>
 
-      {/* Small Glowing Floating Particles */}
-      <span className="absolute top-14 left-1/4 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-75 pointer-events-none" />
-      <span className="absolute bottom-20 right-1/4 w-2.5 h-2.5 rounded-full bg-[#14B8B0] animate-pulse pointer-events-none" />
-      <span className="absolute top-1/3 right-12 w-1.5 h-1.5 rounded-full bg-[#7C3AED] animate-pulse pointer-events-none" />
-      <span className="absolute bottom-1/3 left-12 w-2 h-2 rounded-full bg-[#FF8706] animate-ping opacity-60 pointer-events-none" />
 
       {/* ─── 3D PERSPECTIVE STAGE WITH CURSOR DRAG & MOVE INTERACTION ───────────────────────────────────── */}
       <div
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        className="perspective-[1000px] w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center cursor-grab active:cursor-grabbing z-10 scale-90 sm:scale-100 transition-transform duration-300"
+        className="perspective-[1000px] w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center cursor-grab active:cursor-grabbing z-10 scale-[0.76] min-[360px]:scale-[0.82] min-[400px]:scale-[0.88] sm:scale-100 transition-transform duration-300"
       >
         {/* 3D INTERACTIVE ROTATING CUBE CONTAINER */}
         <div
@@ -943,11 +928,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
       <div className="max-w-[1400px] mx-auto">
         
         {/* SECTION HEADER WITH 3D CUBE SIGNATURE ILLUSTRATION ON RIGHT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center mb-16 sm:mb-24 pl-4 sm:pl-6 lg:pl-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center mb-16 sm:mb-24">
           
           {/* Left Column: Text & Headings (6 cols) */}
           <motion.div
-            className="lg:col-span-6 flex flex-col items-start text-left"
+            className="lg:col-span-6 flex flex-col items-start text-left pl-4 sm:pl-6 lg:pl-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -962,10 +947,16 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             </div>
 
             {/* Large Bold Headline */}
-            <h2 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[46px] text-[#2A285F] leading-[1.14] tracking-tight mb-6">
+            <motion.h2 
+              className="font-display font-extrabold text-3xl sm:text-5xl lg:text-[46px] text-[#2A285F] leading-[1.14] tracking-tight mb-6"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
               Solutions we build <br />
               to move your business <span className="text-[#FF8706]">forward.</span>
-            </h2>
+            </motion.h2>
 
             {/* Description */}
             <p className="text-base sm:text-lg text-[#475569] max-w-[540px] leading-relaxed font-normal mb-8">
@@ -1015,12 +1006,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             return (
               <motion.div
                 key={service.title}
-                className="group relative bg-white rounded-[24px] border border-[#ECECEC] p-8 sm:p-9 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] hover:border-[#FF8706]/40 transition-all duration-400 hover:-translate-y-2 flex flex-col justify-between h-full cursor-pointer overflow-hidden"
+                className="group relative bg-white rounded-[24px] border border-[#ECECEC] p-8 sm:p-9 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] hover:border-[#FF8706]/40 transition-shadow duration-300 flex flex-col justify-between h-full cursor-pointer overflow-hidden"
                 variants={{
                   hidden: { opacity: 0, y: 30 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] } },
                 }}
-                whileHover={{ y: -8, scale: 1.015 }}
+                whileHover={{ y: -8, scale: 1.015, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
               >
                 <div>
                   {/* Top Bar: Icon Badge on Left, Numbered Badge on Right */}
@@ -1080,15 +1071,17 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <button
+          <motion.button
             onClick={() => navigate('/services')}
-            className="group inline-flex items-center gap-3 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-base px-8 py-4 rounded-2xl shadow-lg shadow-[#FF8706]/25 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
+            whileHover={{ y: -3, scale: 1.02, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+            whileTap={{ scale: 0.98 }}
+            className="group inline-flex items-center gap-3 bg-[#FF8706] hover:bg-[#E07200] text-white font-bold text-base px-8 py-4 rounded-2xl shadow-lg shadow-[#FF8706]/25 cursor-pointer shadow-md"
           >
             <span>View More</span>
             <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
               <ArrowRight className="w-4 h-4 text-white stroke-[2.5]" />
             </div>
-          </button>
+          </motion.button>
         </motion.div>
 
       </div>
@@ -1096,19 +1089,19 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
       {/* BOTTOM VALUE STRIP (Mobile 2-in-1 Layout, Desktop 4-in-1 Layout with Divider Lines) */}
       <div className="max-w-[1560px] mx-auto px-3 sm:px-6 lg:px-10">
         <motion.div
-          className="w-full bg-white rounded-[24px] sm:rounded-[28px] border border-slate-300 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 overflow-hidden"
+          className="w-full lg:bg-white lg:rounded-[28px] lg:border lg:border-slate-300 lg:shadow-[0_20px_50px_rgba(0,0,0,0.04)] lg:hover:shadow-[0_25px_65px_rgba(0,0,0,0.07)] transition-all duration-400 lg:overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
         >
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-slate-300">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-0 lg:divide-x lg:divide-slate-300">
             {valueItems.map((item) => {
               const ValueIcon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="flex flex-col items-start p-4 sm:p-7 lg:p-10"
+                  className="bg-white border border-slate-200/85 rounded-[24px] shadow-[0_10px_30px_rgba(0,0,0,0.015)] p-4 sm:p-7 lg:p-10 lg:bg-transparent lg:border-none lg:rounded-none lg:shadow-none flex flex-col items-start"
                 >
                   <div className="flex items-center gap-2.5 sm:gap-3.5 mb-2.5 sm:mb-4">
                     <div

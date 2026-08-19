@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck, CheckCircle2, ShieldAlert, AlertTriangle, Clock, RefreshCw } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -92,7 +93,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin
     };
   }, []);
 
-  if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -157,10 +157,23 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200">
-      
-      {/* Outer Card Frame matching Reference Image */}
-      <div className="relative w-full max-w-[480px] sm:max-w-[520px] bg-white rounded-[32px] shadow-2xl border border-slate-100 p-7 sm:p-10 overflow-hidden">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md"
+        >
+          {/* Outer Card Frame matching Reference Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 16 }}
+            transition={{ duration: 0.3, ease: [0.215, 0.61, 0.355, 1] }}
+            className="relative w-full max-w-[480px] sm:max-w-[520px] bg-white rounded-[32px] shadow-2xl border border-slate-100 p-7 sm:p-10 overflow-hidden"
+          >
         
         {/* Top Close Button */}
         <button
@@ -387,7 +400,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin
           </div>
         )}
 
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

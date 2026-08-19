@@ -204,6 +204,42 @@ const aiStack: TechItem[] = [
   },
 ];
 
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const cardEntrance = {
+  hidden: { opacity: 0, y: 16, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const iconHoverAnimation = {
+  hover: {
+    scale: 1.16,
+    rotate: 6,
+    transition: {
+      type: 'spring',
+      stiffness: 400,
+      damping: 12,
+    },
+  },
+};
+
 export const TechStackSection: React.FC = () => {
   return (
     <section id="techstack" className="w-full bg-[#FCFDFE] py-24 sm:py-32 px-4 sm:px-6 lg:px-10 font-sans relative overflow-hidden border-t border-slate-100">
@@ -235,10 +271,15 @@ export const TechStackSection: React.FC = () => {
             <span className="h-[2px] w-10 bg-[#FF8706] rounded-full inline-block" />
           </div>
 
-          {/* Headline */}
-          <h2 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[58px] text-[#0D152A] leading-[1.08] tracking-tight mb-6">
+          <motion.h2 
+            className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[58px] text-[#0D152A] leading-[1.08] tracking-tight mb-6"
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             Technologies We Use
-          </h2>
+          </motion.h2>
 
           {/* Subtitle */}
           <p className="text-base sm:text-lg text-[#475569] max-w-[620px] leading-relaxed font-normal">
@@ -247,85 +288,107 @@ export const TechStackSection: React.FC = () => {
         </motion.div>
 
         {/* ─── FRONTEND CATEGORY ROW ────────────────────────────────────── */}
-        <motion.div
-          className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8">
           {/* Category Eyebrow Title */}
-          <div className="flex items-center gap-3 mb-8">
+          <motion.div 
+            className="flex items-center gap-3 mb-8"
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
             <span className="w-1.5 h-7 bg-[#FF8706] rounded-full inline-block" />
             <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
               Frontend
             </h3>
-          </div>
+          </motion.div>
 
           {/* Frontend Tech Cards Grid */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+          <motion.div
+            className="flex flex-wrap items-center gap-4 sm:gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={staggerContainer}
+          >
             {frontendStack.map((tech) => (
               <motion.div
                 key={tech.name}
-                whileHover={{ y: -4, scale: 1.03 }}
-                className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-6 sm:px-9 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[150px] sm:min-w-[175px] flex-1 sm:flex-initial cursor-pointer group"
+                variants={cardEntrance}
+                whileHover="hover"
+                whileTap={{ scale: 0.98 }}
+                className="bg-white rounded-[24px] shadow-none hover:shadow-[0_15px_35px_rgba(255,135,6,0.04)] border border-slate-100/80 hover:border-[#FF8706]/35 transition-all duration-300 px-6 sm:px-9 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[150px] sm:min-w-[175px] flex-1 sm:flex-initial cursor-pointer group"
               >
-                <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <motion.div 
+                  className="h-14 sm:h-16 flex items-center justify-center"
+                  variants={iconHoverAnimation}
+                >
                   {tech.icon}
-                </div>
+                </motion.div>
                 <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#FF8706] transition-colors">
                   {tech.name}
                 </span>
               </motion.div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* ─── BACKEND CATEGORY ROW ─────────────────────────────────────── */}
-        <motion.div
-          className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8">
           {/* Category Eyebrow Title */}
-          <div className="flex items-center gap-3 mb-8">
+          <motion.div 
+            className="flex items-center gap-3 mb-8"
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
             <span className="w-1.5 h-7 bg-[#14B8B0] rounded-full inline-block" />
             <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
               Backend
             </h3>
-          </div>
+          </motion.div>
 
           {/* Backend Tech Cards Grid */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+          <motion.div
+            className="flex flex-wrap items-center gap-4 sm:gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={staggerContainer}
+          >
             {backendStack.map((tech) => (
               <motion.div
                 key={tech.name}
-                whileHover={{ y: -4, scale: 1.03 }}
-                className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-8 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[165px] flex-1 sm:flex-initial cursor-pointer group"
+                variants={cardEntrance}
+                whileHover="hover"
+                whileTap={{ scale: 0.98 }}
+                className="bg-white rounded-[24px] shadow-none hover:shadow-[0_15px_35px_rgba(20,184,176,0.04)] border border-slate-100/80 hover:border-[#14B8B0]/35 transition-all duration-300 px-5 sm:px-8 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[140px] sm:min-w-[165px] flex-1 sm:flex-initial cursor-pointer group"
               >
-                <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <motion.div 
+                  className="h-14 sm:h-16 flex items-center justify-center"
+                  variants={iconHoverAnimation}
+                >
                   {tech.icon}
-                </div>
+                </motion.div>
                 <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#14B8B0] transition-colors">
                   {tech.name}
                 </span>
               </motion.div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* ─── UI/UX DESIGN CATEGORY ROW ─────────────────────────────────── */}
-        <motion.div
-          className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8"
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="mb-14 sm:mb-16 pl-4 sm:pl-6 lg:pl-8">
           {/* Category Eyebrow Title */}
-          <div className="flex items-center gap-3 mb-8">
+          <motion.div 
+            className="flex items-center gap-3 mb-8"
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
             <span className="w-1.5 h-7 bg-[#7C3AED] rounded-full inline-block" />
             <div className="w-9 h-9 rounded-full bg-[#F0ECFF] flex items-center justify-center shrink-0">
               <Palette className="w-5 h-5 text-[#7C3AED] stroke-[2.5]" />
@@ -333,39 +396,51 @@ export const TechStackSection: React.FC = () => {
             <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
               UI/UX Design
             </h3>
-          </div>
+          </motion.div>
 
           {/* UI/UX Tech Cards Grid */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+          <motion.div
+            className="flex flex-wrap items-center gap-4 sm:gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={staggerContainer}
+          >
             {uiuxStack.map((tech) => (
               <motion.div
                 key={tech.name}
-                whileHover={{ y: -4, scale: 1.03 }}
-                className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-6 sm:px-9 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[150px] sm:min-w-[175px] flex-1 sm:flex-initial cursor-pointer group"
+                variants={cardEntrance}
+                whileHover="hover"
+                whileTap={{ scale: 0.98 }}
+                className="bg-white rounded-[24px] shadow-none hover:shadow-[0_15px_35px_rgba(124,58,237,0.04)] border border-slate-100/80 hover:border-[#7C3AED]/35 transition-all duration-300 px-6 sm:px-9 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[150px] sm:min-w-[175px] flex-1 sm:flex-initial cursor-pointer group"
               >
-                <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <motion.div 
+                  className="h-14 sm:h-16 flex items-center justify-center"
+                  variants={iconHoverAnimation}
+                >
                   {tech.icon}
-                </div>
+                </motion.div>
                 <span className="font-display font-extrabold text-sm sm:text-base text-[#0D152A] text-center tracking-tight group-hover:text-[#7C3AED] transition-colors">
                   {tech.name}
                 </span>
               </motion.div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* ─── MOBILE DEVELOPMENT & AI & AUTOMATION ROW (SIDE BY SIDE) ─── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 mb-20 sm:mb-24 pl-4 sm:pl-6 lg:pl-8">
           
           {/* MOBILE DEVELOPMENT CATEGORY */}
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             {/* Category Eyebrow Title with Smartphone Icon */}
-            <div className="flex items-center gap-3 mb-8">
+            <motion.div 
+              className="flex items-center gap-3 mb-8"
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+            >
               <span className="w-1.5 h-7 bg-[#FF8706] rounded-full inline-block" />
               <div className="w-9 h-9 rounded-full bg-[#FFEFE5] flex items-center justify-center shrink-0">
                 <Smartphone className="w-5 h-5 text-[#FF8706] stroke-[2.5]" />
@@ -373,36 +448,48 @@ export const TechStackSection: React.FC = () => {
               <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
                 Mobile Development
               </h3>
-            </div>
+            </motion.div>
 
             {/* Mobile Tech Cards Grid */}
-            <div className="flex flex-wrap items-center gap-4">
+            <motion.div
+              className="flex flex-wrap items-center gap-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-80px' }}
+              variants={staggerContainer}
+            >
               {mobileStack.map((tech) => (
                 <motion.div
                   key={tech.name}
-                  whileHover={{ y: -4, scale: 1.03 }}
-                  className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-6 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[135px] sm:min-w-[145px] flex-1 sm:flex-initial cursor-pointer group"
+                  variants={cardEntrance}
+                  whileHover="hover"
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-white rounded-[24px] shadow-none hover:shadow-[0_15px_35px_rgba(255,135,6,0.04)] border border-slate-100/80 hover:border-[#FF8706]/35 transition-all duration-300 px-5 sm:px-6 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[135px] sm:min-w-[145px] flex-1 sm:flex-initial cursor-pointer group"
                 >
-                  <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <motion.div 
+                    className="h-14 sm:h-16 flex items-center justify-center"
+                    variants={iconHoverAnimation}
+                  >
                     {tech.icon}
-                  </div>
+                  </motion.div>
                   <span className="font-display font-extrabold text-xs sm:text-sm text-[#0D152A] text-center tracking-tight group-hover:text-[#FF8706] transition-colors">
                     {tech.name}
                   </span>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* AI & AUTOMATION CATEGORY */}
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
+          <div>
             {/* Category Eyebrow Title with Brain Icon */}
-            <div className="flex items-center gap-3 mb-8">
+            <motion.div 
+              className="flex items-center gap-3 mb-8"
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+            >
               <span className="w-1.5 h-7 bg-[#14B8B0] rounded-full inline-block" />
               <div className="w-9 h-9 rounded-full bg-[#E6F8F9] flex items-center justify-center shrink-0">
                 <Cpu className="w-5 h-5 text-[#14B8B0] stroke-[2.5]" />
@@ -410,26 +497,37 @@ export const TechStackSection: React.FC = () => {
               <h3 className="font-display font-extrabold text-2xl text-[#0D152A] tracking-tight">
                 AI & Automation
               </h3>
-            </div>
+            </motion.div>
 
             {/* AI Tech Cards Grid */}
-            <div className="flex flex-wrap items-center gap-4">
+            <motion.div
+              className="flex flex-wrap items-center gap-4"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-80px' }}
+              variants={staggerContainer}
+            >
               {aiStack.map((tech) => (
                 <motion.div
                   key={tech.name}
-                  whileHover={{ y: -4, scale: 1.03 }}
-                  className="bg-white rounded-[24px] shadow-none hover:shadow-xs transition-all duration-300 px-5 sm:px-6 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[135px] sm:min-w-[145px] flex-1 sm:flex-initial cursor-pointer group"
+                  variants={cardEntrance}
+                  whileHover="hover"
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-white rounded-[24px] shadow-none hover:shadow-[0_15px_35px_rgba(20,184,176,0.04)] border border-slate-100/80 hover:border-[#14B8B0]/35 transition-all duration-300 px-5 sm:px-6 py-6 sm:py-7 flex flex-col items-center justify-center gap-3 min-w-[135px] sm:min-w-[145px] flex-1 sm:flex-initial cursor-pointer group"
                 >
-                  <div className="h-14 sm:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <motion.div 
+                    className="h-14 sm:h-16 flex items-center justify-center"
+                    variants={iconHoverAnimation}
+                  >
                     {tech.icon}
-                  </div>
+                  </motion.div>
                   <span className="font-display font-extrabold text-xs sm:text-sm text-[#0D152A] text-center tracking-tight group-hover:text-[#14B8B0] transition-colors">
                     {tech.name}
                   </span>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
         </div>
 

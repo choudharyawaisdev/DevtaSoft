@@ -401,13 +401,20 @@ const ProductDetailModal: React.FC<{
   onClose: () => void;
   onExploreAll?: () => void;
 }> = ({ product, onClose, onExploreAll }) => {
-  if (!product) return null;
-  const details = getProductDetails(product);
+  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
 
+  useEffect(() => {
+    if (product) {
+      setActiveProduct(product);
+    }
+  }, [product]);
+
+  const isOpen = Boolean(product);
+  const details = activeProduct ? getProductDetails(activeProduct) : null;
 
   return (
     <AnimatePresence>
-      {product && (
+      {isOpen && activeProduct && details && (
         <>
           {/* Backdrop Overlay */}
           <motion.div
@@ -420,13 +427,13 @@ const ProductDetailModal: React.FC<{
 
           {/* Modal Box Container */}
           <motion.div
-            className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 lg:p-8"
+            className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 lg:p-8 pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative bg-white rounded-[28px] w-full max-w-[860px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100"
+              className="relative bg-white rounded-[28px] w-full max-w-[860px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100 pointer-events-auto"
               initial={{ opacity: 0, scale: 0.92, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
@@ -451,7 +458,7 @@ const ProductDetailModal: React.FC<{
 
                   <div className="flex items-center gap-4 mb-6">
                     <div className="p-3 rounded-2xl border bg-white shadow-sm" style={{ borderColor: `${details.themeColor}30` }}>
-                      {product.logo}
+                      {activeProduct.logo}
                     </div>
                     <span
                       className="inline-flex items-center gap-1.5 text-xs font-black px-3.5 py-1.5 rounded-full border shadow-xs"
@@ -470,25 +477,6 @@ const ProductDetailModal: React.FC<{
                   </p>
                 </div>
 
-                {/* Key Stats Bar */}
-                <div className="px-8 sm:px-10 py-4">
-                  <div className="grid grid-cols-3 gap-4">
-                    {details.stats.map((stat) => (
-                      <div
-                        key={stat.label}
-                        className="rounded-2xl p-4 text-center border border-slate-100 shadow-xs"
-                        style={{ backgroundColor: details.themeBg }}
-                      >
-                        <span className="font-display font-black text-2xl sm:text-3xl block mb-1" style={{ color: details.themeColor }}>
-                          {stat.value}
-                        </span>
-                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Features List */}
                 <div className="px-8 sm:px-10 py-6">
@@ -550,7 +538,7 @@ const ProductDetailModal: React.FC<{
                 {/* Footer CTA */}
                 <div className="px-8 sm:px-10 pb-8 sm:pb-10 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <p className="text-[#667085] font-medium text-sm text-center sm:text-left">
-                    Interested in integrating or deploying {product.name}?
+                    Interested in integrating or deploying {activeProduct.name}?
                   </p>
                   <div className="flex items-center gap-3">
                     <button
@@ -648,10 +636,16 @@ export const ProductsSection: React.FC<{ onContactClick: () => void }> = ({ onCo
               <span className="h-[2px] w-12 bg-[#14B8B0] rounded-full inline-block" />
             </div>
 
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#0D152A] leading-[1.1] tracking-tight mb-6">
+            <motion.h2 
+              className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#0D152A] leading-[1.1] tracking-tight mb-6"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
               Powerful tools. <br />
               Built for <span className="text-[#FF6B00]">everyone.</span>
-            </h2>
+            </motion.h2>
 
             <p className="text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal mb-10">
               Explore our suite of products designed to simplify tasks, boost productivity, and help you achieve more.
@@ -804,12 +798,12 @@ export const ProductsSection: React.FC<{ onContactClick: () => void }> = ({ onCo
                   setActiveProduct(product);
                 }
               }}
-              className={`rounded-[24px] p-8 border ${product.bgClass} shadow-sm hover:shadow-xl hover:shadow-[#0D152A]/5 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between h-full group cursor-pointer`}
+              className={`rounded-[24px] p-8 border ${product.bgClass} shadow-sm hover:shadow-xl hover:shadow-[#0D152A]/5 transition-shadow duration-300 flex flex-col justify-between h-full group cursor-pointer`}
               variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] } },
               }}
-              whileHover={{ y: -8, scale: 1.03 }}
+              whileHover={{ y: -8, scale: 1.015, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
             >
               <div>
                 <div className="mb-6 h-10 flex items-center transition-transform duration-300 group-hover:scale-105 origin-left">
@@ -846,13 +840,15 @@ export const ProductsSection: React.FC<{ onContactClick: () => void }> = ({ onCo
 
         {/* BOTTOM View All Products central button */}
         <div className="flex justify-center">
-          <button
+          <motion.button
             onClick={() => navigate('/products')}
-            className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] hover:border-[#FF6B00] text-[#0D152A] font-bold text-sm sm:text-base px-8 py-3.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer group"
+            whileHover={{ y: -2, scale: 1.02, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] hover:border-[#FF6B00] text-[#0D152A] font-bold text-sm sm:text-base px-8 py-3.5 rounded-full shadow-sm hover:shadow-md cursor-pointer group"
           >
             <span>View all products</span>
             <ArrowRight className="w-4 h-4 text-[#FF6B00] stroke-[2.5] transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </motion.button>
         </div>
 
       </div>

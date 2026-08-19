@@ -178,7 +178,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onReadMoreClick }) =
             {/* Main Headline */}
             <motion.h2 
               className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#2A285F] leading-[1.1] tracking-tight mb-4"
-              variants={itemVariants}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               Building Digital <br />
               Solutions That <br />

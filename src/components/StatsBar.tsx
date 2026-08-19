@@ -77,7 +77,7 @@ export const StatsBar: React.FC<{ onStatClick?: (label: string) => void }> = ({ 
             <div
               key={stat.label}
               onClick={() => onStatClick?.(stat.label)}
-              className="group cursor-pointer flex items-center justify-center gap-4 px-4 py-3 sm:py-2 rounded-2xl transition-all duration-300 hover:bg-slate-50/90 hover:scale-[1.02]"
+              className="group cursor-pointer flex items-center justify-start sm:justify-center gap-4 px-6 sm:px-4 py-3 sm:py-2 rounded-2xl transition-all duration-300 hover:bg-slate-50/90 hover:scale-[1.02] w-full max-w-[270px] sm:max-w-none mx-auto"
             >
               <div
                 className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 ${

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, CheckCircle2, ArrowRight, Layers, Smartphone, Globe, Users, ShieldCheck, Zap } from 'lucide-react';
 import { ServiceDetail } from '../types';
 
@@ -114,13 +115,34 @@ export const ServicesModal: React.FC<ServicesModalProps> = ({
   onClose,
   onContactClick,
 }) => {
-  if (!selectedService || !serviceMap[selectedService]) return null;
+  const [activeService, setActiveService] = useState<string | null>(null);
 
-  const detail = serviceMap[selectedService];
+  useEffect(() => {
+    if (selectedService) {
+      setActiveService(selectedService);
+    }
+  }, [selectedService]);
+
+  const isOpen = Boolean(selectedService);
+  const detail = activeService ? serviceMap[activeService] : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 sm:p-8 md:p-10">
+    <AnimatePresence>
+      {isOpen && detail && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 16 }}
+            transition={{ duration: 0.3, ease: [0.215, 0.61, 0.355, 1] }}
+            className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 sm:p-8 md:p-10"
+          >
         <button
           onClick={onClose}
           className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 p-2.5 rounded-full transition-colors cursor-pointer"
@@ -201,7 +223,9 @@ export const ServicesModal: React.FC<ServicesModalProps> = ({
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

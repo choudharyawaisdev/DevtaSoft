@@ -79,11 +79,17 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Main Headline */}
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#0D152A] leading-[1.1] tracking-tight mb-6">
+            <motion.h2 
+              className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[52px] text-[#0D152A] leading-[1.1] tracking-tight mb-6"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
               Let’s build <br />
               something amazing <br />
               <span className="text-[#FF6B00]">together.</span>
-            </h2>
+            </motion.h2>
 
             {/* Description */}
             <p className="text-base sm:text-lg text-[#475569] max-w-[560px] leading-relaxed font-normal mb-8">
