@@ -389,17 +389,7 @@ const CaseStudyModal: React.FC<{
                   </p>
                 </div>
 
-                {/* Results */}
-                <div className="px-8 sm:px-10 py-6">
-                  <div className="grid grid-cols-3 gap-4">
-                    {details.results.map((stat) => (
-                      <div key={stat.label} className="rounded-2xl p-4 text-center border border-slate-100" style={{ backgroundColor: details.bgColor }}>
-                        <span className="font-display font-extrabold text-2xl sm:text-3xl block mb-1" style={{ color: details.color }}>{stat.value}</span>
-                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">{stat.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+
 
                 {/* Challenge & Solution */}
                 <div className="px-8 sm:px-10 pb-6 space-y-5">

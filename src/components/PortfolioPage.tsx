@@ -1375,19 +1375,7 @@ export const PortfolioPage: React.FC<{ onContactClick: () => void }> = ({ onCont
                     </p>
                   </div>
 
-                {/* Results Row */}
-                <div className="px-8 sm:px-10 py-4">
-                  <div className="grid grid-cols-3 gap-4">
-                    {caseStudyModalData[selectedProject.id].results.map((r) => (
-                      <div key={r.label} className="bg-[#FFEFE5] rounded-2xl p-4 text-center border border-[#FF8706]/20">
-                        <span className="font-display font-black text-2xl sm:text-3xl text-[#FF8706] block mb-1">
-                          {r.value}
-                        </span>
-                        <span className="text-[#667085] font-semibold text-xs sm:text-sm">{r.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+
 
                 {/* Challenge & Solution */}
                 <div className="px-8 sm:px-10 py-6 space-y-4">
